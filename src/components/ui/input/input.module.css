@@ -1,0 +1,23 @@
+.input_container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border: 2px solid var(--primary-shade);
+    border-radius: 4px;
+    padding-inline: 1rem;
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
+
+.input_field {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 4px;
+}
+
+.input_icon {
+    margin-left: 8px;
+    color: #888;
+}

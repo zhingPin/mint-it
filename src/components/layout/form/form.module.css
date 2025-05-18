@@ -1,0 +1,122 @@
+.Form_box {
+    display: flex;
+    flex-direction: column;
+    /* gap: 16px; */
+    padding: 16px;
+    /* background-color: var(--primary-shade); */
+    border-radius: 8px;
+    box-shadow: var(--shadow-2);
+    /* min-height: 100%; */
+}
+
+
+
+.Form_box_input_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.Form_box_input_box {
+
+    background: rgba(0, 0, 255, 0.5);
+
+    display: flex;
+    align-items: center;
+
+
+}
+
+.Form_box_input_box svg {
+    margin-inline: 8px;
+}
+
+.Form_box_input {
+    border-radius: 0 0.3rem 0.3rem 0;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+
+
+.Form_box_input_with_logo {
+    display: flex;
+}
+
+.Form_box_input select,
+.Form_box_input input,
+.Form_box_input textarea {
+    background-color: black;
+    outline: none;
+
+    border: 1px solid var(--icons-color);
+    width: 100%;
+    padding: 0.5rem;
+}
+
+
+
+.Form_box_input textarea {
+    resize: vertical;
+}
+
+.Form_box_input input[type="text"]:focus,
+.Form_box_input textarea:focus {
+    border: 1px solid var(--main-color);
+    box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.5);
+    /* Add a blue shadow when focused */
+}
+
+
+
+.Form_box_input select,
+.Form_box_input textarea,
+.Form_box_input input[id="username"] {
+    /* Your styles here */
+    border-radius: 0.3rem;
+}
+
+.Form_box_input input[id="wallet"] {
+    border-radius: 0.3rem 0 0 0.3rem;
+}
+
+.Form_box_input input[type="radio"] {
+    appearance: radio;
+}
+
+.Form_box_input input[type="checkbox"] {
+    appearance: checkbox;
+    margin-bottom: 0.7rem;
+}
+
+.Form_box_input select {
+    border: 1px solid var(--icons-color);
+}
+
+.Form_box_input input::placeholder,
+.Form_box_input textarea::placeholder {
+    color: grey;
+}
+
+.Form_box_input label {
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+.Form_box_btn {
+    margin: 1rem 0;
+}
+
+/* .button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+} */
+
+@media screen and (max-width: 35em) {}
+
+@media screen and (min-width: 425px) and (max-width: 768px) {}

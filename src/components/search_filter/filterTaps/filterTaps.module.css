@@ -1,0 +1,46 @@
+.filterTaps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 16px; */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+}
+
+.tab {
+    /* padding: 8px 16px; */
+    border: none;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.tab:hover {
+    background-color: #e0e0e0;
+}
+
+.tab.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdownSelect {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+}

@@ -1,0 +1,17 @@
+.logo {
+    align-items: center;
+    white-space: nowrap;
+    text-shadow:
+        -1px -1px 0 #662d91,
+        1px -1px 0 #662d91,
+        -1px 1px 0 #662d91,
+        1px 1px 0 #662d91;
+    gap: 0.5em;
+    display: flex;
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 50%;
+    cursor: pointer;
+}

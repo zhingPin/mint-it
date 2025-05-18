@@ -1,0 +1,11 @@
+.navControllers {
+    background-color: #662d91;
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(1fr, 1fr));
+}
+
+@media screen and (max-width: 34em) {
+    .navControllers {
+        display: flex;
+    }
+}

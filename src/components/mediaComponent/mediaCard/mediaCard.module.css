@@ -1,0 +1,98 @@
+.media_card_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* grid-template-columns: repeat auto; */
+    justify-content: flex-start;
+    background-color: var(--foreground);
+    gap: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual media card */
+.media_card {
+    background-color: var(--primary-shade);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in;
+    text-align: start;
+}
+
+
+
+/* Image inside the media card */
+.media_card_image {
+    display: flex;
+    max-height: 180px;
+    width: 100%;
+    /* height: auto; */
+    /* border-radius: 8px; */
+    /* margin-bottom: 12px; */
+}
+
+.info_card {
+    /* display: flex;
+    flex-direction: column; */
+    display: flex;
+    flex-direction: column;
+    /* grid-row: 1fr auto; */
+    padding: 10px;
+
+    /* grid-row: auto 1fr; */
+}
+
+/* Title of the media card */
+.media_card_title {
+    /* font-size: 1rem; */
+    /* font-weight: bold; */
+    color: var(--primary-color);
+    /* margin-bottom: 8px; */
+}
+
+/* Description inside the media card */
+.media_card_description {
+    /* font-size: 1rem; */
+    color: var(--text-secondary-color);
+    margin-bottom: 12px;
+}
+
+/* Price inside the media card */
+.media_card_price {
+    /* font-size: 1.2rem; */
+    font-weight: bold;
+    color: var(--text-primary-color);
+}
+
+/* Responsive styles for smaller screens */
+/* @media screen and (max-width: 25em) {
+    .media_card {
+        min-height: 150px;
+        max-height: auto;
+        min-width: 100%;
+        padding: 12px;
+    }
+
+    .media_card_image {
+        width: 100%;
+        height: auto;
+    }
+
+    .media_card_title {
+        font-size: 1.2rem;
+    }
+
+    .media_card_description {
+        font-size: 0.9rem;
+    }
+
+    .media_card_price {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 25em) {
+    .media_card {
+        min-height: 50px;
+        max-height: 50px;
+        min-width: 100%;
+    }
+} */
