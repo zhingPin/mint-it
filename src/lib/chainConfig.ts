@@ -39,16 +39,20 @@ const changeNetwork = async (networkName: string): Promise<void> => {
       params: [{ chainId: network.chainId }],
     });
     console.log(`Switched to network: ${networkName}`);
-  } catch (error: any) {
-    if (error.code === 4902) {
-      // If the network is not added, add it
-      console.log(`Network not found. Adding network: ${networkName}`);
-      await addNetwork(network, networkName);
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error) {
+      const e = error as { code: number };
+      if (e.code === 4902) {
+        console.log(`Network not found. Adding network: ${networkName}`);
+        await addNetwork(network, networkName);
+      } else {
+        console.error("Error switching network:", error);
+      }
     } else {
-      console.error("Error switching network:", error);
+      console.error("Unknown error switching network:", error);
     }
   }
-};
+}
 
 // Helper function to add a network
 const addNetwork = async (network: NetworkConfigProps, networkName: string): Promise<void> => {

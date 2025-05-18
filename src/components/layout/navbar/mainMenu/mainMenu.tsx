@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import React, { useContext } from "react";
-import { usePathname } from "next/navigation";
 import styles from "./mainMenu.module.css";
 import Button from "../../../ui/button/button"
 import Dropdown from "../dropdown/dropdown";
@@ -17,7 +16,6 @@ type MainMenuProps = {
 const MainMenu: React.FC<MainMenuProps> = ({ pageLinks }) => {
   const { currentAccount, handleConnectWallet } = useContext(WokeContext) || {};
 
-  // const pathname = usePathname();
   const account = shortenAddress(currentAccount || "");
   return (
     <Dropdown

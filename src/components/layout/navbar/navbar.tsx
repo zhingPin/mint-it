@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './navbar.module.css'
-import { CgMenuRight } from 'react-icons/cg'
 import MainMenu from './mainMenu/mainMenu'
 import NavConnect from './navConnect/navConnect'
 import { Logo } from '@/components/ui'

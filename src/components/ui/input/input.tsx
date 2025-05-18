@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import React from "react";
 import styles from "./input.module.css";
 
 type InputProps = {

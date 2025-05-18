@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "./dropdown.module.css";
 
 interface DropdownProps {
@@ -29,7 +29,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     if (isOpen && onClose) onClose();
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: MouseEvent) => {
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node)
@@ -37,7 +37,8 @@ const Dropdown: React.FC<DropdownProps> = ({
       setIsOpen(false);
       if (onClose) onClose();
     }
-  };
+  }, [onClose]);
+
 
   useEffect(() => {
     if (isOpen) {
@@ -48,7 +49,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, handleClickOutside]);
 
   return (
     <div

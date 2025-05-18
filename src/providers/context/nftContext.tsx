@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { CreateNftInput, NftData } from "../../../types/media-types";
+import { IPFSHTTPClient } from "ipfs-http-client";
 export interface NftContextProps {
   loading?: boolean;
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +11,6 @@ export interface NftContextProps {
   fetchMarketsNFTs: () => Promise<NftData[] | undefined>;
   createNFT: (input: CreateNftInput) => Promise<void>
   buyNFT: (tokenId: number, price: string) => Promise<void>; // Updated type
-  client?: any; // Replace 'any' with the actual type of your client
+  client?: IPFSHTTPClient; // Replace 'any' with the actual type of your client
 }
 

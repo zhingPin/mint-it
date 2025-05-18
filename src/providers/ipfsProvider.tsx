@@ -26,7 +26,7 @@ export const IpfsContext = createContext<IpfsContextProps>({
 
 // Create a client-side only component for IPFS
 const IpfsProviderInner = ({ children }: { children: ReactNode }) => {
-    const [client, setClient] = useState<any>(null)
+    const [client, setClient] = useState<IPFSHTTPClient | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [progress, setProgress] = useState<number | null>(null);
 

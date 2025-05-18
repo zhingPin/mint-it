@@ -2,16 +2,16 @@
 import React, { useState } from "react";
 import styles from "./filterTaps.module.css";
 import { Button } from "@/components/ui";
-import DropDownTap from "./dropDownTap/dropDownTap";
+// import DropDownTap from "./dropDownTap/dropDownTap";
 
 type FilterTapsProps = {
     tabs: string[];
     dropdownOptions: string[];
 };
 
-const FilterTaps: React.FC<FilterTapsProps> = ({ tabs, dropdownOptions }) => {
+const FilterTaps: React.FC<FilterTapsProps> = ({ tabs }) => {
     const [activeTab, setActiveTab] = useState<string>(tabs[0]); // Default to the first tab
-    const [selectedOption, setSelectedOption] = useState<string>(dropdownOptions[0]); // Default to the first dropdown option
+    // const [selectedOption, setSelectedOption] = useState<string>(dropdownOptions[0]); // Default to the first dropdown option
 
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
@@ -19,11 +19,11 @@ const FilterTaps: React.FC<FilterTapsProps> = ({ tabs, dropdownOptions }) => {
         // Perform actions based on the selected tab
     };
 
-    const handleDropdownChange = (option: string) => {
-        setSelectedOption(option);
-        console.log("Selected Option:", option);
-        // Perform actions based on the selected dropdown option
-    };
+    // const handleDropdownChange = (option: string) => {
+    //     setSelectedOption(option);
+    //     console.log("Selected Option:", option);
+    //     // Perform actions based on the selected dropdown option
+    // };
 
     return (
         <div className={styles.filterTaps}>

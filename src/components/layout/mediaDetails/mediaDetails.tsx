@@ -42,7 +42,7 @@ const MediaDetails = () => {
         if (tokenId) {
             fetchMedia();
         }
-    }, [tokenId]);
+    }, [tokenId, fetchMarketsNFTs]);
 
     if (loading) return <p>Loading media details...</p>;
     if (!media) return <p>Media not found.</p>;

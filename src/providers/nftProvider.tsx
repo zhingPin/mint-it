@@ -1,17 +1,15 @@
 "use client";
 import axios from "axios";
-import React, { useState, ReactNode, useContext, useEffect } from "react";
+import React, { ReactNode, useContext } from "react";
 import { NftContextProps } from "./context/nftContext";
 import { WalletContext } from "./walletProvider";
-import { create } from "ipfs-http-client";
-import { IpfsContext, useIpfs } from "./ipfsProvider";
+import { IpfsContext } from "./ipfsProvider";
 import { networkInfo } from "@/lib/chains/networkInfo";
 import { connectToContract, fetchContract } from "./context/helpers/walletHelpers/connectingContracts";
 import { networkConfig } from "@/lib/chains/networkConfig";
 import { ethers } from "ethers";
 import { useRouter } from "next/navigation";
-import { CreateNftInput, NftData } from "../../types/media-types";
-import { Router } from "next/router";
+import { CreateNftInput, MarketItem, NftData } from "../../types/media-types";
 
 
 
@@ -28,12 +26,11 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (!ipfsContext) {
         throw new Error("NftProvider must be used within IpfsProvider");
     }
-    const { uploadToIpfs, client } = ipfsContext;
+    const { client } = ipfsContext;
 
 
     const { currentAccount, currentNetwork } = walletContext
 
-    const networkContract = networkInfo[currentNetwork]?.contractAddress;
 
     const router = useRouter();
 
@@ -48,7 +45,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             royaltyPercentage,
             quantity,
             collection,
-            router,
+            // router,
         } = nftData;
 
         if (!name || !price || !image) {
@@ -163,7 +160,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                 creator,
                                 batchSpecificId,
                                 batchNumber,
-                            }: any) => {
+                            }: MarketItem) => {
                                 try {
                                     const tokenURI = await contract.tokenURI(tokenId);
                                     console.log(
@@ -262,7 +259,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                         creator,
                         batchSpecificId,
                         batchNumber,
-                    }: any) => {
+                    }: MarketItem) => {
                         const tokenURI = await contract.tokenURI(tokenId);
                         const {
                             data: { name, image, description, video, audio },
@@ -330,10 +327,6 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     return (
         <NftContext.Provider value={{
-            // loading,
-            // setLoading,
-            // error,
-            // setError,
             createNFT,
             fetchNFTsByOwner,
             fetchMarketsNFTs,

@@ -4,14 +4,12 @@ import { NftData } from "../../../../types/media-types";
 import Link from "next/link";
 import BuyToken from "./buyToken/buyToken";
 import MediaDisplay from "./mediaDisplay/mediaDisplay";
-import { usePathname } from "next/navigation";
 
 type MediaCardProps = {
     NftData: NftData[];
 };
 
 const MediaCard: React.FC<MediaCardProps> = ({ NftData }) => {
-    const pathname = usePathname();
 
     const nfts = NftData
 

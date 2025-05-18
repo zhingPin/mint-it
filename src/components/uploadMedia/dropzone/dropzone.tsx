@@ -35,7 +35,7 @@ interface DropzoneProps {
 
 const Dropzone: React.FC<DropzoneProps> = ({ type }) => {
     const { uploadToIpfs } = useIpfs();
-    const { mediaData, setMediaData, setImageData } = useMedia(); // Access mediaData and setMediaData from the provider
+    const { setMediaData, setImageData } = useMedia(); // Access mediaData and setMediaData from the provider
 
 
     function formatFileSize(sizeInBytes: number): string {

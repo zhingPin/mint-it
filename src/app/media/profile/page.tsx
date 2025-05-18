@@ -2,16 +2,8 @@ import React from 'react'
 import styles from './page.module.css'
 import { Search_filter } from '@/components'
 
-const Page = async ({
-    searchParams
-}: {
-    searchParams: {
-        query: string;
-        page: string;
-    }
-}) => {
+const Page = async () => {
 
-    const { query } = await searchParams; // Get the 'query' parameter
 
     return (
         <div className="page">

@@ -2,7 +2,6 @@
 import { NftContext } from "@/providers/nftProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { NftData } from "../../../types/media-types";
-import styles from "./allMedia.module.css";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
 import { useSearchParams } from "next/navigation";
 
@@ -51,17 +50,17 @@ const AllMedia = () => {
             .catch((error) => {
                 console.error("Error fetching NFTs:", error);
             });
-    }, []);
+    }, [fetchMarketsNFTs]);
 
     // Filter NFTs based on the filter and query from the URL
     const filteredNFTs = nfts.filter((nft) => {
         // Apply filter logic
         if (filter === "all") return true;
-        if (filter === "music") return nft.audio || nft.fileType?.startsWith("audio/");
-        if (filter === "videos") return nft.video || nft.fileType?.startsWith("video/");
+        if (filter === "music") return nft.audio || nft.media.fileType?.startsWith("audio/");
+        if (filter === "videos") return nft.video || nft.media.fileType?.startsWith("video/");
         if (filter === "images") {
             return (
-                (nft.image || nft.fileType?.startsWith("image/")) &&
+                (nft.image || nft.media.fileType?.startsWith("image/")) &&
                 !nft.video &&
                 !nft.audio
             );

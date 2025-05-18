@@ -6,16 +6,7 @@ import { FaMagnifyingGlass } from 'react-icons/fa6';
 import styles from './page.module.css'
 
 
-const Page = async ({
-    searchParams
-}: {
-    searchParams: {
-        query?: string;
-        page?: string;
-        filter?: string;
-    }
-}) => {
-    const { query, page, filter } = await searchParams; // Destructure the searchParams object
+const Page = async () => {
 
     const filterOptions = [
         { key: "audio", label: "Audio", icon: <FaMusic /> },

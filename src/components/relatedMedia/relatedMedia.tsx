@@ -2,7 +2,6 @@
 import { NftContext } from "@/providers/nftProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import styles from "./relatedMedia.module.css";
 import { NftData } from "../../../types/media-types";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
 

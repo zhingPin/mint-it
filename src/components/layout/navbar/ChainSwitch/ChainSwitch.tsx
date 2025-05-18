@@ -6,7 +6,6 @@ import styles from "./ChainSwitch.module.css";
 import { FaChevronDown } from "react-icons/fa";
 import Dropdown from "../dropdown/dropdown";
 import { WokeContext } from "@/providers/context";
-import { hardhat_logo } from "../../../../../public/img/chain_logos";
 import { getVisibleNetworks } from "../../../../../helpers/networkHelpers";
 import { handleNetworkSwitch } from "@/lib/chainConfig";
 import { networkInfo } from "@/lib/chains/networkInfo";

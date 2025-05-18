@@ -58,7 +58,7 @@ export const CheckIfWalletConnected = async (): Promise<WalletData | null> => {
   try {
     if (typeof window === "undefined") return null;
 
-    const { ethereum } = window as any;
+    const { ethereum } = window;
     if (!ethereum) return null;
 
     const accounts = await ethereum.request({ method: "eth_accounts" });
@@ -93,7 +93,7 @@ export const ConnectWallet = async (): Promise<WalletData | undefined> => {
       return undefined;
     }
 
-    const { ethereum } = window as any;
+    const { ethereum } = window;
     if (!ethereum) {
       console.log("Ethereum object not found. Please install MetaMask.");
       return undefined;
@@ -112,7 +112,6 @@ export const ConnectWallet = async (): Promise<WalletData | undefined> => {
     }
 
     const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = provider.getSigner(accounts[0]);
 
     const balanceInWei = await provider.getBalance(accounts[0]);
     const balance = ethers.formatEther(balanceInWei);
@@ -138,7 +137,7 @@ export const disconnectWallet = async () => {
 
 export const handleNetworkSwitch = async (): Promise<void> => {
   if (typeof window !== "undefined") {
-    const { ethereum } = window as any;
+    const { ethereum } = window;
     if (!ethereum) {
       return; // No wallet found
     }

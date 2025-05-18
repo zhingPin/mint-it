@@ -1,6 +1,6 @@
 import React from "react";
 import { HiOutlineMail } from "react-icons/hi";
-import { MdOutlineHttp, MdOutlineContentCopy } from "react-icons/md";
+import { MdOutlineHttp } from "react-icons/md";
 import {
     TiSocialFacebook,
     TiSocialTwitter,
@@ -114,7 +114,7 @@ const Form = () => {
                             <option value="none">None</option>
                             <option value="hip-hop">Hip-Hop</option>
                             <option value="reggae">Reggae</option>
-                            <option value="'RnB'">'RnB'</option>
+                            <option value="'RnB'">RnB</option>
                         </select>
                     </div>
                 </div>

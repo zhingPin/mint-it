@@ -64,48 +64,26 @@ export interface NftData {
     router: AppRouterInstance,
 }
 
+export interface MarketItem {
+    tokenId: bigint;
+    seller: string;
+    owner: string;
+    price: bigint;
+    creator: string;
+    batchSpecificId: bigint;
+    batchNumber: bigint;
+}
 
-
-// interface NftData2 {
-//     tokenId: number; // Required field
-//     name: string; // Required field
-//     description?: string;
-//     media: Media2; // Consolidated media field
-//     price: string; // Price in Ether
-//     seller?: string; // Seller's address
-//     owner?: string; // Owner's address
-//     creator?: string; // Creator's address
-//     royaltyPercentage?: number;
-//     quantity?: number;
-//     collection?: string;
-//     batchNumber?: number;
-//     metadata?: Record<string, any>; // Additional metadata
-//     chainId?: string; // Blockchain network ID
-// }
-
-// export type Media2 = Video2 | Audio2;
-
-// interface Image2 {
-//     fileUrl?: string;
-//     fileType?: "image/jpg" | "image/jpeg" | "image/png" | "image/gif" | "image/bmp" | "image/tiff" | "image/webp" | "image/svg+xml" | "image/heic" | "image/raw";
-//     fileSize?: string;
-//     resolution?: string;
-// }
-
-// interface Video2 {
-//     fileUrl?: string;
-//     fileType?: "video/mp4" | "video/webm" | "video/ogg" | "video/avi" | "video/mov" | "video/wmv" | "video/flv" | "video/mkv" | "video/mpeg" | "video/mpg" | "video/3gp" | "video/3g2";
-//     fileSize?: string;
-//     url: string;
-//     resolution?: string;
-// }
-
-// interface Audio2 {
-//     fileUrl?: string;
-//     fileType?: "audio/mp3" | "audio/wav" | "audio/ogg" | "audio/aac" | "audio/flac" | "audio/m4a" | "audio/wma" | "audio/opus" | "audio/alac" | "audio/dsd" | "audio/aiff";
-//     fileSize?: string;
-//     url: string;
-//     bitrate?: string;
-// }
-
+export interface Metadata {
+    name: string;
+    image: string;
+    description: string;
+    media?: string;
+    video?: string;
+    audio?: string;
+    royaltyPercentage?: number;
+    quantity?: number;
+    website?: string;
+    collection?: string;
+}
 

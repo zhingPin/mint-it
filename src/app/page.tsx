@@ -16,7 +16,7 @@ export default function Home() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Built for Creators</h2>
         <p className={styles.sectionDescription}>
-          Whether you're a music producer, visual artist, or film director, Woke lets you showcase and sell your work on your terms.
+          Whether you are a music producer, visual artist, or film director, Woke lets you showcase and sell your work on your terms.
         </p>
 
         <div className={styles.featuresGrid}>
