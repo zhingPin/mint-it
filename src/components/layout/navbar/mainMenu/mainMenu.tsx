@@ -26,15 +26,19 @@ const MainMenu: React.FC<MainMenuProps> = ({ pageLinks }) => {
       }
       dropdownClassName={styles.dropdown}
     >
-      <ul>
-        {pageLinks.map((el, i) => (
-          <li key={i}>
-            <Link href={el.link}>
+      {pageLinks.map((el, i) => (
+        <Link href={el.link}>
+          <ul>
+
+            <li key={i}>
+
               <div>{el.name}</div>
-            </Link>
-          </li>
-        ))}
-      </ul>
+            </li>
+          </ul>
+        </Link>
+      ))}
+
+
       {/* <ThemeSwitch />*/}
       <Button
         btnName={account ? shortenAddress(account) : "Connect"}
