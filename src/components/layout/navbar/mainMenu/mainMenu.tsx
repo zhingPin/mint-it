@@ -27,10 +27,10 @@ const MainMenu: React.FC<MainMenuProps> = ({ pageLinks }) => {
       dropdownClassName={styles.dropdown}
     >
       {pageLinks.map((el, i) => (
-        <Link href={el.link}>
+        <Link href={el.link} key={i}>
           <ul>
 
-            <li key={i}>
+            <li >
 
               <div>{el.name}</div>
             </li>
