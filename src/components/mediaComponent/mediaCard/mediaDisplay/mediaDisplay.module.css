@@ -2,6 +2,7 @@
     background: #111;
     /* border: 1px solid #333; */
     transition: 1s ease-in-out;
+    min-width: 300px;
 }
 
 .card:hover {
@@ -50,11 +51,7 @@
     border-radius: 8px;
 }
 
-.meta {
-    font-size: 0.85rem;
-    color: #ccc;
-    line-height: 1.4;
-}
+
 
 .noFile {
     color: #777;

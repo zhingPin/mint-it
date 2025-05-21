@@ -1,7 +1,7 @@
 .media_details {
     display: flex;
     flex-direction: row;
-    flex: 1;
+    /* flex: 1; */
     /* justify-content: space-between; */
     /* background-color: yellow; */
 }

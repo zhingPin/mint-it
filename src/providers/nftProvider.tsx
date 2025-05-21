@@ -98,22 +98,31 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             console.log("Create sale URL:", url);
             const price = ethers.parseUnits(formInputPrice, "ether");
 
-            const contract = await connectToContract(
-                currentNetwork
-            );
+            const contract = await connectToContract(currentNetwork, "marketplace");
             if (!contract) {
                 console.error("Failed to connect to the contract.");
                 return;
             }
-            const [listingPrice] = await contract.getFees();
 
-            const transaction = !isReselling
-                ? await contract.createToken(url, price, royaltyPercentage, quantity, {
-                    value: ethers.parseUnits((listingPrice * BigInt(quantity)).toString(), "wei"),
-                })
-                : await contract.resellToken(id, price, {
-                    value: ethers.parseUnits(listingPrice.toString(), "wei"),
+            const [listingPrice] = await contract.getFees(); // assume listingPrice is a BigInt
+
+            let transaction;
+            if (!isReselling) {
+                const totalListingFee = listingPrice * BigInt(quantity);
+                transaction = await contract.mintAndList(
+                    url,
+                    price,
+                    royaltyPercentage,
+                    quantity,
+                    {
+                        value: totalListingFee,
+                    }
+                );
+            } else {
+                transaction = await contract.listItem(id, price, {
+                    value: listingPrice,
                 });
+            }
 
             await transaction.wait();
             console.log("Transaction Hash:", transaction.hash);
@@ -122,11 +131,14 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
     };
 
+
     const fetchMarketsNFTs = async (): Promise<NftData[]> => {
         try {
             const allNetworks = Object.keys(networkInfo).filter(
                 (network) =>
-                    networkInfo[network].active && networkInfo[network].contractAddress
+                    networkInfo[network].active &&
+                    networkInfo[network].contracts.marketplace &&
+                    networkInfo[network].contracts.nft // ✅ NFT contract must exist
             );
 
             const allNFTs: NftData[] = [];
@@ -136,13 +148,12 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                     networkConfig[network]?.rpcUrls[0]
                 );
                 console.log(`Fetching NFTs from network: ${network}`);
-                console.log("Using RPC URL:", networkConfig[network]?.rpcUrls[0]);
 
-                const contract = fetchContract(provider, network);
-                console.log("Contract Address:", networkInfo[network]?.contractAddress);
+                const marketplaceContract = fetchContract(provider, network, "marketplace");
+                const nftContract = fetchContract(provider, network, "nft"); // ✅ NFT contract instance
 
                 try {
-                    const data = await contract.fetchMarketItems();
+                    const data = await marketplaceContract.fetchMarketItems();
                     console.log(`Fetched Market Items from ${network}:`, data);
 
                     if (!data || data.length === 0) {
@@ -162,7 +173,8 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                 batchNumber,
                             }: MarketItem) => {
                                 try {
-                                    const tokenURI = await contract.tokenURI(tokenId);
+                                    // ✅ Call tokenURI on the NFT contract, not marketplace
+                                    const tokenURI = await nftContract.tokenURI(tokenId);
                                     console.log(
                                         `Token URI for Token ID ${tokenId} on ${network}:`,
                                         tokenURI
@@ -189,7 +201,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                     );
 
                                     return {
-                                        tokenId: tokenId,
+                                        tokenId,
                                         name,
                                         description,
                                         image,
@@ -207,14 +219,14 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                         tokenURI,
                                         batchSpecificId: Number(batchSpecificId),
                                         batchNumber: Number(batchNumber),
-                                        network, // Include the network name for reference
+                                        network,
                                     };
                                 } catch (metadataError) {
                                     console.error(
                                         `Error fetching metadata for token ${tokenId} on ${network}:`,
                                         metadataError
                                     );
-                                    return null; // Skip this token if metadata fetch fails
+                                    return null;
                                 }
                             }
                         )
@@ -234,6 +246,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
 
 
+
     const fetchNFTsByOwner = async (type: string): Promise<NftData[] | undefined> => {
         if (!currentAccount) {
             console.error("No current account found.");
@@ -243,7 +256,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             const provider = new ethers.JsonRpcProvider(
                 networkConfig[currentNetwork]?.rpcUrls[0]);
 
-            const contract = fetchContract(provider, currentNetwork);
+            const contract = fetchContract(provider, currentNetwork, "marketplace");
             const data =
                 type === "fetchItemsListed"
                     ? await contract.fetchItemsListed()
@@ -303,7 +316,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     //---BUY NFTs FUNCTION
     const buyNFT = async (tokenId: number, price: string) => {
         try {
-            const contract = await connectToContract(currentNetwork);
+            const contract = await connectToContract(currentNetwork, "marketplace");
 
             if (!contract) {
                 console.error("Failed to connect to the contract.");

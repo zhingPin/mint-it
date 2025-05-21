@@ -17,6 +17,10 @@ export interface NetworkInfoProps {
     iconUrls: string | StaticImageData[];
     displayName: string;
     contractAddress: string;
+    contracts: {
+        nft: string;
+        marketplace: string;
+    }
     environment: "mainnet" | "testnet";
     active: boolean,
     dex?: string[]

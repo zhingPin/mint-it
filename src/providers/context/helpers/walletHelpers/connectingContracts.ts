@@ -2,7 +2,8 @@ import { Contract, ethers, Signer } from "ethers";
 import getWeb3Modal from "./modal";
 import Web3Modal from "web3modal";
 
-import { WOKE_ABI } from "../../const";
+import { WOKE_ABI, GSOE_TOKENS_ABI, NFT_MARKETPLACE_ABI } from "../../const";
+
 import { Provider } from "ethers";
 import { networkInfo } from "@/lib/chains/networkInfo";
 
@@ -12,29 +13,45 @@ interface WalletData {
   chainId: number | string;
 }
 
+type ContractType = "nft" | "marketplace";
+
+
 export const fetchContract = (
   signerOrProvider: Signer | Provider,
-  currentNetworkKey: string
+  currentNetworkKey: string,
+  contractType: ContractType
 ): Contract => {
-  const contractAddress = networkInfo[currentNetworkKey]?.contractAddress;
-  if (!contractAddress) {
-    throw new Error(`No contract address found for network: ${currentNetworkKey}`);
+  const network = networkInfo[currentNetworkKey];
+
+  if (!network) {
+    throw new Error(`Unknown network key: ${currentNetworkKey}`);
   }
 
-  return new ethers.Contract(contractAddress, WOKE_ABI, signerOrProvider);
-};
+  const contractAddress =
+    contractType === "nft"
+      ? network.contracts.nft
+      : network.contracts.marketplace;
 
+  if (!contractAddress) {
+    throw new Error(`No address found for ${contractType} on ${currentNetworkKey}`);
+  }
+
+  const abi = contractType === "nft" ? GSOE_TOKENS_ABI : NFT_MARKETPLACE_ABI;
+
+  return new ethers.Contract(contractAddress, abi, signerOrProvider);
+};
 
 /**
  * Connects to the contract dynamically based on the current Network.
  * @returns {Promise<Contract | undefined>} The contract instance.
  */
 export const connectToContract = async (
-  currentNetworkKey: string
+  currentNetworkKey: string,
+  contractType: ContractType
 ): Promise<ethers.Contract | undefined> => {
   if (typeof window === "undefined") {
     console.log("Window is not available");
-    return undefined; // Ensure this doesn't run server-side
+    return undefined;
   }
 
   try {
@@ -43,8 +60,7 @@ export const connectToContract = async (
     const provider = new ethers.BrowserProvider(connection);
     const signer = await provider.getSigner();
 
-    // Fetch the contract using the current network key
-    const contract = fetchContract(signer, currentNetworkKey);
+    const contract = fetchContract(signer, currentNetworkKey, contractType); // ✅ fixed
     console.log("Contract connected:", contract);
     return contract;
   } catch (error) {
@@ -52,6 +68,7 @@ export const connectToContract = async (
     return undefined;
   }
 };
+
 
 
 export const CheckIfWalletConnected = async (): Promise<WalletData | null> => {

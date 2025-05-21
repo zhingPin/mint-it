@@ -9,9 +9,9 @@ import styles from './page.module.css'
 const Page = async () => {
 
     const filterOptions = [
-        { key: "audio", label: "Audio", icon: <FaMusic /> },
-        { key: "videos", label: "Videos", icon: <FaVideo /> },
-        { key: "images", label: "Images", icon: <FaImages /> },
+        { key: "audio", label: "", icon: <FaMusic /> },
+        { key: "videos", label: "", icon: <FaVideo /> },
+        { key: "images", label: "", icon: <FaImages /> },
         { key: "all", label: "All", icon: null },
     ];
     // console.log(query, page)

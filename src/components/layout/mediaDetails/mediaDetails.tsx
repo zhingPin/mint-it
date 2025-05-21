@@ -55,6 +55,7 @@ const MediaDetails = () => {
             <MediaDisplay mediaData={media} />
 
             <div className={styles.media_info}>
+
                 <h2>{media.name}</h2>
                 <p>{media.description}</p>
                 <p>Price: {media.price} ETH</p>
