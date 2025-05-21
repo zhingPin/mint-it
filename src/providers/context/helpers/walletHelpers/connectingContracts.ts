@@ -2,7 +2,7 @@ import { Contract, ethers, Signer } from "ethers";
 import getWeb3Modal from "./modal";
 import Web3Modal from "web3modal";
 
-import { WOKE_ABI, GSOE_TOKENS_ABI, NFT_MARKETPLACE_ABI } from "../../const";
+import { GSOE_TOKENS_ABI, NFT_MARKETPLACE_ABI } from "../../const";
 
 import { Provider } from "ethers";
 import { networkInfo } from "@/lib/chains/networkInfo";
