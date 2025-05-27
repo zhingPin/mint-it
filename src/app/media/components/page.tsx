@@ -1,6 +1,6 @@
-import MediaDetails from '@/components/layout/mediaDetails/mediaDetails'
-import RelatedMedia from '@/components/relatedMedia/relatedMedia'
-import styles from "./page.module.css"
+// import MediaDetails from '@/components/layout/mediaDetails/mediaDetails'
+// import RelatedMedia from '@/components/relatedMedia/relatedMedia'
+// import styles from "./page.module.css"
 import Form from '@/components/layout/form/form'
 
 const Page = () => {
