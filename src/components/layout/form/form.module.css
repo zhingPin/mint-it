@@ -1,7 +1,7 @@
 .Form_box {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    /* gap: 2rem; */
     /* padding: 2rem; */
     /* border-radius: 8px; */
     box-shadow: var(--shadow-2);

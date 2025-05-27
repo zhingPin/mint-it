@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./textarea.module.css";
+import styles from "./textArea.module.css";
 
 type TextareaProps = {
     id?: string;
