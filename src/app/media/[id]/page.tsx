@@ -9,7 +9,8 @@ const Page = async () => {
 
     return (
         <div className='page'>
-            <MediaDetails />
+            <section><MediaDetails /></section>
+
             <RelatedMedia />
         </div>
     )

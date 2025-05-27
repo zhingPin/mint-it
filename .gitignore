@@ -44,6 +44,7 @@ next-env.d.ts
 
 #folders
 /web3
+/pitching
 
 # secret
 .Roadmap.md

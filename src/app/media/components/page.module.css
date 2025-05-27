@@ -1,0 +1,34 @@
+.card_view_box {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: center;
+    /* left fixed, right flexible */
+    width: 100%;
+    border: 1px solid var(--primary-shade);
+}
+
+/* Stacks layout on small screens */
+@media (max-width: 600px) {
+    .card_view_box {
+        grid-template-columns: 1fr;
+    }
+}
+
+.preview_card {
+    background-color: yellow;
+    border: 1px solid var(--secondary-shade);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.card_display {
+    width: 100%;
+    background: var(--secondary-color);
+    min-height: 100%;
+}
+
+.info_display {
+    background: var(--primary-color);
+    padding: 1rem;
+    box-sizing: border-box;
+}

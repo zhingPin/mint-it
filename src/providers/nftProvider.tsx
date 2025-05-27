@@ -256,7 +256,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             const provider = new ethers.JsonRpcProvider(
                 networkConfig[currentNetwork]?.rpcUrls[0]);
 
-            const contract = fetchContract(provider, currentNetwork, "marketplace");
+            const contract = fetchContract(provider, currentNetwork, "nft");
             const data =
                 type === "fetchItemsListed"
                     ? await contract.fetchItemsListed()
@@ -325,7 +325,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
             const formattedPrice = ethers.parseUnits(price, "ether");
 
-            const transaction = await contract.createMarketSale(tokenId, {
+            const transaction = await contract.buyItem(tokenId, {
                 value: formattedPrice,
             });
 
@@ -336,6 +336,9 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             // Optionally, handle the error (e.g., show a notification to the user)
         }
     };
+
+    // const earnings = await contract.getMarketplaceEarnings();
+    // const earningsInEth = ethers.formatUnits(earnings, "ether");
 
 
     return (

@@ -8,6 +8,7 @@ import { WalletContext } from "@/providers/walletProvider";
 import { Button } from "@/components/ui";
 import { FaWallet } from "react-icons/fa";
 import MediaDisplay from "@/components/mediaComponent/mediaCard/mediaDisplay/mediaDisplay";
+import { shortenAddress } from "../../../../utils/address";
 
 const MediaDetails = () => {
     const nftContext = useContext(NftContext);
@@ -55,10 +56,30 @@ const MediaDetails = () => {
             <MediaDisplay mediaData={media} />
 
             <div className={styles.media_info}>
-
                 <h2>{media.name}</h2>
-                <p>{media.description}</p>
-                <p>Price: {media.price} ETH</p>
+                <div className={styles.media_metadata}>
+                    {media.description && <p><strong> Description:</strong> {media.description}</p>}
+                    {media.creator && <p><strong>Creator:</strong> {shortenAddress(media.creator)}</p>}
+                    {media.royaltyPercentage !== undefined && (
+                        <p><strong>Royalties:</strong> {media.royaltyPercentage}%</p>
+                    )}
+                    {media.genre && <p><strong>Genre:</strong> {media.genre}</p>}
+                    {media.collection && <p><strong>Collection:</strong> {media.collection}</p>}
+                    {media.credits && <p><strong>Credits:</strong> {media.credits}</p>}
+                    {media.quantity !== undefined && (
+                        <p><strong>Quantity:</strong> {media.quantity}</p>
+                    )}
+                    {media.website && (
+                        <p>
+                            <strong>Website:</strong>{" "}
+                            <a href={media.website} target="_blank" rel="noopener noreferrer">
+                                {media.website}
+                            </a>
+                        </p>
+                    )}
+                    <p><strong>Price:</strong> {media.price} ETH</p>
+                </div>
+
                 {isSeller ? (
                     <Button
                         icon={<FaWallet />}

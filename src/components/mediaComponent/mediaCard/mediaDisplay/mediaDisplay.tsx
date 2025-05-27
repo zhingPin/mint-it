@@ -26,22 +26,21 @@ export default function MediaDisplay({ mediaData }: MediaDisplayProps) {
         <div className={styles.card}>
             {/* ---- Cover or Media ---- */}
             {!showPlayer || !hasMedia ? (
-                /* Cover image (acts as play button if media exists) */
-                <button
-                    type="button"
-                    className={styles.imageWrapper}
-                    onClick={() => hasMedia && setShowPlayer(true)}
-                >
-                    <Image
-                        src={mediaData.image.fileUrl}
-                        alt="Uploaded cover"
-                        fill
-                        className={styles.image}
-                    />
-                    {hasMedia && <span className={styles.playOverlay}>▶</span>}
-                </button>
+                // <button
+                //     type="button"
+                //     className={styles.imageWrapper}
+                //     onClick={() => hasMedia && setShowPlayer(true)}
+                // >
+                <Image
+                    src={mediaData.image.fileUrl}
+                    alt="Uploaded cover"
+                    width={150}
+                    height={150}
+                    className={styles.image}
+                />
+                //     {hasMedia && <span className={styles.playOverlay}>▶</span>}
+                // </button>
             ) : (
-                /* Media player (shown after click) */
                 <div className={styles.mediaWrapper}>
                     {mediaData.media!.fileType?.startsWith("video") ? (
                         <video

@@ -1,0 +1,22 @@
+.select_field,
+.textarea_field {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: black;
+    color: white;
+    border: 1px solid var(--icons-color);
+    border-radius: 0.3rem;
+    outline: none;
+}
+
+.select_field:focus,
+.textarea_field:focus {
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.5);
+}
+
+.select_container,
+.textarea_container {
+    display: flex;
+    flex-direction: column;
+}

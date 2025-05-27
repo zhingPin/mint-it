@@ -1,11 +1,11 @@
 .navbar {
     display: grid;
     grid-template-columns: 1fr auto;
-    /* min-height: 100%; */
+    min-height: 100%;
     position: sticky;
     z-index: 1000;
-    min-height: 80px;
     padding-inline: 3%;
+    background-color: rgb(6, 6, 33);
 }
 
 

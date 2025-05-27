@@ -14,7 +14,7 @@ const MediaCard: React.FC<MediaCardProps> = ({ NftData }) => {
     const nfts = NftData
 
     return (
-        <div className={styles.media_card_container}>
+        <div className={styles.media_card_grid}>
             {nfts.map((el, index) => (
                 <div key={index} className={styles.media_card}>
                     <MediaDisplay mediaData={{ image: el.image, media: el.media }} />

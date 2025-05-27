@@ -1,48 +1,42 @@
 import React from "react";
-import styles from "./input.module.css";
+import styles from "./textarea.module.css";
 
-type InputProps = {
+type TextareaProps = {
     id?: string;
     name?: string;
-    type?: string;
-    value?: string | number | readonly string[];
-    defaultValue?: string | number | readonly string[];
-    placeholder: string;
+    value?: string;
+    defaultValue?: string;
+    placeholder?: string;
     onChange?: (value: string) => void;
-    icon?: React.ReactNode;
     required?: boolean;
     disabled?: boolean;
     readOnly?: boolean;
-    autoComplete?: string;
+    rows?: number;
     maxLength?: number;
     minLength?: number;
     className?: string;
 };
 
-
-const Input: React.FC<InputProps> = ({
+const Textarea: React.FC<TextareaProps> = ({
     id,
     name,
-    type = "text",
     value,
     defaultValue,
     placeholder,
     onChange,
-    icon,
-    required = false,
-    disabled = false,
-    readOnly = false,
-    autoComplete,
+    required,
+    disabled,
+    readOnly,
+    rows = 5,
     maxLength,
     minLength,
     className,
 }) => {
     return (
-        <div className={`${styles.input_container} ${className || ""}`}>
-            <input
+        <div className={`${styles.textarea_container} ${className || ""}`}>
+            <textarea
                 id={id}
                 name={name}
-                type={type}
                 value={value}
                 defaultValue={defaultValue}
                 placeholder={placeholder}
@@ -50,15 +44,13 @@ const Input: React.FC<InputProps> = ({
                 required={required}
                 disabled={disabled}
                 readOnly={readOnly}
-                autoComplete={autoComplete}
+                rows={rows}
                 maxLength={maxLength}
                 minLength={minLength}
-                className={styles.input_field}
+                className={styles.textarea_field}
             />
-            {icon && <div className={styles.input_icon}>{icon}</div>}
         </div>
     );
 };
 
-
-export default Input;
+export default Textarea;

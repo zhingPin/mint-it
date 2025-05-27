@@ -1,10 +1,4 @@
 :root {
-  /* phase out */
-  --background: #ffffff;
-  --foreground: #171717;
-  --main-color: #662d91;
-  /* -------------------- */
-
   --primary-color: #662d91;
   --primary-tint: #2d3d4c;
   --primary-shade: #d1c0de;
@@ -15,18 +9,34 @@
 
   --text-color: #58553d;
   --text-tint: #3f3d2c;
-  --text-shade: #d8d7cd;
+  --text-shade: #ffffff;
 
+  --main-padding: 16px;
   --component-gap: 1em;
   --inline-padding-layout: 3rem;
   --block-padding-layout: 3rem;
+
+  --font-geist-sans: 'Geist', Arial, sans-serif;
 
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --primary-color: #d1c0de;
+    --primary-tint: #2d3d4c;
+    --primary-shade: #662d91;
+
+    --secondary-color: #e6fbf9;
+    --secondary-tint: #008076;
+    --secondary-shade: #00d6c4;
+    /* text */
+    --text-color: #ffffff;
+    --text-tint: #3f3d2c;
+    --text-shade: #58553d;
+
+    --background-color: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --border-color: #333;
   }
 }
 
@@ -39,13 +49,12 @@ body {
 
 body {
   /* position: relative; */
-  color: var(--foreground);
-  background: var(--background);
+  /* color: var(--text-tint); */
+  /* background: var(--text-shade); */
+  background: var(--text-tint);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* display: flex; */
   height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -56,10 +65,8 @@ body {
 }
 
 main {
-  /* display: flex;
-  flex-direction: column; */
+  min-height: 100%;
   position: relative;
-  /* min-height: 100%; */
 }
 
 header {
@@ -69,9 +76,8 @@ header {
 }
 
 section {
-  padding: 4rem 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+  margin-bottom: var(--main-padding);
+  background: var(--card-bg);
 }
 
 @media (max-width: 600px) {
@@ -83,10 +89,9 @@ section {
 nav {
   top: 0;
   position: sticky;
-  /* z-index: 1000; */
-  color: var(--background);
+  color: var(--text-shade);
   background-color: rgb(6, 6, 33);
-  /* min-width: 100%; */
+  min-height: 100px;
 
 }
 
@@ -96,30 +101,15 @@ input {
   color: var(--primary-shade);
 }
 
-
-
 .page {
-  /* display: flex;
-  flex-direction: column; */
-
-  /* flex: 1; */
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  font-family: var(--font-geist-sans);
   height: 100%;
-  padding: 16px;
-  gap: 16px;
-  background: var(--foreground);
-  color: var(--background);
+  padding: var(--main-padding);
+  font-family: var(--font-geist-sans);
+  color: var(--text-tint);
+  overflow-y: auto;
 }
 
-
-
-.page::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 0.5rem;
 }
 
@@ -131,13 +121,13 @@ input {
 
 ::-webkit-scrollbar-track {
   border-radius: 0;
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--text-shade);
+  color: var(--text-tint);
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: var(--main-color);
+  background: var(--primary-color);
   width: 0.5rem;
 }
 
@@ -151,6 +141,17 @@ input {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* a:hover {
+  text-decoration: underline;
+} */
+
+body,
+input,
+button,
+a {
+  transition: all 0.3s ease-in-out;
 }
 
 svg {
@@ -176,23 +177,36 @@ svg {
   background-color: var(--primary-shade);
 }
 
-.preview_media {
-  border: 1px solid var(--primary-shade);
+.preview_card {
+  /* flex: 1; */
+  display: flex;
+  /* min-width: 100%; */
+  border: 1px solid var(--secondary-shade);
 }
 
-/* {BUTTON} */
+/* .preview_media {} */
+
 .new_button {
+  padding: 5px;
   align-content: center;
   align-items: center;
   justify-content: center;
   font-family: PlusJakartaSans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Cantarell, Helvetica Neue, Ubuntu, sans-serif;
-  /* border: var(--secondary-color) 2px solid; */
   cursor: pointer;
   box-shadow: 0.3rem 0.3rem 0.3rem rgba(115, 184, 252, 0.5), inset 0.2rem 0.2rem 0.2rem 0.2rem rgba(115, 184, 252, 0.2);
   transition: 300ms ease;
   gap: 5px;
-  background: var(--secondary-shade);
+  background: var(--secondary-color);
   color: var(--text-color);
+  font-weight: bold;
+
+  /* 👇 Border always defined */
+  border: 1px solid transparent;
+  margin: 0 auto;
+}
+
+.new_button:hover {
+  border: 1px solid var(--primary-color);
 }
 
 @media (prefers-color-scheme: dark) {

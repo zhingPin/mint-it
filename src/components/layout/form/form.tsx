@@ -15,107 +15,85 @@ const Form = () => {
     return (
         <>
             <form className={styles.Form_box}>
-                <div className={styles.Form_box_input_grid}>
-                    <div className={`${styles.Form_box_input} small_input`}>
-                        <label htmlFor="name">Username</label>
-                        <div className={styles.Form_box_input_box}>
-                            <input
-                                type="text"
-                                placeholder="Enter your Name"
-                                id="username"
-                                name="username"
-                            />
+                {/* Profile Info */}
+                <div className={styles.Form_section}>
+                    <h3>Profile Information</h3>
+                    <div className={styles.Form_box_input_grid}>
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="username">Username</label>
+                            <input type="text" placeholder="Enter your name" id="username" />
                         </div>
-                    </div>
 
-                    <div className={`${styles.Form_box_input} small_input`}>
-                        <label htmlFor="email">Email</label>
-                        <div className={styles.Form_box_input_box}>
-                            <div className={styles.Form_box_input_box_icon}>
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="email">Email</label>
+                            <div className={styles.Form_box_input_box}>
                                 <HiOutlineMail />
+                                <input type="text" placeholder="Your email" id="email" />
                             </div>
-                            <input type="text" placeholder="Your E-mail" />
                         </div>
-                    </div>
-                    <div className={styles.Form_box_input}>
-                        <label htmlFor="website">Website</label>
-                        <div className={styles.Form_box_input_box}>
-                            <div className={styles.Form_box_input_box_icon}>
-                                <MdOutlineHttp />
-                            </div>
 
-                            <input
-                                type="text"
-                                placeholder="Your Website"
-                                id="website"
-                                name="website"
-                            />
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="website">Website</label>
+                            <div className={styles.Form_box_input_box}>
+                                <MdOutlineHttp />
+                                <input type="text" placeholder="Your website" id="website" />
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className={styles.Form_box_input_grid}>
 
-                    <div className={`${styles.Form_box_input} large_input`}>
-                        <label htmlFor="description">Description</label>
-                        <textarea
-                            name=""
-                            id=""
-                            cols={20}
-                            rows={5}
-                            placeholder="Write something about yourself in few words"
-                        ></textarea>
+                {/* Bio & Genre */}
+                <div className={styles.Form_section}>
+                    <h3>About You</h3>
+                    <div className={styles.Form_box_input_grid}>
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="description">Bio</label>
+                            <textarea
+                                id="description"
+                                rows={4}
+                                placeholder="Write something about yourself"
+                            ></textarea>
+                        </div>
+
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="genre">Genre</label>
+                            <select id="genre">
+                                <option value="">Select Genre</option>
+                                <option value="hip-hop">Hip-Hop</option>
+                                <option value="reggae">Reggae</option>
+                                <option value="rnb">RnB</option>
+                            </select>
+                        </div>
                     </div>
+                </div>
 
-                    <div className={`${styles.Form_box_input} medium_input`}>
-                        <label htmlFor="facebook">Facebook</label>
-                        <div className={styles.Form_box_input_box}>
-                            <div className={styles.Form_box_input_box_icon}>
+                {/* Social Media */}
+                <div className={styles.Form_section}>
+                    <h3>Social Links</h3>
+                    <div className={styles.Form_box_input_grid}>
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="facebook">Facebook</label>
+                            <div className={styles.Form_box_input_box}>
                                 <TiSocialFacebook />
+                                <input type="text" id="facebook" placeholder="Your Facebook" />
                             </div>
-                            <input
-                                type="text"
-                                placeholder="Your Facebook Address"
-                                id="facebook"
-                                name="facebook"
-                            />
                         </div>
-                    </div>
-                    <div className={`${styles.Form_box_input} medium_input`}>
-                        <label htmlFor="twitter">Twitter</label>
-                        <div className={styles.Form_box_input_box}>
-                            <div className={styles.Form_box_input_box_icon}>
+
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="twitter">Twitter</label>
+                            <div className={styles.Form_box_input_box}>
                                 <TiSocialTwitter />
+                                <input type="text" id="twitter" placeholder="Your Twitter" />
                             </div>
-                            <input
-                                type="text"
-                                placeholder="Your Twitter Address"
-                                id="twitter"
-                                name="twitter"
-                            />
                         </div>
-                    </div>
-                    <div className={`${styles.Form_box_input} medium_input`}>
-                        <label htmlFor="Instragram">Instragram</label>
-                        <div className={styles.Form_box_input_box}>
-                            <div className={styles.Form_box_input_box_icon}>
+
+                        <div className={styles.Form_box_input}>
+                            <label htmlFor="instagram">Instagram</label>
+                            <div className={styles.Form_box_input_box}>
                                 <TiSocialInstagram />
+                                <input type="text" id="instagram" placeholder="Your Instagram" />
                             </div>
-                            <input
-                                type="text"
-                                placeholder="Your Instagram Address"
-                                id="instagram"
-                                name="instagram"
-                            />
                         </div>
-                    </div>
-                    <div className={styles.Form_box_input}>
-                        <label htmlFor="Genre">Genre</label>
-                        <select name="genre" id="genre">
-                            <option value="none">None</option>
-                            <option value="hip-hop">Hip-Hop</option>
-                            <option value="reggae">Reggae</option>
-                            <option value="'RnB'">RnB</option>
-                        </select>
                     </div>
                 </div>
             </form>

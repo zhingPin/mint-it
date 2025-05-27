@@ -1,121 +1,82 @@
 .Form_box {
     display: flex;
     flex-direction: column;
-    /* gap: 16px; */
-    padding: 16px;
-    /* background-color: var(--primary-shade); */
-    border-radius: 8px;
+    gap: 2rem;
+    /* padding: 2rem; */
+    /* border-radius: 8px; */
     box-shadow: var(--shadow-2);
-    /* min-height: 100%; */
+    background: var(--background-color);
 }
 
+/* Group wrapper for sections */
+.Form_section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
+.Form_section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
 
+/* Input grid: flexible 2 or 3 columns */
 .Form_box_input_grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    justify-content: flex-start;
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Individual input block */
+.Form_box_input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.Form_box_input label {
+    font-weight: bold;
+    color: var(--secondary-color);
 }
 
 .Form_box_input_box {
-
-    background: rgba(0, 0, 255, 0.5);
-
     display: flex;
     align-items: center;
-
-
+    background-color: rgba(0, 0, 255, 0.1);
+    /* padding: 0.3rem 0.5rem; */
+    /* border-radius: 4px; */
+    gap: 0.5rem;
 }
 
-.Form_box_input_box svg {
-    margin-inline: 8px;
-}
-
-.Form_box_input {
-    border-radius: 0 0.3rem 0.3rem 0;
-    display: flex;
-    flex-direction: column;
-
-}
-
-
-
-
-.Form_box_input_with_logo {
-    display: flex;
-}
-
-.Form_box_input select,
 .Form_box_input input,
+.Form_box_input select,
 .Form_box_input textarea {
-    background-color: black;
-    outline: none;
-
-    border: 1px solid var(--icons-color);
-    width: 100%;
+    flex: 1;
     padding: 0.5rem;
+    background: black;
+    color: white;
+    border: 1px solid var(--icons-color);
+    /* border-radius: 4px; */
+    outline: none;
 }
 
-
+.Form_box_input input:focus,
+.Form_box_input select:focus,
+.Form_box_input textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.5);
+}
 
 .Form_box_input textarea {
     resize: vertical;
-}
-
-.Form_box_input input[type="text"]:focus,
-.Form_box_input textarea:focus {
-    border: 1px solid var(--main-color);
-    box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.5);
-    /* Add a blue shadow when focused */
-}
-
-
-
-.Form_box_input select,
-.Form_box_input textarea,
-.Form_box_input input[id="username"] {
-    /* Your styles here */
-    border-radius: 0.3rem;
-}
-
-.Form_box_input input[id="wallet"] {
-    border-radius: 0.3rem 0 0 0.3rem;
-}
-
-.Form_box_input input[type="radio"] {
-    appearance: radio;
-}
-
-.Form_box_input input[type="checkbox"] {
-    appearance: checkbox;
-    margin-bottom: 0.7rem;
-}
-
-.Form_box_input select {
-    border: 1px solid var(--icons-color);
+    min-height: 100px;
 }
 
 .Form_box_input input::placeholder,
 .Form_box_input textarea::placeholder {
     color: grey;
 }
-
-.Form_box_input label {
-    color: var(--secondary-color);
-    font-weight: 700;
-}
-
-.Form_box_btn {
-    margin: 1rem 0;
-}
-
-/* .button {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-size: 1.5rem;
-} */
 
 @media screen and (max-width: 35em) {}
 
