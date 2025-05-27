@@ -1,0 +1,23 @@
+.input_container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    /* align-items: center; */
+    border: 2px solid var(--primary-shade);
+    border-radius: 4px;
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
+
+
+
+.input_icon {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    /* margin-left: 8px; */
+    padding: 4px;
+    /* object-fit: fill; */
+    color: #888;
+    background-color: var(--primary-shade);
+}

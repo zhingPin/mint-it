@@ -1,0 +1,7 @@
+.meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 0.85rem;
+    color: #ccc;
+    line-height: 1.4;
+}

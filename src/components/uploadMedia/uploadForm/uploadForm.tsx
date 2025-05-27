@@ -1,11 +1,14 @@
 "use client";
 import React, { useContext, useState } from "react";
-import formStyles from "@/components/layout/form/form.module.css"
-import { Button } from "@/components/ui";
-import { MediaContext } from "@/providers/mediaProvider";
+import formStyles from "@/components/layout/form/form.module.css";
+import Input from "@/components/ui/form_Components/input/input";
+import Textarea from "@/components/ui/form_Components/textArea/textArea";
+import Select from "@/components/ui/form_Components/select/select";
+import { Button } from "@/components/ui"; import { MediaContext } from "@/providers/mediaProvider";
 import { NftContext } from "@/providers/nftProvider";
 import { useRouter } from "next/navigation";
 import { NftImage } from "../../../../types/media-types";
+import FormField from "@/components/ui/form_Components/formField/formField";
 
 const UploadForm = () => {
     const router = useRouter();
@@ -17,10 +20,9 @@ const UploadForm = () => {
         throw new Error("UploadForm must be used within MediaProvider and NftProvider");
     }
 
-    const { mediaData, } = mediaContext;
+    const { mediaData } = mediaContext;
     const { createNFT } = nftContext;
 
-    // Form state
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [genre, setGenre] = useState("none");
@@ -31,7 +33,6 @@ const UploadForm = () => {
     const handleSubmit = async () => {
         if (!mediaData.image) {
             alert("Please upload a file first.");
-            console.log("mediaData", mediaData)
             return;
         }
 
@@ -51,21 +52,17 @@ const UploadForm = () => {
                 name: title,
                 description,
                 price,
-                // image: mediaData.image?.fileUrl,
                 image: {
                     fileType: mediaData.image.fileType as NftImage["fileType"],
                     fileUrl: mediaData.image.fileUrl,
                     fileSize: mediaData.image.fileSize,
-
                 },
                 media: mediaData.media,
                 royaltyPercentage: parseFloat(royalties) || 0,
                 quantity: parseInt(quantity, 10) || 1,
                 genre,
-                router: router, // Pass a string value
+                router: router,
             });
-
-            // alert("NFT created successfully!");
         } catch (error) {
             console.error("Error creating NFT:", error);
             alert("Failed to create NFT. Please try again.");
@@ -76,88 +73,82 @@ const UploadForm = () => {
         <div>
             <form className={formStyles.Form_box} onSubmit={(e) => e.preventDefault()}>
                 <div className={formStyles.Form_box_input_grid}>
-                    <div className={`${formStyles.Form_box_input} small_input`}>
-                        <label htmlFor="title">Title</label>
-                        <div className={formStyles.Form_box_input_box}>
-                            <input
-                                type="text"
-                                placeholder="Enter the title"
-                                id="title"
-                                name="title"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                    <div className={`${formStyles.Form_box_input} large_input`}>
-                        <label htmlFor="description">Description</label>
-                        <textarea
+                    <FormField label="Title" id="title" className="small_input">
+                        <Input
+                            id="title"
+                            name="title"
+                            placeholder="Enter the title"
+                            value={title}
+                            onChange={(val) => setTitle(val)}
+                        />
+                    </FormField>
+                </div>
+                <div className={formStyles.Form_box_input_grid}>
+                    <FormField label="Description" id="description" className="large_input">
+                        <Textarea
                             id="description"
-                            cols={20}
-                            rows={5}
                             placeholder="Write a description"
                             value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        ></textarea>
-                    </div>
-                </div>
-                <div className={formStyles.Form_box_input_grid}>
-                    <div className={formStyles.Form_box_input}>
-                        <label htmlFor="genre">Genre</label>
-                        <select
-                            name="genre"
+                            onChange={(val) => setDescription(val)}
+                            rows={5}
+                        />
+                    </FormField>
+
+                    <FormField label="Genre" id="genre">
+                        <Select
                             id="genre"
+                            name="genre"
                             value={genre}
-                            onChange={(e) => setGenre(e.target.value)}
-                        >
-                            <option value="none">None</option>
-                            <option value="hip-hop">Hip-Hop</option>
-                            <option value="reggae">Reggae</option>
-                            <option value="RnB">RnB</option>
-                        </select>
-                    </div>
+                            onChange={(val) => setGenre(val)}
+                            options={[
+                                { value: "none", label: "None" },
+                                { value: "hip-hop", label: "Hip-Hop" },
+                                { value: "reggae", label: "Reggae" },
+                                { value: "RnB", label: "RnB" },
+                            ]}
+                        />
+                    </FormField>
+
                 </div>
+
                 <div className={formStyles.Form_box_input_grid}>
-                    <div className={`${formStyles.Form_box_input} small_input`}>
-                        <label htmlFor="price">Price</label>
-                        <div className={formStyles.Form_box_input_box}>
-                            <input
+                    <div className={formStyles.Form_box_input_grid_number}>
+                        <FormField label="Price" id="price" className="small_input">
+                            <Input
                                 type="number"
-                                placeholder="Enter the price"
                                 id="price"
                                 name="price"
+                                placeholder="Enter the price"
                                 value={price}
-                                onChange={(e) => setPrice(e.target.value)}
+                                onChange={(val) => setPrice(val)}
                             />
-                        </div>
-                    </div>
-                    <div className={`${formStyles.Form_box_input} small_input`}>
-                        <label htmlFor="royalties">Royalties</label>
-                        <div className={formStyles.Form_box_input_box}>
-                            <input
+                        </FormField>
+
+                        <FormField label="Royalties" id="royalties" className="small_input">
+                            <Input
                                 type="number"
-                                placeholder="Enter Royalty %"
                                 id="royalties"
                                 name="royalties"
+                                placeholder="Enter Royalty %"
                                 value={royalties}
-                                onChange={(e) => setRoyalties(e.target.value)}
+                                onChange={(val) => setRoyalties(val)}
                             />
-                        </div>
-                    </div>
-                    <div className={`${formStyles.Form_box_input} small_input`}>
-                        <label htmlFor="quantity">Quantity</label>
-                        <div className={formStyles.Form_box_input_box}>
-                            <input
+                        </FormField>
+
+                        <FormField label="Quantity" id="quantity" className="small_input">
+                            <Input
                                 type="number"
-                                placeholder="Enter Quantity"
                                 id="quantity"
                                 name="quantity"
+                                placeholder="Enter Quantity"
                                 value={quantity}
-                                onChange={(e) => setQuantity(e.target.value)}
+                                onChange={(val) => setQuantity(val)}
                             />
-                        </div>
+                        </FormField>
                     </div>
                 </div>
+
+
                 <Button btnName="Upload Media" handleClick={handleSubmit} />
             </form>
         </div>

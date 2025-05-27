@@ -28,6 +28,12 @@
     gap: 1rem;
 }
 
+.Form_box_input_grid_number {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
 /* Individual input block */
 .Form_box_input {
     display: flex;

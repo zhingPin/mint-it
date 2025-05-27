@@ -95,11 +95,20 @@ nav {
 
 }
 
-textarea,
+input {
+  width: 100%;
+  /* background-color: var(--primary-shade); */
+  color: var(--text-tint);
+  border: 1px solid var(--secondary-shade);
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+}
+
+/* textarea,
 select,
 input {
   color: var(--primary-shade);
-}
+} */
 
 .page {
   height: 100%;
@@ -137,6 +146,12 @@ input {
   margin: 0;
 }
 
+body,
+input,
+button,
+a {
+  transition: all 0.3s ease-in-out;
+}
 
 a {
   color: inherit;
@@ -147,12 +162,7 @@ a {
   text-decoration: underline;
 } */
 
-body,
-input,
-button,
-a {
-  transition: all 0.3s ease-in-out;
-}
+
 
 svg {
   display: block;

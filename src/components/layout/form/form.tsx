@@ -7,97 +7,74 @@ import {
     TiSocialInstagram,
 } from "react-icons/ti";
 
-//INTERNAL IMPORT
 import styles from "./form.module.css";
-// import { Button } from "../../components/componentsIndex";
+import FormField from "@/components/ui/form_Components/formField/formField";
+import Input from "@/components/ui/form_Components/input/input";
+import Textarea from "@/components/ui/form_Components/textArea/textArea";
+import Select from "@/components/ui/form_Components/select/select";
+
 
 const Form = () => {
     return (
-        <>
-            <form className={styles.Form_box}>
-                {/* Profile Info */}
-                <div className={styles.Form_section}>
-                    <h3>Profile Information</h3>
-                    <div className={styles.Form_box_input_grid}>
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="username">Username</label>
-                            <input type="text" placeholder="Enter your name" id="username" />
-                        </div>
+        <form className={styles.Form_box}>
+            {/* Profile Info */}
+            <div className={styles.Form_section}>
+                <h3>Profile Information</h3>
+                <div className={styles.Form_box_input_grid}>
+                    <FormField id="username" label="Username">
+                        <Input id="username" placeholder="Enter your name" />
+                    </FormField>
 
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="email">Email</label>
-                            <div className={styles.Form_box_input_box}>
-                                <HiOutlineMail />
-                                <input type="text" placeholder="Your email" id="email" />
-                            </div>
-                        </div>
+                    <FormField id="email" label="Email">
+                        <Input id="email" placeholder="Your email" icon={<HiOutlineMail />} />
+                    </FormField>
 
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="website">Website</label>
-                            <div className={styles.Form_box_input_box}>
-                                <MdOutlineHttp />
-                                <input type="text" placeholder="Your website" id="website" />
-                            </div>
-                        </div>
-                    </div>
+                    <FormField id="website" label="Website">
+                        <Input id="website" placeholder="Your website" icon={<MdOutlineHttp />} />
+                    </FormField>
                 </div>
+            </div>
 
-                {/* Bio & Genre */}
-                <div className={styles.Form_section}>
-                    <h3>About You</h3>
-                    <div className={styles.Form_box_input_grid}>
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="description">Bio</label>
-                            <textarea
-                                id="description"
-                                rows={4}
-                                placeholder="Write something about yourself"
-                            ></textarea>
-                        </div>
+            {/* Bio & Genre */}
+            <div className={styles.Form_section}>
+                <h3>About You</h3>
+                <div className={styles.Form_box_input_grid}>
+                    <FormField id="description" label="Bio">
+                        <Textarea id="description" placeholder="Write something about yourself" rows={4} />
+                    </FormField>
 
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="genre">Genre</label>
-                            <select id="genre">
-                                <option value="">Select Genre</option>
-                                <option value="hip-hop">Hip-Hop</option>
-                                <option value="reggae">Reggae</option>
-                                <option value="rnb">RnB</option>
-                            </select>
-                        </div>
-                    </div>
+                    <FormField id="genre" label="Genre">
+                        <Select
+                            id="genre"
+                            options={[
+                                { label: "Select Genre", value: "" },
+                                { label: "Hip-Hop", value: "hip-hop" },
+                                { label: "Reggae", value: "reggae" },
+                                { label: "RnB", value: "rnb" },
+                            ]}
+                        />
+                    </FormField>
                 </div>
+            </div>
 
-                {/* Social Media */}
-                <div className={styles.Form_section}>
-                    <h3>Social Links</h3>
-                    <div className={styles.Form_box_input_grid}>
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="facebook">Facebook</label>
-                            <div className={styles.Form_box_input_box}>
-                                <TiSocialFacebook />
-                                <input type="text" id="facebook" placeholder="Your Facebook" />
-                            </div>
-                        </div>
+            {/* Social Media */}
+            <div className={styles.Form_section}>
+                <h3>Social Links</h3>
+                <div className={styles.Form_box_input_grid}>
+                    <FormField id="facebook" label="Facebook">
+                        <Input id="facebook" placeholder="Your Facebook" icon={<TiSocialFacebook />} />
+                    </FormField>
 
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="twitter">Twitter</label>
-                            <div className={styles.Form_box_input_box}>
-                                <TiSocialTwitter />
-                                <input type="text" id="twitter" placeholder="Your Twitter" />
-                            </div>
-                        </div>
+                    <FormField id="twitter" label="Twitter">
+                        <Input id="twitter" placeholder="Your Twitter" icon={<TiSocialTwitter />} />
+                    </FormField>
 
-                        <div className={styles.Form_box_input}>
-                            <label htmlFor="instagram">Instagram</label>
-                            <div className={styles.Form_box_input_box}>
-                                <TiSocialInstagram />
-                                <input type="text" id="instagram" placeholder="Your Instagram" />
-                            </div>
-                        </div>
-                    </div>
+                    <FormField id="instagram" label="Instagram">
+                        <Input id="instagram" placeholder="Your Instagram" icon={<TiSocialInstagram />} />
+                    </FormField>
                 </div>
-            </form>
-        </>
+            </div>
+        </form>
     );
 };
 
