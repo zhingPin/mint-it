@@ -16,7 +16,7 @@ export interface NetworkConfigProps {
 export interface NetworkInfoProps {
     iconUrls: string | StaticImageData[];
     displayName: string;
-    contractAddress: string;
+    // contractAddress: string;
     contracts: {
         nft: string;
         marketplace: string;

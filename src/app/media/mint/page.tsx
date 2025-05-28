@@ -7,7 +7,7 @@ import UploadFormat from '@/components/uploadMedia/uploadFormat/uploadFormat'
 
 const Page = () => {
     return (
-        <div >
+        <div className={styles.upload_page}>
             <div className="flex">
                 <div className={styles.upload_container}>
                     <Dropzone type="image" />

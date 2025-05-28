@@ -5,7 +5,7 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
     hardhat: {
         iconUrls: [hardhat_logo],
         displayName: "Hardhat",
-        contractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        // contractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
         contracts: {
             nft: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
             marketplace: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
@@ -17,7 +17,7 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
     polygon: {
         iconUrls: [matic_logo],
         displayName: "Polygon Mainnet",
-        contractAddress: "",
+        // contractAddress: "",
         contracts: {
             nft: "",
             marketplace: ""
@@ -29,7 +29,7 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
     arb: {
         iconUrls: [arb_logo],
         displayName: "Arbitrum",
-        contractAddress: "",
+        // contractAddress: "",
         contracts: {
             nft: "",
             marketplace: ""
@@ -41,30 +41,19 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
     polygon_amoy: {
         iconUrls: [matic_logo],
         displayName: "Polygon Amoy",
-        contractAddress: "",
+        // contractAddress: "",
         contracts: {
-            nft: "",
-            marketplace: ""
+            nft: "0xf78cA5Dad15EEf6AC6c2Edd7EbC12ED91F6A634a",
+            marketplace: "0x3A28217Ffea5e0Cd4C3F5e3A895f5D9Da8D02c6e"
         },
         environment: "testnet",
-        active: false,
+        active: true,
 
-    },
-    polygon_mumbai: {
-        iconUrls: [matic_logo],
-        displayName: "Polygon Mumbai",
-        contractAddress: "",
-        contracts: {
-            nft: "",
-            marketplace: ""
-        },
-        environment: "testnet",
-        active: false,
     },
     bsc: {
         iconUrls: [bsc_logo],
         displayName: "BSC",
-        contractAddress: "",
+        // contractAddress: "",
         contracts: {
             nft: "",
             marketplace: ""
@@ -75,7 +64,7 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
     base: {
         iconUrls: [base_logo],
         displayName: "Base",
-        contractAddress: "",
+        // contractAddress: "",
         contracts: {
             nft: "",
             marketplace: ""
@@ -86,7 +75,7 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
     base_sepolia: {
         iconUrls: [base_logo],
         displayName: "Base Sepolia",
-        contractAddress: "",
+        // contractAddress: "",
         contracts: {
             nft: "",
             marketplace: ""

@@ -28,4 +28,15 @@ export const networkConfig: Record<string, NetworkConfigProps> = {
             "https://polygon-mainnet.g.alchemy.com/v2/3ZLq2XKn1y46ClMV6jmLio0vYxEJaz1z"],
         blockExplorerUrls: ["https://polygonscan.com"],
     },
+    polygon_amoy: {
+        chainId: `0x${Number(80002).toString(16)}`,
+        chainName: "Polygon Amoy",
+        nativeCurrency: {
+            name: "MATIC",
+            symbol: "MATIC",
+            decimals: 18,
+        },
+        rpcUrls: ["https://rpc-amoy.polygon.technology/"],
+        blockExplorerUrls: ["https://www.oklink.com/amoy"],
+    },
 }

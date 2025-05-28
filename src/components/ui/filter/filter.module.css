@@ -1,6 +1,6 @@
 .filter_body {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
     /* Evenly distribute buttons */
     grid-auto-flow: column;
     /* Force items to stay in a single row */
@@ -12,10 +12,12 @@
 
 .filter_button {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    /* align-items: center; */
+    /* justify-content: center; */
     /* gap: 10px; */
-    padding: 8px 0;
+    /* padding: 8px 0; */
+    /* flex: 1; */
     border: none;
     /* border-radius: 4px; */
     background-color: #fff;

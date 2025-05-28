@@ -1,6 +1,12 @@
+.upload_page {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto 3fr;
+}
+
 .upload_container {
-    display: flex;
-    flex-direction: row;
+    /* display: flex;
+    flex-direction: row; */
     /* display: grid;
     grid-template-columns: ; */
     gap: 16px;

@@ -12,22 +12,22 @@ const UploadFormat = () => {
     return (
         <div className={styles.meta}>
             {hasImage && (
-                <div className={styles.meta_sections}>
+                <p className={styles.meta_sections}>
                     <strong>Image&nbsp;format:</strong> {mediaData.image.fileType} &nbsp;&nbsp;
                     <strong>Image&nbsp; Size:</strong> {mediaData.image.fileSize}
                     {/* <span><strong>Image format:</strong></span>
                     <span>{mediaData.image.fileType}</span>
                     <span><strong>Image size:</strong></span>
                     <span>{mediaData.image.fileSize}</span> */}
-                </div>
+                </p>
             )}
             {hasMedia && (
-                <div className={styles.meta_sections}>
+                <p className={styles.meta_sections}>
                     <span><strong>Media type:</strong></span>
                     <span>{mediaData.media!.fileType}</span>
                     <span><strong>Media size:</strong></span>
                     <span>{mediaData.media!.fileSize}</span>
-                </div>
+                </p>
             )}
         </div>
     );
