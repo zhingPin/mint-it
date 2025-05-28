@@ -6,8 +6,8 @@ import Image from 'next/image';
 
 
 export interface MediaData {
-    image: NftImage;      // required cover
-    media?: NftMedia;     // optional video / audio
+    image: NftImage;
+    media?: NftMedia;
 }
 
 interface MediaDisplayProps {
@@ -17,7 +17,7 @@ interface MediaDisplayProps {
 export default function MediaDisplay({ mediaData }: MediaDisplayProps) {
     const [showPlayer, setShowPlayer] = useState(false);
     if (!mediaData?.image.fileUrl && !mediaData?.media) {
-        return <p className={styles.noFile}>No file uploaded yet.</p>;
+        return <p className={styles.noFile}>upload image!</p>;
     }
 
     const hasMedia = Boolean(mediaData.media);
@@ -26,20 +26,20 @@ export default function MediaDisplay({ mediaData }: MediaDisplayProps) {
         <div className={styles.card}>
             {/* ---- Cover or Media ---- */}
             {!showPlayer || !hasMedia ? (
-                // <button
-                //     type="button"
-                //     className={styles.imageWrapper}
-                //     onClick={() => hasMedia && setShowPlayer(true)}
-                // >
-                <Image
-                    src={mediaData.image.fileUrl}
-                    alt="Uploaded cover"
-                    width={150}
-                    height={150}
-                    className={styles.image}
-                />
-                //     {hasMedia && <span className={styles.playOverlay}>▶</span>}
-                // </button>
+                <button
+                    type="button"
+                    className={styles.imageWrapper}
+                    onClick={() => hasMedia && setShowPlayer(true)}
+                >
+                    <Image
+                        src={mediaData.image.fileUrl}
+                        alt="Uploaded cover"
+                        width={150}
+                        height={150}
+                        className={styles.image}
+                    />
+                    {hasMedia && <span className={styles.playOverlay}>▶</span>}
+                </button>
             ) : (
                 <div className={styles.mediaWrapper}>
                     {mediaData.media!.fileType?.startsWith("video") ? (
@@ -49,7 +49,8 @@ export default function MediaDisplay({ mediaData }: MediaDisplayProps) {
                             autoPlay
                             className={styles.media}
                             onEnded={() => setShowPlayer(false)} // 👈 Return to image after playback
-
+                            width={150}
+                            height={150}
                         />
                     ) : (
                         <audio

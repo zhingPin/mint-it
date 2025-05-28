@@ -5,6 +5,8 @@ import { useIpfs } from "@/providers/ipfsProvider";
 import { useDropzone } from "react-dropzone";
 import { useMedia } from "@/providers/mediaProvider";
 import { NftImage, NftMedia } from "../../../../types/media-types";
+import { BiMusic, BiVideo, BiUpload, BiImage } from "react-icons/bi";
+
 
 // ✅ FIXED: Type guard for image MIME types
 function isValidImageType(type: string | undefined): type is NftImage["fileType"] {
@@ -102,29 +104,26 @@ const Dropzone: React.FC<DropzoneProps> = ({ type }) => {
         maxSize: 50000000, // 50 MB
     });
 
+    const renderIcon = () => {
+        if (type === "image") return <BiImage size={40} className={styles.upload_icon} />;
+        if (type === "media") return (<div className={styles.icon_stack}><BiVideo size={40} className={styles.upload_icon} />or<BiMusic size={40} className={styles.upload_icon} /></div>);
+        return <BiUpload size={40} className={styles.upload_icon} />;
+    };
+
     return (
         <div className={styles.dropzone_container}>
             <div {...getRootProps()} className={styles.dropzone_box}>
                 <input {...getInputProps()} />
+                <div className={styles.icon_stack}>
+                    <BiUpload size={40} className={styles.upload_overlay} />
+                    {renderIcon()}
+                </div>
+
                 <p>
-                    Drag & drop or click to select{" "}
-                    {type === "image" ? "a cover image" : "a media file"}
+                    {type === "image" ? "Image" : "Media file"}
                 </p>
             </div>
-            {/* {type === "image" && mediaData?.image && (
-                <div className={styles.file_info}>
-                    <p>Cover Image URL: {mediaData.image.fileUrl}</p>
-                    <p>File Type: {mediaData.image.fileType}</p>
-                    <p>File Size: {mediaData.image.fileSize}</p>
-                </div>
-            )}
-            {type === "media" && mediaData?.media && (
-                <div className={styles.file_info}>
-                    <p>Media File URL: {mediaData.media.fileUrl}</p>
-                    <p>File Type: {mediaData.media.fileType}</p>
-                    <p>File Size: {mediaData.media.fileSize}</p>
-                </div>
-            )} */}
+
         </div>
     );
 };

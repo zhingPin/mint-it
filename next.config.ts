@@ -3,7 +3,19 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["gtsoe.infura-ipfs.io", "gtsoe.infura-ipfs.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "gtsoe.infura-ipfs.io",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "gsoe.infura-ipfs.io",
+        pathname: "/**",
+      },
+    ],
+    // domains: ["gtsoe.infura-ipfs.io", "gsoe.infura-ipfs.io"],
     formats: ["image/webp"],
   },
 };
