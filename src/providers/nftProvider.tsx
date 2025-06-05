@@ -26,14 +26,10 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (!ipfsContext) {
         throw new Error("NftProvider must be used within IpfsProvider");
     }
-    const { client } = ipfsContext;
 
-
-    const { currentAccount, currentNetwork } = walletContext
-
-
+    const { uploadToIpfs } = ipfsContext;
+    const { currentAccount, currentNetwork } = walletContext;
     const router = useRouter();
-
 
     const createNFT = async (nftData: CreateNftInput): Promise<void> => {
         const {
@@ -45,41 +41,36 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             royaltyPercentage,
             quantity,
             collection,
-            // router,
         } = nftData;
 
         if (!name || !price || !image) {
-            console.error("Data is missing.");
+            console.error("Missing required NFT data.");
             return;
         }
-        const chainId = currentNetwork
 
-        const data = JSON.stringify({
+        const chainId = currentNetwork;
+
+        const metadata = {
             name,
-            price,
-            image,
             description,
+            image,
             media,
+            price,
             royaltyPercentage,
             quantity,
             collection,
-            chainId
-
-        });
+            chainId,
+        };
 
         try {
-            if (!client) {
-                console.error("IPFS client is not initialized.");
-                return;
-            }
+            const metadataBlob = new Blob([JSON.stringify(metadata)], { type: "application/json" });
+            const metadataFile = new File([metadataBlob], "metadata.json");
 
-            const added = await client.add(data);
-            const url = `${process.env.NEXT_PUBLIC_SUBDOMAIN}/ipfs/${added.path}`;
+            const metadataUrl = await uploadToIpfs(metadataFile);
 
-            await createSale(url, price, royaltyPercentage || 0, quantity || 1);
+            await createSale(metadataUrl, price, royaltyPercentage || 0, quantity || 1);
+            console.log("NFT created successfully. URL:", metadataUrl);
             // router.push("/");
-            console.log("NFT created successfully. URL:", url);
-            console.log("Data:", data);
         } catch (error) {
             console.error("Error while creating NFT:", error);
         }
