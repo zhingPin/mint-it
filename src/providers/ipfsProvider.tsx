@@ -35,8 +35,8 @@ const IpfsProviderInner = ({ children }: { children: ReactNode }) => {
         // Only import and initialize IPFS in the browser
         const initIpfs = async () => {
             try {
-                const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
-                const projectSecretKey = process.env.NEXT_PUBLIC_SECRET_KEY
+                const projectId = process.env.PROJECT_ID
+                const projectSecretKey = process.env.SECRET_KEY
 
                 if (!projectId || !projectSecretKey) {
                     console.error("Project ID and Secret Key must be defined in the environment variables.")
