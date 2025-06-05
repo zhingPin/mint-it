@@ -17,6 +17,11 @@
     /* max-width: 500px; */
 }
 
+.active {
+    border-color: var(--primary-shade);
+}
+
+
 .dropzone_box input {
     object-fit: fill;
     max-height: 100%;

@@ -16,48 +16,48 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [walletError, setWalletError] = useState<string>("");
     const [currentAccount, setAccount] = useState<string>("");
     const [accountBalance, setAccountBalance] = useState<string>("");
-    const [currentNetwork, setCurrentNetwork] = useState<string>("hardhat");
+    const [currentNetwork, setCurrentNetwork] = useState<string>("");
     const [isConnected, setIsConnected] = useState<boolean>(false);
 
-    // useEffect(() => {
-    //     const init = async () => {
-    //         const walletData = await CheckIfWalletConnected();
+    useEffect(() => {
+        const init = async () => {
+            const walletData = await CheckIfWalletConnected();
 
-    //         if (walletData) {
-    //             setAccount(walletData.address);
-    //             setAccountBalance(walletData.balance);
-    //             setIsConnected(true);
-    //             console.log("Wallet connected:", walletData.address);
-    //         } else {
-    //             setIsConnected(false);
-    //             console.log("Wallet not connected.");
-    //         }
-    //     };
+            if (walletData) {
+                setAccount(walletData.address);
+                setAccountBalance(walletData.balance);
+                setIsConnected(true);
+                console.log("Wallet connected:", walletData.address);
+            } else {
+                setIsConnected(false);
+                console.log("Wallet not connected.");
+            }
+        };
 
-    //     init();
-    // }, []);
+        init();
+    }, []);
 
-    // useEffect(() => {
-    //     if (typeof window.ethereum !== "undefined") {
-    //         const handleAccountsChanged = (accounts: string[]) => {
-    //             setAccount(accounts.length ? accounts[0] : "");
-    //         };
+    useEffect(() => {
+        if (typeof window.ethereum !== "undefined") {
+            const handleAccountsChanged = (accounts: string[]) => {
+                setAccount(accounts.length ? accounts[0] : "");
+            };
 
-    //         const handleChainChanged = async () => {
-    //             await fetchCurrentNetwork();
-    //         };
+            const handleChainChanged = async () => {
+                await fetchCurrentNetwork();
+            };
 
-    //         // Add event listeners
-    //         window.ethereum.on("accountsChanged", handleAccountsChanged);
-    //         window.ethereum.on("chainChanged", handleChainChanged);
+            // Add event listeners
+            window.ethereum.on("accountsChanged", handleAccountsChanged);
+            window.ethereum.on("chainChanged", handleChainChanged);
 
-    //         // Cleanup event listeners on component unmount
-    //         return () => {
-    //             window.ethereum?.removeListener("accountsChanged", handleAccountsChanged);
-    //             window.ethereum?.removeListener("chainChanged", handleChainChanged);
-    //         };
-    //     }
-    // }, []);
+            // Cleanup event listeners on component unmount
+            return () => {
+                window.ethereum?.removeListener("accountsChanged", handleAccountsChanged);
+                window.ethereum?.removeListener("chainChanged", handleChainChanged);
+            };
+        }
+    }, []);
 
     const handleConnectWallet = async () => {
         if (!currentAccount) {
@@ -107,10 +107,10 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
     };
 
-    // // Run `fetchCurrentNetwork` on component mount
-    // useEffect(() => {
-    //     fetchCurrentNetwork();
-    // }, []);
+    // Run `fetchCurrentNetwork` on component mount
+    useEffect(() => {
+        fetchCurrentNetwork();
+    }, []);
 
     return (
         <WalletContext.Provider

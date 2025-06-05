@@ -98,7 +98,10 @@ const Dropzone: React.FC<DropzoneProps> = ({ type }) => {
     }
     return (
         <div >
-            <div {...getRootProps()} className={styles.dropzone_box}>
+            <div
+                {...getRootProps()}
+                className={`${styles.dropzone_box} ${isDragActive ? styles.active : ""}`}
+            >
                 <input {...getInputProps()} />
                 <div className={styles.icon_stack}>
                     {renderIcon()}
