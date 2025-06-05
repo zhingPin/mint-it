@@ -5,7 +5,7 @@ import { useIpfs } from "@/providers/ipfsProvider";
 import { useDropzone } from "react-dropzone";
 import { useMedia } from "@/providers/mediaProvider";
 import { NftImage, NftMedia } from "../../../../types/media-types";
-import { BiMusic, BiVideo, BiUpload, BiImage } from "react-icons/bi";
+import { BiUpload, BiImage } from "react-icons/bi";
 import { GrMultimedia } from "react-icons/gr";
 
 

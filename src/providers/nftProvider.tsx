@@ -291,17 +291,28 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                         type === "fetchItemsListed"
                             ? await marketplace.fetchItemsListed()
                             : await marketplace.fetchMyNFTs();
-                } catch (fetchErr: any) {
+                } catch (fetchErr: unknown) {
                     if (
-                        fetchErr?.code === "BAD_DATA" &&
-                        fetchErr?.info?.method === type
+                        typeof fetchErr === "object" &&
+                        fetchErr !== null &&
+                        "code" in fetchErr &&
+                        "info" in fetchErr &&
+                        typeof (fetchErr as any).code === "string" &&
+                        typeof (fetchErr as any).info === "object"
                     ) {
-                        console.warn(`No NFTs returned from ${type} on ${network}.`);
-                        continue;
-                    } else {
-                        throw fetchErr;
+                        const code = (fetchErr as { code: string }).code;
+                        const info = (fetchErr as { info: { method: string } }).info;
+
+                        if (code === "BAD_DATA" && info.method === type) {
+                            console.warn(`No NFTs returned from ${type} on ${network}.`);
+                            continue;
+                        }
                     }
+
+                    throw fetchErr;
                 }
+
+
 
                 if (!rawItems || rawItems.length === 0) {
                     console.log(`No NFTs found on ${network}.`);

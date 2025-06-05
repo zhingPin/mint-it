@@ -37,10 +37,11 @@ const MyMedia: React.FC = () => {
         };
 
         fetchData();
-    }, [currentAccount, type]);
+    }, [currentAccount, type, fetchNFTsByOwner]);
 
     if (loading) return <p>Loading your NFTs...</p>;
-    if (myNFTs.length === 0) return <p>You don't own any NFTs yet.</p>;
+    if (myNFTs.length === 0) return <p>You don&apos;t own any NFTs yet.</p>
+        ;
 
     return (
         <div>

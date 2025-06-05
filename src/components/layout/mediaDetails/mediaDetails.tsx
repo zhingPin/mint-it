@@ -25,7 +25,7 @@ const MediaDetails = () => {
     const [media, setMedia] = useState<NftData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const tokenId = Number(id);
-    const listingId = Number(id)
+    // const listingId = Number(id)
     const router = useRouter();
 
     useEffect(() => {

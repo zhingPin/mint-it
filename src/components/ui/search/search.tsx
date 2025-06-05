@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./search.module.css";
+// import styles from "./search.module.css";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import Input from "@/components/ui/form_Components/input/input";
 import { useDebouncedCallback } from "use-debounce";
