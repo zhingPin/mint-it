@@ -3,9 +3,13 @@ import { NftContext } from "@/providers/nftProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { NftData } from "../../../types/media-types";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
-import { useSearchParams } from "next/navigation";
 
-const AllMedia = () => {
+interface AllMediaProps {
+    query: string
+    sort: string
+    filter: string
+}
+const AllMedia: React.FC<AllMediaProps> = ({ query, filter }) => {
 
     const nftContext = useContext(NftContext);
 
@@ -16,9 +20,7 @@ const AllMedia = () => {
     const { fetchMarketsNFTs } = nftContext;
 
     const [nfts, setNfts] = useState<NftData[]>([]);
-    const searchParams = useSearchParams();
-    const filter = searchParams.get("filter") || "all"; // Get the filter from the URL
-    const query = searchParams.get("query") || ""; // Get the query from the URL
+
 
     useEffect(() => {
         fetchMarketsNFTs()

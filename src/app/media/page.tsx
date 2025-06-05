@@ -1,55 +1,68 @@
 import AllMedia from '@/components/allMedia/allMedia';
 import Filter from '@/components/ui/filter/filter';
+import Search from '@/components/ui/search/search';
 import { FaImages, FaMusic, FaVideo } from 'react-icons/fa';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import styles from './page.module.css'
 import DropDownTap from '@/components/search_filter/filterTaps/dropDownTap/dropDownTap';
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import FilterTaps from '@/components/search_filter/filterTaps/filterTaps';
 
-const FilterTaps = dynamic(() => import('@/components/search_filter/filterTaps/filterTaps'), { ssr: false });
-const Search = dynamic(() => import('@/components/ui/search/search'), { ssr: false });
+interface PageProps {
+    searchParams: Promise<{
+        query?: string
+        sort?: string
+        filter?: string
+    }>
+}
 
-const Page = async () => {
+const Page = async ({ searchParams }: PageProps) => {
+
+    const params = await searchParams
+
+    const query = params.query || ""
+    const sort = params.sort || "Most Recent"
+    const filter = params.filter || "Listed"
+
     const filterOptions = [
         { key: "audio", label: "", icon: <FaMusic /> },
         { key: "videos", label: "", icon: <FaVideo /> },
         { key: "images", label: "", icon: <FaImages /> },
         { key: "all", label: "All", icon: null },
     ];
-
+    // console.log(query, page)
     return (
         <main className="page">
             <div className={styles.query_box}>
                 <div></div>
-                <Suspense fallback={<div>Loading search...</div>}>
-                    <Search
-                        placeholder="Search for media..."
-                        icon={<FaMagnifyingGlass />}
-                    />
-                </Suspense>
+                <Search
+                    placeholder="Search for media..."
+                    icon={<FaMagnifyingGlass />}
+                />
                 <div>
                     <div className={styles.filter_options}>
-                        <Suspense fallback={<div>Loading filters...</div>}>
-                            <FilterTaps tabs={["listed"]} />
-                        </Suspense>
-                        <DropDownTap dropdownOptions={[
-                            "new to old",
-                            "old to new",
-                            "price hi to low",
-                            "price low to hi"
-                        ]} />
+                        <FilterTaps tabs={["listed"]} />
+                        <DropDownTap dropdownOptions=
+                            {
+                                [
+                                    "new to old",
+                                    "old to new",
+                                    "price hi to low",
+                                    " price low to hi"
+                                ]
+                            }
+                        />
                     </div>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
             <div>
                 <h1>Media</h1>
                 <Filter filterOptions={filterOptions} />
-                <AllMedia />
+                <AllMedia query={query} sort={sort} filter={filter} />
             </div>
         </main>
-    );
-};
+    )
+}
 
-export default Page;
+export default Page

@@ -1,18 +1,23 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { NftContext } from "@/providers/nftProvider";
 import { WalletContext } from "@/providers/walletProvider";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
 import { NftData } from "../../../types/media-types";
 
-const MyMedia: React.FC = () => {
+
+interface MyMediaProps {
+    query: string
+    sort: string
+    filter: string
+}
+
+const MyMedia: React.FC<MyMediaProps> = ({ filter }) => {
     const [myNFTs, setMyNFTs] = useState<NftData[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     const nftContext = useContext(NftContext);
     const walletContext = useContext(WalletContext);
-    const searchParams = useSearchParams();
 
     if (!nftContext || !walletContext) {
         throw new Error("MyMedia must be used within NftProvider and WalletProvider");
@@ -21,7 +26,6 @@ const MyMedia: React.FC = () => {
     const { fetchNFTsByOwner } = nftContext;
     const { currentAccount } = walletContext;
 
-    const filter = searchParams.get("filter");
     const type = filter === "Listed" ? "fetchItemsListed" : "fetchMyNFTs";
 
     useEffect(() => {
