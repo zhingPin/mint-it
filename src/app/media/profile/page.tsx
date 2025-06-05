@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './page.module.css'
 import { Search_filter } from '@/components'
+import MyMedia from '@/components/myMedia/myMedia'
 
 const Page = async () => {
 
@@ -12,6 +13,7 @@ const Page = async () => {
                     <div>
                     </div> <Search_filter placeholder='search me' />
                 </div>
+                <MyMedia />
             </div>
         </div>
     )

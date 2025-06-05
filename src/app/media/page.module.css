@@ -1,7 +1,6 @@
 .home_page {
     display: grid;
     grid-template-rows: 1fr 4fr;
-
     /* display: flex;
     flex-direction: column;*/
     min-height: 100%;
@@ -9,13 +8,11 @@
 }
 
 .query_box {
-    /* display: flex; */
-    /* flex: 1; */
-    /* flex-direction: row; */
-    /* min-width: 100%; */
-    /* padding: auto; */
     display: grid;
-    /* grid-template-columns: 1fr 1fr; */
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 
+.filter_options {
+    display: flex;
+    justify-content: space-around;
 }

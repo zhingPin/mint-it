@@ -1,11 +1,18 @@
 .Form_box {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     /* gap: 2rem; */
     /* padding: 2rem; */
     /* border-radius: 8px; */
+    display: grid;
+    grid-template-rows: 1fr auto;
     box-shadow: var(--shadow-2);
     background: var(--background-color);
+}
+
+.Form_box button {
+    margin: 0 auto;
+    align-self: center;
 }
 
 /* Group wrapper for sections */
@@ -64,7 +71,6 @@
     color: white;
     border: 1px solid var(--icons-color);
     /* border-radius: 4px; */
-    outline: none;
 }
 
 .Form_box_input input:focus,

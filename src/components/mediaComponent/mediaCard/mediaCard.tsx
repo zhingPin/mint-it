@@ -17,20 +17,19 @@ const MediaCard: React.FC<MediaCardProps> = ({ NftData }) => {
         <div className={styles.media_card_grid}>
             {nfts.map((el, index) => (
                 <div key={index} className={styles.media_card}>
-                    <MediaDisplay mediaData={{ image: el.image, media: el.media }} />
+                    <div className={styles.display}>
+                        <MediaDisplay mediaData={{ image: el.image, media: el.media }} />
+                    </div>
                     <div className={styles.info_card}>
                         <p className={styles.media_card_title}>{el.name}</p>
-
                         <p className={styles.description}>{el.description}</p>
-                        <div className="flex">
+                        <div className={styles.info_card_action}>
                             <Link
                                 href={{ pathname: `/media/${el.tokenId}` }}>
                                 <h4>info</h4>
                             </Link>
-                            <BuyToken
-                                tokenId={el.tokenId ? Number(el.tokenId) : 0} // Ensure tokenId is a number
-                                price={el.price ? String(el.price) : "0"} // Ensure price is a string
-                            />
+                            <BuyToken listingId={el.listingId} tokenId={el.tokenId} price={el.price} />
+
                         </div>
                     </div>
                 </div>

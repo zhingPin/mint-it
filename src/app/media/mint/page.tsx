@@ -10,12 +10,17 @@ const Page = () => {
     return (
         <div className={styles.upload_page}>
             <div className={styles.upload_container}>
-
                 <div className={styles.dropzone_boxes}>
+
                     <Dropzone type="image" />
                     <Dropzone type="media" />
                 </div>
-                <PreviewCard />
+                <div><PreviewCard /> </div>
+                {/* <div className={styles.dropzone_boxes}>
+                    <Dropzone type="image" />
+                    <Dropzone type="media" />
+                </div>
+                <PreviewCard /> */}
             </div>
 
             <UploadFormat />

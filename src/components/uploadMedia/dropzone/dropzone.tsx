@@ -6,6 +6,7 @@ import { useDropzone } from "react-dropzone";
 import { useMedia } from "@/providers/mediaProvider";
 import { NftImage, NftMedia } from "../../../../types/media-types";
 import { BiMusic, BiVideo, BiUpload, BiImage } from "react-icons/bi";
+import { GrMultimedia } from "react-icons/gr";
 
 
 // ✅ FIXED: Type guard for image MIME types
@@ -106,20 +107,20 @@ const Dropzone: React.FC<DropzoneProps> = ({ type }) => {
 
     const renderIcon = () => {
         if (type === "image") return <BiImage size={40} className={styles.upload_icon} />;
-        if (type === "media") return (<div className={styles.icon_stack}><BiVideo size={40} className={styles.upload_icon} />or<BiMusic size={40} className={styles.upload_icon} /></div>);
+        if (type === "media") return <GrMultimedia size={40} />;
         return <BiUpload size={40} className={styles.upload_icon} />;
     };
 
     return (
-        <div className={styles.dropzone_container}>
+        <div >
             <div {...getRootProps()} className={styles.dropzone_box}>
                 <input {...getInputProps()} />
                 <div className={styles.icon_stack}>
-                    <BiUpload size={40} className={styles.upload_overlay} />
                     {renderIcon()}
                 </div>
 
                 <p>
+                    <BiUpload className={styles.upload_overlay} />
                     {type === "image" ? "Image" : "Media file"}
                 </p>
             </div>

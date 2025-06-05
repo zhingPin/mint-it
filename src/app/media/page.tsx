@@ -4,6 +4,8 @@ import Search from '@/components/ui/search/search';
 import { FaImages, FaMusic, FaVideo } from 'react-icons/fa';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import styles from './page.module.css'
+import DropDownTap from '@/components/search_filter/filterTaps/dropDownTap/dropDownTap';
+import FilterTaps from '@/components/search_filter/filterTaps/filterTaps';
 
 
 const Page = async () => {
@@ -18,11 +20,28 @@ const Page = async () => {
     return (
         <main className="page">
             <div className={styles.query_box}>
-                {/* <Search_filter placeholder={"search all"} /> */}
+                <div></div>
                 <Search
                     placeholder="Search for media..."
-                    icon={<FaMagnifyingGlass />} // Pass the icon here
+                    icon={<FaMagnifyingGlass />}
                 />
+                <div>
+                    <div className={styles.filter_options}>
+                        <FilterTaps tabs={["listed"]} />
+                        <DropDownTap dropdownOptions=
+                            {
+                                [
+                                    "new to old",
+                                    "old to new",
+                                    "price hi to low",
+                                    " price low to hi"
+                                ]
+                            }
+                        />
+                    </div>
+
+                </div>
+
             </div>
             <div>
                 <h1>Media</h1>

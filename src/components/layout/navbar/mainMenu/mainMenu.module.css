@@ -12,7 +12,6 @@
     color: var(--primary-color);
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
-    outline: none;
 }
 
 .menu_icon.show,

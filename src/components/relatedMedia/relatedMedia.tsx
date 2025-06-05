@@ -1,9 +1,9 @@
 "use client";
-import { NftContext } from "@/providers/nftProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { NftData } from "../../../types/media-types";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
+import { NftContext } from "@/providers/nftProvider";
 
 const RelatedMedia = () => {
     const [relatedMedia, setRelatedMedia] = useState<NftData[]>([]); // State to store related NFTs

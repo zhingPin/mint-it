@@ -1,13 +1,5 @@
 .select_field,
-.textarea_field {
-    width: 100%;
-    padding: 0.5rem;
-    background-color: black;
-    color: white;
-    border: 1px solid var(--icons-color);
-    border-radius: 0.3rem;
-    outline: none;
-}
+.textarea_field {}
 
 .select_field:focus,
 .textarea_field:focus {

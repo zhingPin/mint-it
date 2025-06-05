@@ -1,41 +1,6 @@
-.search {
-    grid-area: search;
-}
-
-.filter {
-    grid-area: filter;
-}
-
-.dropdown {
-    grid-area: dropdown;
-    display: flex;
-}
-
 .search_filter_body {
-    display: grid;
-    grid-template-areas:
-        "search filter dropdown";
-    /* Single row layout for larger screens */
-    grid-template-columns: repeat(3, 1fr);
-    /* Adjust column widths as needed */
-    gap: 16px;
-    transition: transform 0.2s ease-in-out;
-    /* align-items: center; */
-    justify-items: center;
-}
-
-@media screen and (max-width: 34em) {
-    .search_filter_body {
-        grid-template-areas:
-            "search search search"
-            /* First row */
-            "filter dropdown dropdown";
-        /* Second row */
-        grid-template-columns: 1fr 1fr;
-        /* Two columns for smaller screens */
-        grid-template-rows: auto auto;
-        /* Two rows */
-        gap: 8px;
-        transition: transform 0.2s ease-in-out;
-    }
+    display: flex;
+    gap: var(--main-padding);
+    justify-content: flex-end;
+    /* flex-direction: row; */
 }

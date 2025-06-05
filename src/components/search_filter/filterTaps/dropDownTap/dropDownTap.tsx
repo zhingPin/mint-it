@@ -1,33 +1,47 @@
-"use client"
-import React, { useState } from 'react'
-import styles from './dropDownTap.module.css'
+"use client";
+import React, { useEffect, useState } from "react";
+import styles from "./dropDownTap.module.css";
+import Select from "@/components/ui/form_Components/select/select";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 type DropDownTapProps = {
-    dropdownOptions: string[]; // Array of dropdown options
+    dropdownOptions: string[];
 };
+
 const DropDownTap: React.FC<DropDownTapProps> = ({ dropdownOptions }) => {
-    const [selectedOption, setSelectedOption] = useState<string>(dropdownOptions[0]); // Default to the first dropdown option
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
 
-    const handleDropdownChange = (option: string) => {
-        setSelectedOption(option);
-        console.log("Selected Option:", option);
-        // Perform actions based on the selected dropdown option
+    const currentSort = searchParams.get("sort") || dropdownOptions[0]; // Get from URL or default
+    const [selectedOption, setSelectedOption] = useState<string>(currentSort);
+
+    useEffect(() => {
+        setSelectedOption(currentSort);
+    }, [currentSort]);
+
+    const handleDropdownChange = (value: string) => {
+        setSelectedOption(value);
+
+        const params = new URLSearchParams(searchParams);
+        params.set("sort", value);
+
+        replace(`${pathname}?${params.toString()}`);
     };
-    return (
-        // {/* Dropdown */ }
-        < div className={styles.dropdown} >
-            <select
-                value={selectedOption}
-                onChange={(e) => handleDropdownChange(e.target.value)}
-                className={styles.dropdownSelect}
-            >
-                {dropdownOptions.map((option, index) => (
-                    <option key={index} value={option}>
-                        {option}
-                    </option>
-                ))}
-            </select>
-        </ div>)
-}
 
-export default DropDownTap
+    const selectOptions = dropdownOptions.map((opt) => ({
+        label: opt,
+        value: opt,
+    }));
+
+    return (
+        <Select
+            value={selectedOption}
+            onChange={handleDropdownChange}
+            options={selectOptions}
+            className={styles.dropdown_select}
+        />
+    );
+};
+
+export default DropDownTap;

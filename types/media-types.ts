@@ -19,27 +19,28 @@ export type NftMedia = NftVideo | NftAudio;
 
 
 export interface NftVideo {
-    fileUrl?: string;
-    fileType?: string;
-    fileSize?: string,
+    fileUrl: string;
+    fileType: string;
+    fileSize: string,
     resolution?: string; // Optional resolution (e.g., "1920x1080")
 }
 
 export interface NftAudio {
     fileUrl?: string;
-    fileType?: string;
+    fileType: string;
     fileSize?: string,
 }
 
 export interface NftImage {
     fileUrl: string;
     fileType: string;
-    fileSize?: string;
+    fileSize: string;
     resolution?: string;
 }
 
 export interface NftData {
-    tokenId?: number;
+    tokenId: number;
+    listingId: number,
     name: string;
     image: NftImage
     media: NftMedia, // Type of the NFT
@@ -48,7 +49,7 @@ export interface NftData {
     audio?: string; // Optional field
     price: string; // Price in Ether
     seller: string | null; // Seller's address or null if not available
-    owner?: string;
+    owner: string;
     creator?: string;
     royaltyPercentage?: number;
     quantity?: number;
@@ -66,6 +67,7 @@ export interface NftData {
 
 export interface MarketItem {
     tokenId: bigint;
+    listingId: string,
     seller: string;
     owner: string;
     price: bigint;

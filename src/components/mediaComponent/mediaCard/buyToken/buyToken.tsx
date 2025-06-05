@@ -3,11 +3,12 @@ import { NftContext } from '@/providers/nftProvider';
 import React, { useContext } from 'react';
 
 type BuyTokenProps = {
+    listingId: number;
     tokenId: number;
     price: string;
 };
 
-const BuyToken: React.FC<BuyTokenProps> = ({ tokenId, price }) => {
+const BuyToken: React.FC<BuyTokenProps> = ({ listingId, tokenId, price }) => {
     const nftContext = useContext(NftContext);
 
     if (!nftContext) {
@@ -25,7 +26,7 @@ const BuyToken: React.FC<BuyTokenProps> = ({ tokenId, price }) => {
         <div>
             <Button
                 btnName={`buy for ${price}eth`}
-                handleClick={() => buyNFT(tokenId, price)} // Pass tokenId and price
+                handleClick={() => buyNFT(listingId, tokenId, price)} // Pass tokenId and price
             />
         </div>
     );

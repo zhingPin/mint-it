@@ -1,53 +1,25 @@
 .card {
+    position: relative;
+    width: 100%;
     background: #111;
-    transition: 1s ease-in-out;
-    width: 100%;
-    position: relative;
-
+    object-fit: contain;
+    display: flex;
 }
 
-.card button {
-    object-fit: fill;
-    position: relative;
-    inset: 0;
-    width: 100%;
-    /* min-height: 100%; */
-}
-
-.card img {
-    object-fit: fill;
-    position: relative;
-    inset: 0;
-    width: 100%;
-}
-
-.media,
 .image {
     object-fit: fill;
     position: relative;
-    inset: 0;
-    width: 100%;
-    /* height: 100%; */
+    height: 100%;
 }
 
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.imageWrapper {
+.playButton {
     position: absolute;
-    width: 100%;
-    /* padding-top: 56.25%; */
-    border: none;
+    inset: 0;
     background: transparent;
+    border: none;
     cursor: pointer;
+    z-index: 1;
 }
-
-.imageWrapper:hover .playOverlay {
-    opacity: 1;
-}
-
 
 .playOverlay {
     position: absolute;
@@ -56,32 +28,36 @@
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.45);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.45);
     opacity: 0;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.3s ease;
+}
+
+.playButton:hover .playOverlay {
+    opacity: 1;
 }
 
 .mediaWrapper {
+    object-fit: contain;
     width: 100%;
-}
-
-/* 
-
-.image {
+    display: flex;
     object-fit: fill;
-    flex: 1;
+    overflow: hidden;
+    position: relative;
 }
-
 
 .media {
-    width: 100%;
-    border-radius: 8px;
-} */
-
+    flex: 1;
+    height: 100%;
+    object-fit: fill;
+}
 
 
 .noFile {
-    color: #777;
+    color: #aaa;
     font-style: italic;
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
 }

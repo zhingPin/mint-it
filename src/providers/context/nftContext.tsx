@@ -7,10 +7,10 @@ export interface NftContextProps {
   setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   error?: string;
   setError?: React.Dispatch<React.SetStateAction<string>>;
-  fetchNFTsByOwner: (type: string) => Promise<NftData[] | undefined>;
+  fetchNFTsByOwner: (type: "fetchItemsListed" | "fetchMyNFTs") => Promise<NftData[] | undefined>;
   fetchMarketsNFTs: () => Promise<NftData[] | undefined>;
   createNFT: (input: CreateNftInput) => Promise<void>
-  buyNFT: (tokenId: number, price: string) => Promise<void>; // Updated type
+  buyNFT: (listingId: number, tokenId: number, price: string) => Promise<void>; // Updated type
   client?: IPFSHTTPClient; // Replace 'any' with the actual type of your client
 }
 

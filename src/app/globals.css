@@ -96,14 +96,15 @@ nav {
 }
 
 input {
-  display: flex;
-  flex: 1;
-  min-width: 100%;
+  /* display: flex;
+  flex-direction: row; */
+  /* flex: 1; */
+  /* min-width: 100%; */
   /* background-color: var(--primary-shade); */
   color: var(--text-tint);
   border: 1px solid var(--secondary-shade);
-  padding: 0.5rem;
-  border-radius: 0.3rem;
+  /* padding: 0.5rem; */
+  /* border-radius: 0.3rem; */
 }
 
 /* textarea,
@@ -164,22 +165,39 @@ a {
   text-decoration: underline;
 } */
 
-
-
-svg {
-  display: block;
-  /* min-height: 0px; */
+form {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding-block: 16px;
 }
+
+form,
+input,
+select,
+textarea,
+button {
+  border-radius: 0.4em;
+  display: block;
+  margin: 0;
+  height: 100%;
+  outline: none;
+}
+
+input,
+select,
+textarea,
+button {
+  padding: 4px;
+}
+
+
 
 .flex {
   display: flex;
-  /* flex-direction: row; */
-  /* justify-content: space-between; */
 }
 
 .dynamic_flex {
   display: flex;
-  /* flex-direction: row; */
   justify-content: space-between;
 }
 
@@ -190,31 +208,33 @@ svg {
 }
 
 .preview_card {
-  /* flex: 1; */
   display: flex;
-  /* min-width: 100%; */
-  border: 1px solid var(--secondary-shade);
+  width: 100%;
+  height: 180px;
+  /* max-height: 250px; */
+  border: 1px solid var(--secondary-color);
+  background: #111;
 }
 
 /* generic button */
 .new_button {
-  padding: 5px;
+  padding: 4px;
   align-content: center;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   font-family: PlusJakartaSans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Cantarell, Helvetica Neue, Ubuntu, sans-serif;
   cursor: pointer;
-  box-shadow: 0.3rem 0.3rem 0.3rem rgba(115, 184, 252, 0.5), inset 0.2rem 0.2rem 0.2rem 0.2rem rgba(115, 184, 252, 0.2);
-  transition: 300ms ease;
+  /* transition: 300ms ease; */
   gap: 5px;
   background: var(--secondary-color);
   color: var(--text-color);
   font-weight: bold;
-  /* min-width: 100%; */
-
-  /* 👇 Border always defined */
   border: 1px solid transparent;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+}
+
+.cta_button {
+  box-shadow: 0.3rem 0.3rem 0.3rem rgba(115, 184, 252, 0.5), inset 0.2rem 0.2rem 0.2rem 0.2rem rgba(115, 184, 252, 0.2);
 }
 
 .new_button:hover {
@@ -237,14 +257,17 @@ svg {
 }
 
 @media screen and (max-width: 34em) {
+
   .page {
-    padding: 0
+    padding: 0;
+
   }
 
-  .dynamic_flex {
-    display: flex;
-    flex-direction: column;
-    /* flex-direction: row; */
-    justify-content: space-between;
+  input,
+  select,
+  textarea,
+  button {
+    border-radius: 0;
   }
+
 }

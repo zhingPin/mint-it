@@ -8,8 +8,9 @@ function PreviewCard() {
 
 
 
-    return <div className={styles.preview_box}>
+    return <div className="preview_card">
         <MediaDisplay mediaData={mediaData} />
+
     </div>;
 }
 

@@ -40,7 +40,10 @@ const Input: React.FC<InputProps> = ({
 }) => {
     return (
         <div className={`${styles.input_container} ${className || ""}`}>
-            {icon && <div className={styles.input_icon}>{icon}</div>}
+            <div className={styles.input_icon}>
+                {icon && icon}
+            </div>
+
             <input
                 id={id}
                 name={name}
@@ -58,6 +61,7 @@ const Input: React.FC<InputProps> = ({
                 className={styles.input_field}
             />
         </div>
+
     );
 };
 

@@ -1,9 +1,8 @@
-"use client"
-import React, { useState } from 'react'
-import styles from "./mediaDisplay.module.css"
-import { NftImage, NftMedia } from '../../../../../types/media-types';
-import Image from 'next/image';
-
+"use client";
+import React, { useState } from "react";
+import styles from "./mediaDisplay.module.css";
+import { NftImage, NftMedia } from "../../../../../types/media-types";
+import Image from "next/image";
 
 export interface MediaData {
     image: NftImage;
@@ -16,55 +15,69 @@ interface MediaDisplayProps {
 
 export default function MediaDisplay({ mediaData }: MediaDisplayProps) {
     const [showPlayer, setShowPlayer] = useState(false);
-    if (!mediaData?.image.fileUrl && !mediaData?.media) {
-        return <p className={styles.noFile}>upload image!</p>;
+
+    const imageUrl = mediaData.image?.fileUrl;
+    const imageType = mediaData.image?.fileType || "";
+    const media = mediaData.media;
+
+    const shouldShowPlayButton = media && !showPlayer;
+    const isVideo = media?.fileType?.startsWith("video");
+
+    if (!imageUrl && !media) {
+        return (
+            <div className={styles.card}>
+                <p className={styles.noFile}>Upload image!</p>
+            </div>
+        );
     }
 
-    const hasMedia = Boolean(mediaData.media);
-    console.log("mediaData", mediaData)
     return (
         <div className={styles.card}>
-            {/* ---- Cover or Media ---- */}
-            {!showPlayer || !hasMedia ? (
-                <button
-                    type="button"
-                    className={styles.imageWrapper}
-                    onClick={() => hasMedia && setShowPlayer(true)}
-                >
+            {/* If not playing, show image with optional play overlay */}
+            {!showPlayer && imageType.startsWith("image") && imageUrl && (
+                <>
                     <Image
-                        src={mediaData.image.fileUrl}
-                        alt="Uploaded cover"
-                        width={150}
-                        height={150}
+                        src={imageUrl}
+                        alt="NFT Cover"
                         className={styles.image}
+                        fill
+                        sizes="50"
+                        priority
                     />
-                    {hasMedia && <span className={styles.playOverlay}>▶</span>}
-                </button>
-            ) : (
+                    {shouldShowPlayButton && (
+                        <button
+                            type="button"
+                            className={styles.playButton}
+                            onClick={() => setShowPlayer(true)}
+                        >
+                            <span className={styles.playOverlay}>▶</span>
+                        </button>
+                    )}
+                </>
+            )}
+
+            {/* If playing, show media instead of image */}
+            {media && showPlayer && (
                 <div className={styles.mediaWrapper}>
-                    {mediaData.media!.fileType?.startsWith("video") ? (
+                    {isVideo ? (
                         <video
-                            src={mediaData.media!.fileUrl}
+                            src={media.fileUrl}
                             controls
                             autoPlay
                             className={styles.media}
-                            onEnded={() => setShowPlayer(false)} // 👈 Return to image after playback
-                            width={150}
-                            height={150}
+                            onEnded={() => setShowPlayer(false)}
                         />
                     ) : (
                         <audio
-                            src={mediaData.media!.fileUrl}
+                            src={media.fileUrl}
                             controls
                             autoPlay
                             className={styles.media}
-                            onEnded={() => setShowPlayer(false)} // 👈 Return to image after playback
-
+                            onEnded={() => setShowPlayer(false)}
                         />
                     )}
                 </div>
             )}
-        </div>)
+        </div>
+    );
 }
-
-// export default MediaDisplay

@@ -1,23 +1,42 @@
 .input_container {
     display: grid;
     grid-template-columns: auto 1fr;
-    /* align-items: center; */
-    border: 2px solid var(--primary-shade);
+    /* fixed width for icon box */
     border-radius: 4px;
     background-color: #fff;
     color: var(--primary-color);
+    font-size: 16px;
+    overflow: hidden;
 }
 
-
-
-
 .input_icon {
-    flex: 1;
     display: flex;
     align-items: center;
-    /* margin-left: 8px; */
-    padding: 4px;
-    /* object-fit: fill; */
-    color: #888;
+    justify-content: center;
     background-color: var(--primary-shade);
+    width: 100%;
+    height: 100%;
+}
+
+.input_icon:empty {
+    background-color: transparent;
+    /* or keep it shaded if you want visual consistency */
+}
+
+.input_icon svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: 4px;
+}
+
+.input_field {
+    width: 100%;
+    padding: 4px;
+}
+
+@media screen and (max-width: 34em) {
+    .input_container {
+        border-radius: 0;
+    }
 }

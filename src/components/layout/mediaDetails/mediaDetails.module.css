@@ -1,90 +1,101 @@
-.media_details {
+.nft_detail_card {
     display: grid;
-    grid-template-columns: auto 1fr;
-    justify-content: center;
-    /* left fixed, right flexible */
-    width: 100%;
-    border: 1px solid var(--primary-shade);
-}
+    grid-template-columns: 1fr 1.5fr;
+    /* Two columns: media + details */
+    gap: var(--main-padding);
 
-/* Stacks layout on small screens */
-@media screen and (max-width: 28em) {
-    .media_details {
-        grid-template-columns: 1fr;
-    }
-}
-
-.media_info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* background: var(--primary-shade); */
     padding: var(--main-padding);
-    background-color: var(--primary-shade);
-    /* color: var(--text-primary-color); */
-    /* border-radius: 12px; */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* gap: 1rem; */
-    /* max-width: 500px; */
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Title */
-.media_info h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    /* margin-bottom: 0.5rem; */
-}
-
-/* Description */
-.media_info p {
-    margin: 0;
-    /* line-height: 1.4; */
-    /* font-size: 1rem; */
-}
-
-/* Price */
-.media_info p:nth-of-type(2) {
-    /* font-weight: bold; */
-    /* font-size: 1.1rem; */
-    color: var(--primary-color);
-    /* Use your theme highlight color */
-}
-
-/* Button Styling (optional override for .button) */
-.button {
-    /* padding: 0.75rem 1.25rem; */
-    /* background-color: var(--button-bg, #5c67f2); */
-    /* border: none; */
     border-radius: 8px;
-    font-weight: 600;
-    /* cursor: pointer; */
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    min-height: 150px;
+}
+
+
+.media_placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* background-color: #ddd; */
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    /* transition: background 0.3s ease; */
+    justify-content: center;
+    color: #888;
+    font-size: 1.2rem;
+    user-select: none;
 }
 
-.media_metadata {
-    /* margin-top: 1rem;
-    margin-bottom: 1rem; */
-    /* display: flex; */
-    flex-wrap: wrap;
-    /* font-size: 0.95rem; */
-    /* color: var(--text-secondary-color); */
-    gap: calc(var(--main-padding)*2);
+.details_section {
+    flex: 1 1 60%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
 }
 
-.media_metadata p {
-    margin-bottom: 0.25rem 0;
+.nft_title {
+    font-size: 2rem;
+    /* margin: 0 0 0.75rem 0; */
 }
 
-.media_metadata a {
-    color: var(--primary-color);
-    text-decoration: underline;
+.nft_description {
+    /* font-size: 1rem; */
+    line-height: 1.4;
+    /* margin-bottom: 1.5rem; */
+    color: #444;
 }
 
-/* .button:hover {
-    background-color: var(--button-hover-bg, #4a54e1);
-} */
+.meta_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    /* margin-bottom: 1.5rem; */
+}
+
+.meta_item {
+    background: #f5f5f5;
+    /* padding: 0.75rem 1rem; */
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+    /* font-weight: 600; */
+    color: #333;
+}
+
+.nft_price,
+.meta {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.buy_button {
+    /* padding: 0.75rem 1.5rem; */
+    /* background-color: #0070f3; */
+    /* color: white; */
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    /* cursor: pointer; */
+    transition: background-color 0.2s ease;
+    align-self: center;
+    margin-block: var(--main-padding);
+}
+
+.buy_button:hover {
+    background-color: #005bb5;
+}
+
+
+
+
+
+/* On smaller screens, stack vertically */
+@media (max-width: 700px) {
+    .nft_detail_card {
+        grid-template-columns: 1fr;
+        /* Single column */
+    }
+
+    .media_section,
+    .details_section {
+        width: 100%;
+    }
+}

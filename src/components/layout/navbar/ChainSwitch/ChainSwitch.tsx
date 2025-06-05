@@ -23,8 +23,8 @@ const ChainSwitch: React.FC = () => {
     if (switched) setCurrentNetwork(switched); // Update context only if switch is successful
   }
   const networkLogo = networkInfo[currentNetwork]?.iconUrls[0]; // Default to hardhat logo if not found
-  console.log(currentNetwork)
-  console.log(visibleNetworks)
+  // console.log(currentNetwork)
+  // console.log("visibleNetworks", visibleNetworks)
   return (
     <Dropdown
       trigger={

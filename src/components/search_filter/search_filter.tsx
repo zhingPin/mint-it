@@ -5,6 +5,7 @@ import Search from '../ui/search/search'
 // import FilterTaps from './filterTaps/filterTaps'
 import DropDownTap from './filterTaps/dropDownTap/dropDownTap'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
+import FilterTaps from './filterTaps/filterTaps'
 type SearchFilterProps = {
     placeholder: string;
 }
@@ -17,21 +18,17 @@ const Search_filter: React.FC<SearchFilterProps> = ({ placeholder }) => {
                     icon={<FaMagnifyingGlass />} // Pass the icon here
                 />
             </div>
-            <div className={styles.filter} >
-                <DropDownTap
-                    dropdownOptions={["Most Recent", "High to Low", "Low to High", "Old to New"]}
-                />
-            </div>
-            <div className={styles.dropdown} /* grid-area: dropdown */>
-                type  <DropDownTap
+            <DropDownTap
+                dropdownOptions={["Most Recent", "High to Low", "Low to High", "Old to New"]}
+            />
+            {/* <DropDownTap
                     dropdownOptions={["music", "audio book", "podcast", "video", "movie", "tv show"]}
-                />
-                {/* <FilterTaps
-                    tabs={["Listed", "Owned", "Liked", "Following", "Followers"]}
-                    dropdownOptions={["Most Recent", "High to Low", "Low to High", "Old to New"]}
                 /> */}
+            <FilterTaps
+                tabs={["Listed", "Owned"]}
+            // dropdownOptions={["Most Recent", "High to Low", "Low to High", "Old to New"]}
+            />
 
-            </div>
         </div>
     )
 }

@@ -1,52 +1,46 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./filterTaps.module.css";
 import { Button } from "@/components/ui";
-// import DropDownTap from "./dropDownTap/dropDownTap";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 type FilterTapsProps = {
     tabs: string[];
-    dropdownOptions: string[];
 };
 
 const FilterTaps: React.FC<FilterTapsProps> = ({ tabs }) => {
-    const [activeTab, setActiveTab] = useState<string>(tabs[0]); // Default to the first tab
-    // const [selectedOption, setSelectedOption] = useState<string>(dropdownOptions[0]); // Default to the first dropdown option
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
+    const currentFilter = searchParams.get("filter") || tabs[0]; // URL or default
+    const [activeTab, setActiveTab] = useState<string>(currentFilter);
+
+    useEffect(() => {
+        setActiveTab(currentFilter);
+    }, [currentFilter]);
 
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
-        console.log("Selected Tab:", tab);
-        // Perform actions based on the selected tab
+
+        const params = new URLSearchParams(searchParams);
+        params.set("filter", tab); // e.g. ?filter=Owned
+        replace(`${pathname}?${params.toString()}`);
     };
 
-    // const handleDropdownChange = (option: string) => {
-    //     setSelectedOption(option);
-    //     console.log("Selected Option:", option);
-    //     // Perform actions based on the selected dropdown option
-    // };
-
     return (
-        <div className={styles.filterTaps}>
-            {/* Tabs */}
-            <div className={styles.tabs}>
-                {tabs.map((tab, index) => (
-                    <Button
-                        btnName={tab}
-                        icon={null} // No icon for tabs, but you can add one if needed
-                        classStyle={`${styles.tab} ${activeTab === tab ? styles.active : ""}`}
-                        handleClick={() => handleTabChange(tab)}
-                        key={index}
-                        aria-selected={activeTab === tab}
-                        role="tab"
-                    />
-
-                ))}
-            </div>
-
-
-            {/* <DropDownTap
-                dropdownOptions={dropdownOptions} // Pass dropdown options to the component
-            /> */}
+        <div className={styles.filterTaps} role="tablist">
+            {tabs.map((tab, index) => (
+                <Button
+                    btnName={tab}
+                    icon={null}
+                    classStyle={`${styles.tab} ${activeTab === tab ? styles.active : ""}`}
+                    handleClick={() => handleTabChange(tab)}
+                    key={index}
+                    aria-selected={activeTab === tab}
+                    role="tab"
+                />
+            ))}
         </div>
     );
 };

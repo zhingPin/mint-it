@@ -28,7 +28,7 @@ const Search: React.FC<SearchProps> = ({ placeholder, icon }) => {
     }, 300);
 
     return (
-        <div className={styles.search_body}>
+        <div >
             <Input
                 placeholder={placeholder}
                 defaultValue={query} // Set the current query as the default value

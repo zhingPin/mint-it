@@ -70,19 +70,18 @@ const UploadForm = () => {
     };
 
     return (
-        <div>
-            <form className={formStyles.Form_box} onSubmit={(e) => e.preventDefault()}>
-                <div className={formStyles.Form_box_input_grid}>
-                    <FormField label="Title" id="title" className="small_input">
-                        <Input
-                            id="title"
-                            name="title"
-                            placeholder="Enter the title"
-                            value={title}
-                            onChange={(val) => setTitle(val)}
-                        />
-                    </FormField>
-                </div>
+        <form className={formStyles.Form_box} onSubmit={(e) => e.preventDefault()}>
+            <div><div className={formStyles.Form_box_input_grid}>
+                <FormField label="Title" id="title" className="small_input">
+                    <Input
+                        id="title"
+                        name="title"
+                        placeholder="Enter the title"
+                        value={title}
+                        onChange={(val) => setTitle(val)}
+                    />
+                </FormField>
+            </div>
                 <div className={formStyles.Form_box_input_grid}>
                     <FormField label="Description" id="description" className="large_input">
                         <Textarea
@@ -147,11 +146,13 @@ const UploadForm = () => {
                         </FormField>
                     </div>
                 </div>
+            </div>
 
-
+            <div>
                 <Button btnName="Upload Media" handleClick={handleSubmit} />
-            </form>
-        </div>
+            </div>
+
+        </form>
     );
 };
 

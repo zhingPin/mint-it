@@ -1,6 +1,4 @@
 .preview_box {
     border: 1px solid var(--secondary-color);
-    min-width: 420px;
-    max-height: 250px;
 
 }
