@@ -7,6 +7,7 @@ import {
 import { getCurrentNetwork, handleNetworkSwitch } from "@/lib/chainConfig";
 import { WalletContextProps } from "./context/walletContext";
 import { networkConfig } from "@/lib/chains/networkConfig";
+import { DEFAULT_NETWORK } from "./context/const";
 
 export const WalletContext = createContext<WalletContextProps | undefined>(
     undefined
@@ -26,6 +27,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             if (walletData) {
                 setAccount(walletData.address);
                 setAccountBalance(walletData.balance);
+                setCurrentNetwork(walletData.chainId);
                 setIsConnected(true);
                 console.log("Wallet connected:", walletData.address);
             } else {
@@ -44,7 +46,7 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             };
 
             const handleChainChanged = async () => {
-                await fetchCurrentNetwork();
+                setTimeout(fetchCurrentNetwork, 300); // Wait 0.5s to ensure state is updated
             };
 
             // Add event listeners
@@ -53,33 +55,31 @@ const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
             // Cleanup event listeners on component unmount
             return () => {
-                window.ethereum?.removeListener("accountsChanged", handleAccountsChanged);
-                window.ethereum?.removeListener("chainChanged", handleChainChanged);
+                if (window?.ethereum?.removeListener) {
+                    window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
+                    window.ethereum.removeListener("chainChanged", handleChainChanged);
+                }
             };
+
         }
-    }, []);
+    }, [currentNetwork]);
 
     const handleConnectWallet = async () => {
         if (!currentAccount) {
             try {
-                // Ensure the user is on the correct network
-                const switchedNetwork = await handleNetworkSwitch(currentNetwork || "hardhat");
+                const switchedNetwork = await handleNetworkSwitch(currentNetwork || DEFAULT_NETWORK);
                 if (!switchedNetwork) {
-                    console.error("Failed to switch network.");
                     setWalletError("Please switch to the correct network.");
                     return;
                 }
 
-                // Connect the wallet
                 const walletDetails = await ConnectWallet();
                 if (walletDetails) {
                     const { address, balance, chainId } = walletDetails;
                     setAccount(address);
                     setAccountBalance(balance);
-                    setCurrentNetwork(chainId.toString());
+                    setCurrentNetwork(chainId); // Already key
                     setIsConnected(true);
-                    console.log("Wallet connected:", address);
-                    console.log("currentNetwork:", chainId.toString());
                 }
             } catch (error) {
                 console.error("Error connecting wallet:", error);

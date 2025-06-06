@@ -2,15 +2,16 @@ import { Contract, ethers, Signer } from "ethers";
 import getWeb3Modal from "./modal";
 import Web3Modal from "web3modal";
 
-import { GSOE_TOKENS_ABI, NFT_MARKETPLACE_ABI } from "../../const";
+import { DEFAULT_NETWORK, GSOE_TOKENS_ABI, NFT_MARKETPLACE_ABI } from "../../const";
 
 import { Provider } from "ethers";
 import { networkInfo } from "@/lib/chains/networkInfo";
+import { getVisibleNetworks } from "../../../../../helpers/networkHelpers";
 
 interface WalletData {
   balance: string;
   address: string;
-  chainId: number | string;
+  chainId: string;
 }
 
 type ContractType = "nft" | "marketplace";
@@ -69,30 +70,33 @@ export const connectToContract = async (
   }
 };
 
-
-
 export const CheckIfWalletConnected = async (): Promise<WalletData | null> => {
   try {
     if (typeof window === "undefined") return null;
-
     const { ethereum } = window;
     if (!ethereum) return null;
 
     const accounts = await ethereum.request({ method: "eth_accounts" });
-    if (!accounts || accounts.length === 0) {
-      console.log("No accounts found.");
-      return null;
-    }
+    if (!accounts || accounts.length === 0) return null;
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    const provider = new ethers.BrowserProvider(ethereum);
     const balanceInWei = await provider.getBalance(accounts[0]);
     const balance = ethers.formatEther(balanceInWei);
-    const chainId = await ethereum.request({ method: "eth_chainId" });
+
+    const chainIdHex = await ethereum.request({ method: "eth_chainId" });
+    const chainId = parseInt(chainIdHex, 16).toString();
+
+    const visibleNetworks = getVisibleNetworks();
+    const matchingEntry = visibleNetworks.find(
+      (net) => parseInt(net.chainId, 16).toString() === chainId
+    );
+
+    const resolvedNetworkKey = matchingEntry?.key || DEFAULT_NETWORK;
 
     return {
       address: accounts[0],
       balance,
-      chainId,
+      chainId: resolvedNetworkKey, // Always return network key
     };
   } catch (err) {
     console.error("Error checking wallet connection:", err);
@@ -100,50 +104,42 @@ export const CheckIfWalletConnected = async (): Promise<WalletData | null> => {
   }
 };
 
-
-
-
 export const ConnectWallet = async (): Promise<WalletData | undefined> => {
   try {
-    if (typeof window === "undefined") {
-      console.log("MetaMask not installed. Please install MetaMask to continue.");
-      return undefined;
-    }
+    if (typeof window === "undefined") return;
 
     const { ethereum } = window;
-    if (!ethereum) {
-      console.log("Ethereum object not found. Please install MetaMask.");
-      return undefined;
-    }
+    if (!ethereum) return;
 
-
-
-    // Request accounts from the wallet
     const accounts = await ethereum.request({
       method: "eth_requestAccounts",
     });
+    if (!accounts || accounts.length === 0) return;
 
-    if (!accounts || accounts.length === 0) {
-      console.log("No accounts found.");
-      return undefined;
-    }
-
-    const provider = new ethers.BrowserProvider(window.ethereum);
-
+    const provider = new ethers.BrowserProvider(ethereum);
     const balanceInWei = await provider.getBalance(accounts[0]);
     const balance = ethers.formatEther(balanceInWei);
-    const chainId = await ethereum.request({ method: "eth_chainId" });
+
+    const chainIdHex = await ethereum.request({ method: "eth_chainId" });
+    const chainId = parseInt(chainIdHex, 16).toString();
+
+    const visibleNetworks = getVisibleNetworks();
+    const matchingEntry = visibleNetworks.find(
+      (net) => parseInt(net.chainId, 16).toString() === chainId
+    );
+    const resolvedNetworkKey = matchingEntry?.key || DEFAULT_NETWORK;
 
     return {
       address: accounts[0],
       balance,
-      chainId,
+      chainId: resolvedNetworkKey, // use key again here
     };
   } catch (err) {
     console.error("Error connecting wallet:", err);
-    return undefined;
+    return;
   }
 };
+
 
 
 

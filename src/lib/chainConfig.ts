@@ -1,9 +1,10 @@
+import { DEFAULT_NETWORK } from "@/providers/context/const";
 import { getVisibleNetworks } from "../../helpers/networkHelpers";
 import { NetworkConfigProps } from "../../types/network-types";
 import { networkConfig } from "./chains/networkConfig";
 
-// Default network
-export const DEFAULT_NETWORK = process.env.DEFAULT_NETWORK || "hardhat";
+
+
 
 if (!networkConfig[DEFAULT_NETWORK]) {
   throw new Error(`Invalid active network: ${DEFAULT_NETWORK}`);

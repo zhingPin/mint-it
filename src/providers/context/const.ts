@@ -6,6 +6,13 @@ import gsoe from "./GSOEToken.json";
 // export const WOKE_ABI = nftMarketplace.abi;
 // export const WOKE_BYTECODE = nftMarketplace.bytecode;
 
+// Default network
+export const DEFAULT_NETWORK =
+    process.env.NODE_ENV !== "production"
+        ? "hardhat"
+        : (process.env.DEFAULT_NETWORK ?? "polygon"); // Use env or fallback to polygon
+
+
 // MARKETPLACE
 export const NFT_MARKETPLACE_ABI = nftMarketplace.abi;
 export const NFT_MARKETPLACE_BYTECODE = nftMarketplace.bytecode;

@@ -9,6 +9,7 @@ import { WokeContext } from "@/providers/context";
 import { getVisibleNetworks } from "../../../../../helpers/networkHelpers";
 import { handleNetworkSwitch } from "@/lib/chainConfig";
 import { networkInfo } from "@/lib/chains/networkInfo";
+import { DEFAULT_NETWORK } from "@/providers/context/const";
 
 const ChainSwitch: React.FC = () => {
   const wokeContext = useContext(WokeContext);
@@ -22,8 +23,8 @@ const ChainSwitch: React.FC = () => {
     const switched = await handleNetworkSwitch(chainKey);
     if (switched) setCurrentNetwork(switched); // Update context only if switch is successful
   }
-  const networkLogo = networkInfo[currentNetwork]?.iconUrls[0]; // Default to hardhat logo if not found
-  // console.log(currentNetwork)
+  const selectedKey = currentNetwork || DEFAULT_NETWORK;
+  const networkLogo = networkInfo[selectedKey]?.iconUrls[0];  // console.log(currentNetwork)
   // console.log("visibleNetworks", visibleNetworks)
   return (
     <Dropdown
@@ -36,8 +37,8 @@ const ChainSwitch: React.FC = () => {
                 src={networkLogo}
                 height={25}
                 width={25}
-                alt={`${networkInfo[currentNetwork]?.displayName || "Chain"
-                  } logo`}
+                alt={`${networkInfo[selectedKey]?.displayName || "Chain"} logo`}
+                title={`${networkInfo[selectedKey]?.displayName || "Chain"} logo`}
               />
             )}
           </div>
