@@ -6,14 +6,16 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 type FilterTapsProps = {
     tabs: string[];
+    tabopt: string; // Optional prop for initial active tab
 };
 
-const FilterTaps: React.FC<FilterTapsProps> = ({ tabs }) => {
+const FilterTaps: React.FC<FilterTapsProps> = ({ tabs, tabopt }) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    const currentFilter = searchParams.get("filter") || tabs[0]; // URL or default
+    // const currentFilter = searchParams.get("filter") || tabs[0]; // URL or default
+    const currentFilter = tabopt
     const [activeTab, setActiveTab] = useState<string>(currentFilter);
 
     useEffect(() => {
@@ -24,7 +26,7 @@ const FilterTaps: React.FC<FilterTapsProps> = ({ tabs }) => {
         setActiveTab(tab);
 
         const params = new URLSearchParams(searchParams);
-        params.set("filter", tab); // e.g. ?filter=Owned
+        params.set("tabopt", tab); // e.g. ?filter=Owned
         replace(`${pathname}?${params.toString()}`);
     };
 

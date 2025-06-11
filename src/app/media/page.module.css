@@ -7,10 +7,7 @@
     /* flex: 1; */
 }
 
-.query_box {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
+.query_box {}
 
 .filter_options {
     display: flex;

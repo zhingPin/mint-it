@@ -2,22 +2,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     justify-content: flex-start;
-    gap: 16px;
+    /* gap: 16px; */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.display {
-    /* min-width: 420px; */
-    width: 100%;
-    height: 180px;
-    /* max-height: 250px; */
-    background: #111;
-    display: flex;
-}
-
-.info_card_action {
-    display: flex;
-    justify-content: space-between;
 }
 
 /* Individual media card */
@@ -29,6 +15,41 @@
     text-align: start;
     /* max-width: 400px; */
 }
+
+
+.display {
+    /* max-width: 380px; */
+    width: 100%;
+    height: 180px;
+    /* max-height: 250px; */
+    background: #111;
+    display: flex;
+}
+
+.owned_card {
+    border: 2px solid limegreen;
+}
+
+.not_owned_card {
+    opacity: 0.8;
+    filter: blur(1px);
+}
+
+.media_card.seller_card {
+    border-color: var(--secondary-color);
+}
+
+.owned_label {
+    font-size: 0.8rem;
+    color: green;
+}
+
+.info_card_action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 
 
 
@@ -43,6 +64,18 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
+}
+
+.creator_label {
+    color: var(--text-secondary-color, #888);
+    font-size: 0.75rem;
+}
+
+.creator_address {
+    color: var(--primary-color, #3498db);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
 /* Title of the media card */

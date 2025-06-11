@@ -27,7 +27,6 @@ export function IpfsProvider({ children }: { children: ReactNode }) {
         setIsLoading(true)
         setProgress(null)
         console.log("Uploading file to IPFS:", file.name)
-
         try {
             const formData = new FormData()
             formData.append("file", file)

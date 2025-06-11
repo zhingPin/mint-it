@@ -148,7 +148,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                 const provider = new ethers.JsonRpcProvider(
                     networkConfig[network]?.rpcUrls[0]
                 );
-                console.log(`Fetching NFTs from network: ${network}`);
+                // console.log(`Fetching NFTs from network: ${network}`);
 
                 const marketplaceContract = fetchContract(provider, network, "marketplace");
                 const nftContract = fetchContract(provider, network, "nft"); // ✅ NFT contract instance
@@ -177,10 +177,10 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                 try {
                                     // ✅ Call tokenURI on the NFT contract, not marketplace
                                     const tokenURI = await nftContract.tokenURI(tokenId);
-                                    console.log(
-                                        `Token URI for Token ID ${tokenId} on ${network}:`,
-                                        tokenURI
-                                    );
+                                    // console.log(
+                                    //     `Token URI for Token ID ${tokenId} on ${network}:`,
+                                    //     tokenURI
+                                    // );
 
                                     const {
                                         data: {
@@ -194,6 +194,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                             quantity,
                                             website,
                                             collection,
+                                            chainId
                                         },
                                     } = await axios.get(tokenURI);
 
@@ -201,6 +202,9 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                         unformattedPrice.toString(),
                                         "ether"
                                     );
+                                    const ownedByCurrentUser = (owner?.toLowerCase() === currentAccount?.toLowerCase());
+                                    const isSeller = (seller?.toLowerCase() === currentAccount?.toLowerCase());
+
 
                                     return {
                                         tokenId,
@@ -223,6 +227,9 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                         batchSpecificId: Number(batchSpecificId),
                                         batchNumber: Number(batchNumber),
                                         network,
+                                        ownedByCurrentUser,
+                                        isSeller,
+                                        chainId
                                     };
                                 } catch (metadataError) {
                                     console.error(
@@ -298,6 +305,9 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                             console.log(`Token URI for token ${item.tokenId} on ${network}:`, tokenURI);
 
                             const { data } = await axios.get(tokenURI);
+                            const ownedByCurrentUser = item.owner?.toLowerCase() === currentAccount.toLowerCase();
+                            const isSeller = item.seller?.toLowerCase() === currentAccount.toLowerCase();
+
 
                             return {
                                 tokenId: Number(item.tokenId),
@@ -320,7 +330,10 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                                 batchSpecificId: Number(item.batchSpecificId),
                                 batchNumber: Number(item.batchNumber),
                                 network,
-                                router
+                                router,
+                                ownedByCurrentUser,
+                                isSeller,
+                                chainId: data.chainId,
                             } as NftData;
                         } catch (metaErr) {
                             console.error(`Metadata error for token ${item.tokenId} on ${network}:`, metaErr);

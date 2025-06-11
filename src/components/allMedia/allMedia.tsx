@@ -8,6 +8,7 @@ interface AllMediaProps {
     query: string
     sort: string
     filter: string
+    tabopt: string
 }
 const AllMedia: React.FC<AllMediaProps> = ({ query, filter }) => {
 
@@ -54,30 +55,22 @@ const AllMedia: React.FC<AllMediaProps> = ({ query, filter }) => {
             });
     }, [fetchMarketsNFTs]);
 
-    // Filter NFTs based on the filter and query from the URL
     const filteredNFTs = nfts.filter((nft) => {
-        // Apply filter logic
         if (filter === "all") return true;
-        if (filter === "music") return nft.audio || nft.media.fileType?.startsWith("audio/");
-        if (filter === "videos") return nft.video || nft.media.fileType?.startsWith("video/");
-        if (filter === "images") {
-            return (
-                (nft.image || nft.media.fileType?.startsWith("image/")) &&
-                !nft.video &&
-                !nft.audio
-            );
-        }
+        if (filter === "music") return nft.audio || nft.media?.fileType?.startsWith("audio/");
+        if (filter === "videos") return nft.video || nft.media?.fileType?.startsWith("video/");
+        if (filter === "images") return !nft.media?.fileType;
 
         return false;
     }).filter((nft) => {
-        // Apply query logic
-        if (!query) return true; // If no query, include all
+        if (!query) return true;
         const lowerCaseQuery = query.toLowerCase();
         return (
-            nft.name?.toLowerCase().includes(lowerCaseQuery) || // Check if name matches query
-            nft.description?.toLowerCase().includes(lowerCaseQuery) // Check if description matches query
+            nft.name?.toLowerCase().includes(lowerCaseQuery) ||
+            nft.description?.toLowerCase().includes(lowerCaseQuery)
         );
     });
+
 
     return (
         <div>

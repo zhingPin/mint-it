@@ -40,43 +40,64 @@ const Dropzone: React.FC<DropzoneProps> = ({ type }) => {
 
     const onDrop = useCallback(
         async (acceptedFiles: File[]) => {
-            const file = acceptedFiles[0]
-            if (file) {
-                try {
-                    const url = await uploadToIpfs(file)
-                    const fileSize = formatFileSize(file.size)
-                    const fileType = file.type
+            const file = acceptedFiles[0];
+            if (!file) return;
 
-                    if (type === "image") {
-                        if (isValidImageType(fileType)) {
-                            setImageData({
-                                fileUrl: url,
-                                fileType,
-                                fileSize,
-                            })
-                        } else {
-                            console.warn("Invalid image file type:", fileType)
-                        }
-                    } else if (type === "media") {
-                        if (isValidMediaType(fileType)) {
-                            setMediaData({
-                                fileUrl: url,
-                                fileType,
-                                fileSize,
-                            })
-                        } else {
-                            console.warn("Invalid media file type:", fileType)
-                        }
-                    }
+            const fileType = file.type;
+            const fileSize = formatFileSize(file.size);
 
-                    console.log("File uploaded:", { url, fileType, fileSize })
-                } catch (error) {
-                    console.error("Upload failed:", error)
+            try {
+                // 👇 Example call to the new hello route
+
+                const res = await fetch("/api/ipfs-upload/preview", {
+                    method: "GET",
+                });
+                const data = await res.json();
+                console.log("Hello API response:", data);
+
+
+                // 👇 Prepare form data for POST
+                const formData = new FormData();
+                formData.append("file", file);
+
+                // // 👇 Call POST /api/ipfs-upload/preview with file
+                // const response = await fetch("/api/ipfs-upload/preview", {
+                //     method: "POST",
+                //     body: formData,
+                // });
+                if (type === "image" && isValidImageType(fileType)) {
+                    const url = await uploadToIpfs(file);
+
+                    setImageData({
+                        fileUrl: url,
+                        fileType,
+                        fileSize,
+                    });
+
+                    console.log("Image uploaded:", { url, fileType, fileSize });
+                } else if (type === "media" && isValidMediaType(fileType)) {
+                    // 👇 For now, just upload full file directly
+                    const url = await uploadToIpfs(file);
+
+                    setMediaData({
+                        fileUrl: url,
+                        previewUrl: "", // no preview now
+                        fileType,
+                        fileSize,
+                        previewDuration: 0,
+                    });
+
+                    console.log("Media uploaded without preview:", { url });
+                } else {
+                    console.warn("Invalid file type:", fileType);
                 }
+            } catch (err) {
+                console.error("Upload or processing failed:", err);
             }
         },
-        [uploadToIpfs, setMediaData, setImageData, type],
-    )
+        [type, setMediaData, setImageData, uploadToIpfs]
+    );
+
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -87,7 +108,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ type }) => {
                     "video/*": [".mp4", ".webm", ".ogg"],
                     "audio/*": [".mp3", ".wav"],
                 },
-        maxSize: 50000000, // 50 MB
+        maxSize: 500000000, // 500 MB
         disabled: isLoading,
     })
 

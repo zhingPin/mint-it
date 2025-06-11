@@ -29,6 +29,7 @@ const UploadForm = () => {
     const [price, setPrice] = useState("");
     const [royalties, setRoyalties] = useState("");
     const [quantity, setQuantity] = useState("");
+    const [author, setAuthor] = useState("");
 
     const handleSubmit = async () => {
         if (!mediaData.image) {
@@ -79,6 +80,15 @@ const UploadForm = () => {
                         placeholder="Enter the title"
                         value={title}
                         onChange={(val) => setTitle(val)}
+                    />
+                </FormField>
+                <FormField label="Author" id="author" className="small_input">
+                    <Input
+                        id="author"
+                        name="author"
+                        placeholder="Enter the author"
+                        value={author}
+                        onChange={(val) => setAuthor(val)}
                     />
                 </FormField>
             </div>

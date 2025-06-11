@@ -1,14 +1,17 @@
 import { Button } from '@/components/ui';
 import { NftContext } from '@/providers/nftProvider';
+import { StaticImageData } from 'next/image';
 import React, { useContext } from 'react';
+import styles from './buyToken.module.css';
 
 type BuyTokenProps = {
     listingId: number;
     tokenId: number;
     price: string;
+    currencyIcon?: React.ReactNode | StaticImageData; // Optional icon prop
 };
 
-const BuyToken: React.FC<BuyTokenProps> = ({ listingId, tokenId, price }) => {
+const BuyToken: React.FC<BuyTokenProps> = ({ listingId, tokenId, price, currencyIcon }) => {
     const nftContext = useContext(NftContext);
 
     if (!nftContext) {
@@ -23,12 +26,14 @@ const BuyToken: React.FC<BuyTokenProps> = ({ listingId, tokenId, price }) => {
     }
 
     return (
-        <div>
-            <Button
-                btnName={`buy for ${price}eth`}
-                handleClick={() => buyNFT(listingId, tokenId, price)} // Pass tokenId and price
-            />
-        </div>
+        // <div className={styles.buy_token_container}>
+        <Button
+            btnName={` ${price}`}
+            handleClick={() => buyNFT(listingId, tokenId, price)} // Pass tokenId and price
+            icon={currencyIcon}
+            classStyle={styles.buy_token_container}
+        />
+        // </div>
     );
 };
 

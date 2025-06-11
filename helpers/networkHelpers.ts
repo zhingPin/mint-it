@@ -8,9 +8,9 @@ export function getVisibleNetworks() {
     .filter(([key, info]) => {
       const hasConfig = !!networkConfig[key];
 
-      if (!hasConfig) {
-        console.warn(`Missing config for network: ${key}`);
-      }
+      // if (!hasConfig) {
+      //   console.warn(`Missing config for network: ${key}`);
+      // }
 
       return (
         info.active &&

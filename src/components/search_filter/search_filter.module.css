@@ -1,6 +1,14 @@
 .search_filter_body {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
     gap: var(--main-padding);
-    justify-content: flex-end;
-    /* flex-direction: row; */
+    margin-bottom: var(--component-gap);
+    /* align-items: center; */
+}
+
+.filter_controls {
+    display: flex;
+    flex-direction: row;
+    gap: var(--main-padding);
+    justify-content: center;
 }

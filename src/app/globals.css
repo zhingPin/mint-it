@@ -12,7 +12,7 @@
   --text-shade: #ffffff;
 
   --main-padding: 16px;
-  --component-gap: 1em;
+  --component-gap: 32px;
   --inline-padding-layout: 3rem;
   --block-padding-layout: 3rem;
 
@@ -119,6 +119,7 @@ input {
   font-family: var(--font-geist-sans);
   /* color: var(--text-tint); */
   overflow-y: auto;
+  gap: var(--component-gap);
 }
 
 ::-webkit-scrollbar {
@@ -218,7 +219,7 @@ button {
 
 /* generic button */
 .new_button {
-  padding: 4px;
+  /* padding: 4px; */
   align-content: center;
   /* align-items: center; */
   justify-content: center;
@@ -259,7 +260,7 @@ button {
 @media screen and (max-width: 34em) {
 
   .page {
-    padding: 0;
+    padding: var(--main-padding) 0 0 0;
 
   }
 

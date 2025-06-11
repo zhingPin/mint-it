@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
     title: "Mint Media",
-    description: "Mint your media NFTs",
+    description: "Mint and sell your media Media",
 };
 
 export default function MintLayout({

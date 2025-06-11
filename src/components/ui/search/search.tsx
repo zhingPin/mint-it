@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-// import styles from "./search.module.css";
+import styles from "./search.module.css";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import Input from "@/components/ui/form_Components/input/input";
 import { useDebouncedCallback } from "use-debounce";
@@ -8,14 +8,15 @@ import { useDebouncedCallback } from "use-debounce";
 type SearchProps = {
     placeholder: string;
     icon: React.ReactNode;
+    query: string; // Optional query prop for initial value
 };
 
-const Search: React.FC<SearchProps> = ({ placeholder, icon }) => {
+const Search: React.FC<SearchProps> = ({ placeholder, icon, query }) => {
     const searchParams = useSearchParams();
     const Pathname = usePathname();
     const { replace } = useRouter();
 
-    const query = searchParams.get("query") || ""; // Get the current query from the URL
+    // const query = searchParams.get("query") || ""; // Get the current query from the URL
 
     const handleSearch = useDebouncedCallback((term: string) => {
         const params = new URLSearchParams(searchParams);
@@ -28,7 +29,8 @@ const Search: React.FC<SearchProps> = ({ placeholder, icon }) => {
     }, 300);
 
     return (
-        <div >
+        <div className={styles.search_container}>
+            {/* Use the Input component with the current query as the default value */}
             <Input
                 placeholder={placeholder}
                 defaultValue={query} // Set the current query as the default value

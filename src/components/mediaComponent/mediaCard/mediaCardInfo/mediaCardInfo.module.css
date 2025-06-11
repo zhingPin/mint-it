@@ -1,0 +1,120 @@
+.card_info_container {
+    /* padding: 12px; */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* background-color: rgba(0, 0, 0, 0.03); */
+}
+
+.card_info_header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    justify-content: space-between;
+    /* margin-bottom: 8px; */
+}
+
+/* .price_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+} */
+
+.price_label {
+    font-size: 0.85rem;
+    color: var(--text-secondary-color, #888);
+}
+
+.price_value {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-primary-color, #333);
+}
+
+.eth_icon {
+    color: #627eea;
+    margin-right: 4px;
+}
+
+.details_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 8px; */
+    font-size: 0.85rem;
+}
+
+.price_container,
+.creator_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.creator_label {
+    color: var(--text-secondary-color, #888);
+    font-size: 0.75rem;
+}
+
+.creator_address {
+    color: var(--primary-color, #3498db);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.creator_address:hover {
+    text-decoration: underline;
+}
+
+.stats_container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.time_left,
+.likes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-secondary-color, #888);
+}
+
+.status_container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.status_tag {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.listed {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: #3498db;
+}
+
+.owned {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+}
+
+.for-sale {
+    background-color: rgba(155, 89, 182, 0.15);
+    color: #9b59b6;
+}
+
+@media (max-width: 480px) {
+    .details_container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .stats_container {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

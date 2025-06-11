@@ -1,65 +1,49 @@
-import AllMedia from '@/components/allMedia/allMedia';
-import Filter from '@/components/ui/filter/filter';
-import Search from '@/components/ui/search/search';
-import { FaImages, FaMusic, FaVideo } from 'react-icons/fa';
-import { FaMagnifyingGlass } from 'react-icons/fa6';
-import styles from './page.module.css'
-import DropDownTap from '@/components/search_filter/filterTaps/dropDownTap/dropDownTap';
-import FilterTaps from '@/components/search_filter/filterTaps/filterTaps';
+import AllMedia from "@/components/allMedia/allMedia"
+import Filter from "@/components/ui/filter/filter"
+import { FaImages, FaMusic, FaVideo } from "react-icons/fa"
+import styles from "./page.module.css"
+import { Search_filter } from "@/components"
 
 interface PageProps {
     searchParams: Promise<{
         query?: string
         sort?: string
         filter?: string
+        tabopt?: string
     }>
 }
 
 const Page = async ({ searchParams }: PageProps) => {
-
     const params = await searchParams
 
     const query = params.query || ""
     const sort = params.sort || "Most Recent"
-    const filter = params.filter || "Listed"
+    const filter = params.filter || "all"
+    const tabopt = params.tabopt || ""
+    // Define filter options with icons
 
     const filterOptions = [
-        { key: "audio", label: "", icon: <FaMusic /> },
-        { key: "videos", label: "", icon: <FaVideo /> },
-        { key: "images", label: "", icon: <FaImages /> },
+        { key: "music", label: "Music", icon: <FaMusic /> },
+        { key: "videos", label: "Videos", icon: <FaVideo /> },
+        { key: "images", label: "Images", icon: <FaImages /> },
         { key: "all", label: "All", icon: null },
     ];
-    // console.log(query, page)
+
     return (
         <main className="page">
             <div className={styles.query_box}>
-                <div></div>
-                <Search
+                <Search_filter
+                    query={query}
+                    sort="Most Recent"
+                    tabopt={tabopt}
                     placeholder="Search for media..."
-                    icon={<FaMagnifyingGlass />}
+                    filterTabs={[]} // Empty array = no filter tabs
                 />
-                <div>
-                    <div className={styles.filter_options}>
-                        <FilterTaps tabs={["listed"]} />
-                        <DropDownTap dropdownOptions=
-                            {
-                                [
-                                    "new to old",
-                                    "old to new",
-                                    "price hi to low",
-                                    " price low to hi"
-                                ]
-                            }
-                        />
-                    </div>
-
-                </div>
-
             </div>
             <div>
-                <h1>Media</h1>
-                <Filter filterOptions={filterOptions} />
-                <AllMedia query={query} sort={sort} filter={filter} />
+                <h1>Marketplace </h1>
+                <Filter filterOptions={filterOptions} filter={filter} />
+                <AllMedia query={query} sort={sort} filter={filter} tabopt={tabopt} />
             </div>
         </main>
     )

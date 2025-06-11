@@ -12,15 +12,18 @@ type FilterOption = {
 
 type FilterProps = {
     filterOptions: FilterOption[];
+    filter: string; // Optional prop for initial filter state
 };
 
-const Filter: React.FC<FilterProps> = ({ filterOptions }) => {
+const Filter: React.FC<FilterProps> = ({ filterOptions, filter }) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
     // Derive activeFilter from the URL query parameters
-    const activeFilter = searchParams.get("filter") || "all";
+    const activeFilter = filter
+
+    // const activeFilter = searchParams.get("filter") || "all";
 
     const handleFilterClick = (filter: string) => {
         const params = new URLSearchParams(searchParams.toString());

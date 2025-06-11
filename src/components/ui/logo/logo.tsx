@@ -5,7 +5,7 @@ import Link from 'next/link'
 const Logo = () => {
     return (
         <div className={styles.logo}>
-            <Link href="/"> The Mint</Link>
+            <Link href="/media"> The Mint</Link>
         </div>
     )
 }

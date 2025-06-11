@@ -18,6 +18,14 @@ const nextConfig: NextConfig = {
     // domains: ["gtsoe.infura-ipfs.io", "gsoe.infura-ipfs.io"],
     formats: ["image/webp"],
   },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.md$/,
+      use: "ignore-loader",
+    });
+
+    return config;
+  },
 };
 
 export default nextConfig;

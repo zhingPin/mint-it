@@ -5,7 +5,16 @@ import RelatedMedia from '@/components/relatedMedia/relatedMedia'
 
 
 
-const Page = async () => {
+interface PageProps {
+    params: Promise<{
+        id: string
+    }>
+}
+
+const Page = async ({ params }: PageProps) => {
+
+    const { id } = await params;
+    console.log("Media ID:", id);
 
     // const { query } = await searchParams; 
 
@@ -14,7 +23,7 @@ const Page = async () => {
         <div className='page'>
             <section><MediaDetails /></section>
 
-            <RelatedMedia />
+            <RelatedMedia id={id} />
         </div>
     )
 }

@@ -1,11 +1,14 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { NftData } from "../../../types/media-types";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
 import { NftContext } from "@/providers/nftProvider";
 
-const RelatedMedia = () => {
+interface RelatedMediaProps {
+    id: string;
+}
+
+const RelatedMedia = ({ id }: RelatedMediaProps) => {
     const [relatedMedia, setRelatedMedia] = useState<NftData[]>([]); // State to store related NFTs
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -16,7 +19,6 @@ const RelatedMedia = () => {
     }
 
     const { fetchMarketsNFTs } = nftContext;
-    const { id } = useParams(); // Extract tokenId from the URL
     const tokenId = Number(id); // Convert tokenId to a number
     console.log(tokenId)
     useEffect(() => {
