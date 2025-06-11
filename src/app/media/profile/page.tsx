@@ -14,13 +14,13 @@ interface PageProps {
 }
 
 const Page = async ({ searchParams }: PageProps) => {
-    // Await the searchParams in Next.js 15+
-    const params = await searchParams
 
-    const query = params.query || ""
-    const sort = params.sort || "Most Recent"
-    const filter = params.filter || "all"
-    const tabopt = params.tabopt || ""
+    const {
+        query = "",
+        sort = "Most Recent",
+        filter = "all",
+        tabopt = ""
+    } = await searchParams;
 
     const filterOptions = [
         { key: "audio", label: "", icon: <FaMusic /> },
@@ -28,11 +28,11 @@ const Page = async ({ searchParams }: PageProps) => {
         { key: "images", label: "", icon: <FaImages /> },
         { key: "all", label: "All", icon: null },
     ];
-
+    const sortOptions = ["Most Recent", "High to Low", "Low to High", "Old to New"];
     return (
         <div className="page">
             <div className={styles.query_box}>
-                <Search_filter placeholder="search me" query={query} sort="Most Recent" tabopt="" />
+                <Search_filter placeholder="Search media..." query={query} sort={sort} tabopt={tabopt} sortOptions={sortOptions} />
             </div>
             {/* Pass the server-side params to MyMedia for filtering */}
             <div>

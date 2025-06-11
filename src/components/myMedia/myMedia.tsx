@@ -5,6 +5,7 @@ import { NftContext } from "@/providers/nftProvider"
 import { WalletContext } from "@/providers/walletProvider"
 import MediaCard from "../mediaComponent/mediaCard/mediaCard"
 import type { NftData } from "../../../types/media-types"
+import { filterAndSortNFTs, getUniqueBatchNFTs, MediaTypeFilter } from "../../../lib/utils/nftFilters"
 
 interface MyMediaProps {
     query: string
@@ -53,21 +54,9 @@ const MyMedia: React.FC<MyMediaProps> = ({ query, sort, filter, tabopt }) => {
                     return
                 }
 
-                // Create a map to store the first NFT for each batchNumber
-                const firstNFTsMap = new Map()
-                // Iterate through the fetched NFTs (reverse to get latest first)
-                items.reverse().forEach((nft) => {
-                    const batchNumber = nft.batchNumber
-
-                    // If the batchNumber is not in the map, add the NFT to the map
-                    if (!firstNFTsMap.has(batchNumber)) {
-                        firstNFTsMap.set(batchNumber, nft)
-                    }
-                })
-
-                // Convert the map values back to an array
-                const firstNFTs = Array.from(firstNFTsMap.values())
-                setMyNFTs(firstNFTs)
+                // Get unique batch NFTs
+                const uniqueNFTs = getUniqueBatchNFTs(items)
+                setMyNFTs(uniqueNFTs)
             })
             .catch((error) => {
                 console.error("Error fetching NFTs:", error)
@@ -79,37 +68,12 @@ const MyMedia: React.FC<MyMediaProps> = ({ query, sort, filter, tabopt }) => {
     }, [tabopt, currentAccount, fetchNFTsByOwner])
 
     // Apply filtering and sorting
-    const processedNFTs = myNFTs
-        .filter((nft) => {
-            // Apply media type filter
-            if (filter === "all") return true
-            if (filter === "music") return nft.audio || nft.media?.fileType?.startsWith("audio/")
-            if (filter === "videos") return nft.video || nft.media?.fileType?.startsWith("video/")
-            if (filter === "images") return !nft.media?.fileType
-            return false
-        })
-        .filter((nft) => {
-            // Apply search query filter
-            if (!query) return true
-            const lowerCaseQuery = query.toLowerCase()
-            return nft.name?.toLowerCase().includes(lowerCaseQuery) || nft.description?.toLowerCase().includes(lowerCaseQuery)
-        })
-        .sort((a, b) => {
-            // Apply sorting
-            switch (sort) {
-                case "Most Recent":
-                    return Number(b.tokenId) - Number(a.tokenId) // Newest first
-                case "High to Low":
-                    return Number.parseFloat(b.price) - Number.parseFloat(a.price)
-                case "Low to High":
-                    return Number.parseFloat(a.price) - Number.parseFloat(b.price)
-                case "Old to New":
-                    return Number(a.tokenId) - Number(b.tokenId) // Oldest first
-                default:
-                    return 0
-            }
-        })
-
+    // Apply filtering and sorting using the utility function
+    const processedNFTs = filterAndSortNFTs(myNFTs, {
+        query,
+        sort: sort as any, // Type assertion for now
+        mediaType: filter as MediaTypeFilter,
+    })
     if (loading) {
         return (
             <div className="flex justify-center items-center py-8">
@@ -141,7 +105,6 @@ const MyMedia: React.FC<MyMediaProps> = ({ query, sort, filter, tabopt }) => {
         return (
             <div className="text-center py-8">
                 <p className="text-gray-500">No NFTs found matching your search criteria.</p>
-                <p className="text-sm text-gray-400 mt-2">Try adjusting your filters or search terms.</p>
             </div>
         )
     }

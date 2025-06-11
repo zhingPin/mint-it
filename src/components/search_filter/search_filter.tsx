@@ -11,7 +11,7 @@ type SearchFilterProps = {
     sort: string // Default sort option
     tabopt: string // Optional filter prop
     // Make these optional with defaults
-    sortOptions?: string[]
+    sortOptions: string[]
     filterTabs?: string[]
     sortParamName?: string
     filterParamName?: string
@@ -19,7 +19,7 @@ type SearchFilterProps = {
 
 const Search_filter: React.FC<SearchFilterProps> = ({
     placeholder,
-    sortOptions = ["Most Recent", "High to Low", "Low to High", "Old to New"],
+    sortOptions,
     filterTabs = ["Listed", "Owned"],
     query = "",
     sort = "Most Recent",

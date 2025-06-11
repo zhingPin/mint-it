@@ -17,9 +17,10 @@ const Page = async ({ searchParams }: PageProps) => {
     const params = await searchParams
 
     const query = params.query || ""
-    const sort = params.sort || "Most Recent"
+    const sort = params.sort || "mostrecent"
     const filter = params.filter || "all"
     const tabopt = params.tabopt || ""
+    const pathname = "/media"
     // Define filter options with icons
 
     const filterOptions = [
@@ -28,16 +29,17 @@ const Page = async ({ searchParams }: PageProps) => {
         { key: "images", label: "Images", icon: <FaImages /> },
         { key: "all", label: "All", icon: null },
     ];
-
+    const sortOptions = ["Most Recent", "High to Low", "Low to High", "Old to New"]
     return (
         <main className="page">
             <div className={styles.query_box}>
                 <Search_filter
                     query={query}
-                    sort="Most Recent"
+                    sort={sort}
                     tabopt={tabopt}
-                    placeholder="Search for media..."
+                    placeholder="Search media..."
                     filterTabs={[]} // Empty array = no filter tabs
+                    sortOptions={sortOptions}
                 />
             </div>
             <div>

@@ -59,8 +59,8 @@ export interface NftData {
     website?: string; // Optional field
     collection?: string; // Optional field
     tokenURI?: string;
-    batchSpecificId?: number;
-    batchNumber?: number;
+    batchSpecificId: number;
+    batchNumber: number;
     metadata?: Record<string, any>; // Additional metadata if needed
     genre?: string; // Optional field for genre
     credits?: string; // Optional field for credits
