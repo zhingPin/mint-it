@@ -32,7 +32,7 @@ const Page = async ({ searchParams }: PageProps) => {
     return (
         <div className="page">
             <div className={styles.query_box}>
-                <Search_filter placeholder="search me" query={query} sort="" tabopt="" />
+                <Search_filter placeholder="search me" query={query} sort="Most Recent" tabopt="" />
             </div>
             {/* Pass the server-side params to MyMedia for filtering */}
             <div>

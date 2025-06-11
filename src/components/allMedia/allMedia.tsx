@@ -10,7 +10,7 @@ interface AllMediaProps {
     filter: string
     tabopt: string
 }
-const AllMedia: React.FC<AllMediaProps> = ({ query, filter }) => {
+const AllMedia: React.FC<AllMediaProps> = ({ query, filter, sort }) => {
 
     const nftContext = useContext(NftContext);
 
@@ -55,26 +55,40 @@ const AllMedia: React.FC<AllMediaProps> = ({ query, filter }) => {
             });
     }, [fetchMarketsNFTs]);
 
-    const filteredNFTs = nfts.filter((nft) => {
-        if (filter === "all") return true;
-        if (filter === "music") return nft.audio || nft.media?.fileType?.startsWith("audio/");
-        if (filter === "videos") return nft.video || nft.media?.fileType?.startsWith("video/");
-        if (filter === "images") return !nft.media?.fileType;
-
-        return false;
-    }).filter((nft) => {
-        if (!query) return true;
-        const lowerCaseQuery = query.toLowerCase();
-        return (
-            nft.name?.toLowerCase().includes(lowerCaseQuery) ||
-            nft.description?.toLowerCase().includes(lowerCaseQuery)
-        );
-    });
-
+    const processedNFTs = nfts
+        .filter((nft) => {
+            // Apply media type filter
+            if (filter === "all") return true
+            if (filter === "music") return nft.audio || nft.media?.fileType?.startsWith("audio/")
+            if (filter === "videos") return nft.video || nft.media?.fileType?.startsWith("video/")
+            if (filter === "images") return !nft.media?.fileType
+            return false
+        })
+        .filter((nft) => {
+            // Apply search query filter
+            if (!query) return true
+            const lowerCaseQuery = query.toLowerCase()
+            return nft.name?.toLowerCase().includes(lowerCaseQuery) || nft.description?.toLowerCase().includes(lowerCaseQuery)
+        })
+        .sort((a, b) => {
+            // Apply sorting
+            switch (sort) {
+                case "Most Recent":
+                    return Number(b.tokenId) - Number(a.tokenId) // Newest first
+                case "High to Low":
+                    return Number.parseFloat(b.price) - Number.parseFloat(a.price)
+                case "Low to High":
+                    return Number.parseFloat(a.price) - Number.parseFloat(b.price)
+                case "Old to New":
+                    return Number(a.tokenId) - Number(b.tokenId) // Oldest first
+                default:
+                    return 0
+            }
+        })
 
     return (
         <div>
-            <MediaCard NftData={filteredNFTs} />
+            <MediaCard NftData={processedNFTs} />
         </div>
     );
 };
