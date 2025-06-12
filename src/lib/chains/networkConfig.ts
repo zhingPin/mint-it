@@ -24,7 +24,8 @@ export const networkConfig: Record<string, NetworkConfigProps> = {
             decimals: 18,
         },
         rpcUrls: [
-            // "https://polygon-rpc.com",
+            "https://polygon-rpc.com",
+            "https://rpc-mainnet.maticvigil.com",
             "https://polygon-mainnet.g.alchemy.com/v2/3ZLq2XKn1y46ClMV6jmLio0vYxEJaz1z"],
         blockExplorerUrls: ["https://polygonscan.com"],
     },
