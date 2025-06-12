@@ -20,7 +20,6 @@ const Page = async ({ searchParams }: PageProps) => {
     const sort = params.sort || "mostrecent"
     const filter = params.filter || "all"
     const tabopt = params.tabopt || ""
-    const pathname = "/media"
     // Define filter options with icons
 
     const filterOptions = [

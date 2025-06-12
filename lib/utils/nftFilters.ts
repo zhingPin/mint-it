@@ -1,12 +1,15 @@
 import { NftData } from "../../types/media-types"
 
+
+
+// Define valid sort options
 export type SortOption = "Most Recent" | "High to Low" | "Low to High" | "Old to New"
 export type MediaTypeFilter = "all" | "music" | "videos" | "images"
 
 export interface FilterAndSortOptions {
     query?: string
-    sort?: SortOption
-    mediaType?: MediaTypeFilter
+    sort?: string // Accept any string, we'll map it to valid options
+    mediaType?: string // Accept any string, we'll map it to valid options
     // Add more filter options as needed
     priceRange?: {
         min?: number

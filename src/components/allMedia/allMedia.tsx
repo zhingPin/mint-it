@@ -3,7 +3,7 @@ import { NftContext } from "@/providers/nftProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { NftData } from "../../../types/media-types";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
-import { filterAndSortNFTs, getUniqueBatchNFTs, MediaTypeFilter } from "../../../lib/utils/nftFilters";
+import { filterAndSortNFTs, getUniqueBatchNFTs } from "../../../lib/utils/nftFilters";
 
 interface AllMediaProps {
     query: string
@@ -44,8 +44,8 @@ const AllMedia: React.FC<AllMediaProps> = ({ query, filter, sort }) => {
     // Apply filtering and sorting using the utility function
     const processedNFTs = filterAndSortNFTs(nfts, {
         query,
-        sort: sort as any, // Type assertion for now
-        mediaType: filter as MediaTypeFilter,
+        sort: sort, // Type assertion for now
+        mediaType: filter,
     })
 
     return (
