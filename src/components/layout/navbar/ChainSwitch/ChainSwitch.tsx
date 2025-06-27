@@ -1,46 +1,65 @@
 "use client";
-import React, { useContext } from "react";
 import Image from "next/image";
-
 import styles from "./ChainSwitch.module.css";
 import { FaChevronDown } from "react-icons/fa";
 import Dropdown from "../dropdown/dropdown";
-import { WokeContext } from "@/providers/context";
 import { getVisibleNetworks } from "../../../../../helpers/networkHelpers";
-import { handleNetworkSwitch } from "@/lib/chainConfig";
-import { networkInfo } from "@/lib/chains/networkInfo";
-import { DEFAULT_NETWORK } from "@/providers/context/const";
+import { handleNetworkSwitch } from "../../../../../utils/helpers/wallet/chain/chainConfig";
+import { networkInfo } from "../../../../../utils/lib/chains/networkInfo";
+import { DEFAULT_NETWORK } from "@/(context)/useContext/walletContext/const";
+import { useWalletContext } from "@/(context)/useContext/walletContext/useWalletContext";
 
-const ChainSwitch: React.FC = () => {
-  const wokeContext = useContext(WokeContext);
-  if (!wokeContext) {
-    throw new Error("WokeProvider must be used within WalletProvider");
-  }
-  const { currentNetwork, setCurrentNetwork } = wokeContext;
-  const visibleNetworks = getVisibleNetworks(); // Call here to get the filtered networks
+
+const ChainSwitch = () => {
+  const { currentNetwork, setCurrentNetwork, currentAccount, handleConnectWallet } = useWalletContext();
+
+  const isConnected = currentAccount !== "";
+
+  const visibleNetworks = getVisibleNetworks();
+
+  const selectedKey = currentNetwork || DEFAULT_NETWORK;
+  const networkLogo = networkInfo[selectedKey]?.iconUrls?.[0];
 
   const switchNetworks = async (chainKey: string) => {
-    const switched = await handleNetworkSwitch(chainKey);
-    if (switched) setCurrentNetwork(switched); // Update context only if switch is successful
-  }
-  const selectedKey = currentNetwork || DEFAULT_NETWORK;
-  const networkLogo = networkInfo[selectedKey]?.iconUrls[0];  // console.log(currentNetwork)
-  // console.log("visibleNetworks", visibleNetworks)
+    console.log(`[chainSwitch] network: ${currentNetwork}`);
+    console.log(`[chainSwitch] account: ${currentAccount}`);
+    if (!isConnected) {
+      console.warn("Please connect your wallet before switching networks.");
+      await handleConnectWallet(); // Optional: auto-connect
+      return;
+    }
+
+    try {
+      const switched = await handleNetworkSwitch(chainKey);
+      if (switched) {
+        setCurrentNetwork(switched);
+        // console.log("Switched to network:", switched);
+      } else {
+        console.warn("Network switch unsuccessful or cancelled by user.");
+      }
+    } catch (error) {
+      console.error("Error switching networks:", error);
+    }
+  };
+
+  // if (currentAccount) {
+  //     console.log(`[chainSwitch] network: ${currentNetwork}`);
+  //     console.log(`[chainSwitch] account: ${currentAccount}`);
+  // }
   return (
     <Dropdown
       trigger={
         <div className={styles.chain_switch} title="Select a chain">
           <div className={styles.greyBackground}>
-            {networkLogo && (
-              <Image
-                className={styles.chain}
-                src={networkLogo}
-                height={25}
-                width={25}
-                alt={`${networkInfo[selectedKey]?.displayName || "Chain"} logo`}
-                title={`${networkInfo[selectedKey]?.displayName || "Chain"} logo`}
-              />
-            )}
+            <Image
+              className={styles.chain}
+              src={networkLogo || networkInfo[DEFAULT_NETWORK]?.iconUrls?.[0]}
+              height={25}
+              width={25}
+              alt={`${networkInfo[selectedKey]?.displayName || "Chain"} logo`}
+              title={`${networkInfo[selectedKey]?.displayName || "Chain"} logo`}
+            />
+
           </div>
           <FaChevronDown className={styles.chevron} />
         </div>
@@ -51,14 +70,13 @@ const ChainSwitch: React.FC = () => {
         {visibleNetworks.map((network) => (
           <li key={network.key} onClick={() => switchNetworks(network.key)}>
             <Image
-              title={`${network.displayName || "Chain"} `}
+              title={`${network.displayName}`}
               src={network.iconUrls[0]}
               alt={`${network.displayName} logo`}
               height={20}
               width={20}
               className={styles.menuLogo}
             />
-
             <span>{network.displayName}</span>
           </li>
         ))}

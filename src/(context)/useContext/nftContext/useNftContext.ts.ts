@@ -1,7 +1,7 @@
 // hooks/useNftContext.ts
 import { useContext } from "react";
-import { NftContextProps } from "../nftContext";
-import { NftContext } from "@/providers/nftProvider";
+import { NftContextProps } from "../context/nftContext";
+import { NftContext } from "@/(context)/providers/nftProvider";
 
 
 export const useNftContext = (): NftContextProps => {

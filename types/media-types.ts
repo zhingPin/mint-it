@@ -1,5 +1,4 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { Router } from "next/router";
 
 export interface CreateNftInput {
     name?: string; // Required field

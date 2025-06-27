@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, createContext, useContext, type ReactNode } from "react"
+import { useState, createContext } from "react"
 
 // Define context types
 interface IpfsContextProps {
@@ -19,7 +19,7 @@ export const IpfsContext = createContext<IpfsContextProps>({
 })
 
 // Provider component
-export function IpfsProvider({ children }: { children: ReactNode }) {
+export function IpfsProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(false)
     const [progress, setProgress] = useState<number | null>(null)
 
@@ -56,11 +56,3 @@ export function IpfsProvider({ children }: { children: ReactNode }) {
     return <IpfsContext.Provider value={{ uploadToIpfs, isLoading, progress }}>{children}</IpfsContext.Provider>
 }
 
-// Custom hook to use the IPFS context
-export function useIpfs() {
-    const context = useContext(IpfsContext)
-    if (!context) {
-        throw new Error("useIpfs must be used within an IpfsProvider")
-    }
-    return context
-}

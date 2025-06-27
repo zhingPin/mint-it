@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui';
-import { NftContext } from '@/providers/nftProvider';
 import { StaticImageData } from 'next/image';
-import React, { useContext } from 'react';
 import styles from './buyToken.module.css';
+import { useNftContext } from '@/(context)/useContext/nftContext/useNftContext.ts';
 
 type BuyTokenProps = {
     listingId: number;
@@ -12,13 +11,9 @@ type BuyTokenProps = {
 };
 
 const BuyToken: React.FC<BuyTokenProps> = ({ listingId, tokenId, price, currencyIcon }) => {
-    const nftContext = useContext(NftContext);
 
-    if (!nftContext) {
-        throw new Error("BuyToken must be used within NftProvider");
-    }
 
-    const { buyNFT } = nftContext;
+    const { buyNFT } = useNftContext();
 
     if (!buyNFT) {
         console.error("buyNFT function is not defined.");

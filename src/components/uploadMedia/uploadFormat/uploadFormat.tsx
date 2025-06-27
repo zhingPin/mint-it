@@ -1,5 +1,6 @@
 "use client";
-import { useMedia } from '@/providers/mediaProvider';
+import { useMedia } from "@/(context)/useContext/useMediaContext";
+
 import styles from './uploadFormat.module.css';
 // This component is used to display the upload format for media and images.
 import React from 'react'

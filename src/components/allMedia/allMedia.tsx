@@ -1,9 +1,10 @@
 "use client";
-import { NftContext } from "@/providers/nftProvider";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NftData } from "../../../types/media-types";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
 import { filterAndSortNFTs, getUniqueBatchNFTs } from "../../../lib/utils/nftFilters";
+import { useNftContext } from "@/(context)/useContext/nftContext/useNftContext.ts"
+import Error from "next/error";
 
 interface AllMediaProps {
     query: string
@@ -13,20 +14,15 @@ interface AllMediaProps {
 }
 const AllMedia: React.FC<AllMediaProps> = ({ query, filter, sort }) => {
 
-    const nftContext = useContext(NftContext);
 
-    if (!nftContext) {
-        throw new Error("AllMedia must be used within NftProvider");
-    }
-
-    const { fetchMarketsNFTs } = nftContext;
+    const { fetchMarketsNFTs } = useNftContext();
 
     const [nfts, setNfts] = useState<NftData[]>([]);
 
 
     useEffect(() => {
         fetchMarketsNFTs()
-            .then((items) => {
+            .then((items: NftData[]) => {
                 if (!items || items.length === 0) {
                     console.warn("No NFTs fetched.");
                     setNfts([]);
@@ -36,7 +32,7 @@ const AllMedia: React.FC<AllMediaProps> = ({ query, filter, sort }) => {
                 const uniqueNFTs = getUniqueBatchNFTs(items)
                 setNfts(uniqueNFTs)
             })
-            .catch((error) => {
+            .catch((error: Error) => {
                 console.error("Error fetching NFTs:", error);
             });
     }, [fetchMarketsNFTs]);

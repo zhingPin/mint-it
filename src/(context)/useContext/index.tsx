@@ -1,9 +1,9 @@
 "use client";
 import { createContext, ReactNode, useContext } from "react";
 import { WalletContextProps } from "./walletContext";
-import { WalletContext } from "../walletProvider";
+import { WalletContext } from "../providers/walletProvider";
 import { NftContextProps } from "./nftContext";
-import { NftContext } from "../nftProvider";
+import { NftContext } from "../providers/nftProvider";
 
 // Combined Context Type
 export interface WokeContextProps extends WalletContextProps, NftContextProps { }

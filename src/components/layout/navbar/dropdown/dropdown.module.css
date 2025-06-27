@@ -13,9 +13,14 @@
 }
 
 .dropdownContent {
+    right: -20px;
+    /* or -40px, adjust as needed */
+}
+
+.dropdownContent {
     position: absolute;
     top: 100%;
-    right: 0;
+    /* right: 0; */
     z-index: 1000;
     background: var(--primary-shade);
     border-radius: 0 0 5px 5px;

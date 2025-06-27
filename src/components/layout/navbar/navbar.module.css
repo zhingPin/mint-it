@@ -15,8 +15,6 @@
     flex: 1;
     justify-content: flex-end;
     align-items: center;
-    /* column-gap: var(--component-gap); */
-    /* padding-inline-end: 4rem; */
     column-gap: 2.5rem;
 }
 

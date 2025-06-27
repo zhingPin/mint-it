@@ -1,5 +1,3 @@
-// modal.ts or utils
-
 import Web3Modal from "web3modal";
 
 let web3ModalInstance: Web3Modal | null = null;

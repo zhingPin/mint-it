@@ -1,0 +1,85 @@
+.chain_switch_container {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    anchor-name: --chain-switch;
+    z-index: 10000;
+    position: relative;
+}
+
+.chain_switch {
+    /* background-color: var(--primary-color); */
+    color: var(--main-text-color);
+    display: flex;
+    padding: .3rem;
+    gap: .3rem;
+    border-radius: 3rem;
+    align-items: center;
+    border: 1.7px solid white;
+    box-shadow: 0px 0px 0px 1px black inset;
+    align-self: center;
+    cursor: pointer;
+    height: 34px;
+    width: 50px;
+}
+
+.greyBackground,
+.chain {
+    border-radius: 50%;
+}
+
+.greyBackground {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: grey;
+    height: 25px;
+    min-width: 25px;
+    object-position: 50% 50%;
+    outline: 1px solid var(--primary-shade);
+}
+
+.chevron {
+    color: var(--primary-shade);
+}
+
+.menu_popover {
+    padding: 0;
+    border-radius: 0 0 5px 5px;
+    border: 3px solid var(--text-color, #fff);
+    border-top: none;
+    background-color: var(--primary-color);
+    font-size: 1rem;
+
+    z-index: 9999;
+    /* Ensure it's above other elements */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    /* Add some shadow for clarity */
+    width: max-content;
+    /* Ensure it adjusts to the content */
+    min-width: 150px;
+    min-height: 100%;
+    /* Optional minimum width for consistency */
+
+    inset: auto;
+    position: absolute;
+    position-anchor: --chain-switch;
+    top: anchor(bottom);
+    right: anchor(right);
+    left: -60px;
+    overflow: hidden;
+}
+
+
+
+/* .menuOption:hover {
+    background: aliceblue;
+} */
+
+.menuLogo {
+    border-radius: 50%;
+}
+
+.menu_popover:popover-open {
+    display: grid;
+}

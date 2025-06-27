@@ -1,11 +1,10 @@
 "use client";
-import React, { ReactNode } from "react";
 import WalletProvider from "./walletProvider";
 import NftProvider from "./nftProvider";
-import { CombinedContextProvider } from "./context";
 import { IpfsProvider } from "./ipfsProvider";
+import { CombinedContextProvider } from "../useContext";
 
-export const WokeProvider: React.FC<{ children: ReactNode }> = ({
+export const WokeProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
     return (

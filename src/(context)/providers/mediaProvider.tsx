@@ -1,6 +1,6 @@
 "use client"
-import React, { createContext, useContext, useState } from "react";
-import { NftImage, NftMedia } from "../../types/media-types";
+import { createContext, useState } from "react";
+import { NftImage, NftMedia } from "../../../types/media-types";
 
 interface MediaData {
     // image: string;
@@ -35,12 +35,4 @@ export const MediaProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             {children}
         </MediaContext.Provider>
     );
-};
-
-export const useMedia = () => {
-    const context = useContext(MediaContext);
-    if (!context) {
-        throw new Error("useMedia must be used within a MediaProvider");
-    }
-    return context;
 };

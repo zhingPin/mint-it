@@ -1,4 +1,4 @@
-import { MediaProvider } from "@/providers/mediaProvider";
+import { MediaProvider } from "@/(context)/providers/mediaProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 

@@ -1,22 +1,31 @@
 "use client";
 import axios from "axios";
-import React, { ReactNode, useContext } from "react";
-import { NftContextProps } from "./context/nftContext";
+import { createContext, useContext } from "react";
 import { WalletContext } from "./walletProvider";
 import { IpfsContext } from "./ipfsProvider";
-import { networkInfo } from "@/lib/chains/networkInfo";
-import { connectToContract, fetchContract } from "./context/helpers/walletHelpers/connectingContracts";
-import { networkConfig } from "@/lib/chains/networkConfig";
+import { networkInfo } from "../../../utils/lib/chains/networkInfo";
+import { connectToContract, fetchContract } from "../../../utils/helpers/wallet/connectContracts";
+import { networkConfig } from "../../../utils/lib/chains/networkConfig";
 import { ethers } from "ethers";
 import { useRouter } from "next/navigation";
-import { CreateNftInput, MarketItem, NftData } from "../../types/media-types";
+import { CreateNftInput, MarketItem, NftData } from "../../../types/media-types";
+import { IPFSHTTPClient } from "ipfs-http-client";
 
+export interface NftContextProps {
+    loading?: boolean;
+    setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+    error?: string;
+    setError?: React.Dispatch<React.SetStateAction<string>>;
+    fetchNFTsByOwner: (type: "fetchItemsListed" | "fetchMyNFTs") => Promise<NftData[] | undefined>;
+    fetchMarketsNFTs: () => Promise<NftData[] | undefined>;
+    createNFT: (input: CreateNftInput) => Promise<void>
+    buyNFT: (listingId: number, tokenId: number, price: string) => Promise<void>; // Updated type
+    client?: IPFSHTTPClient; // Replace 'any' with the actual type of your client
+}
 
+export const NftContext = createContext<NftContextProps | undefined>(undefined);
 
-
-export const NftContext = React.createContext<NftContextProps | undefined>(undefined);
-
-const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+const NftProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const walletContext = useContext(WalletContext);
     if (!walletContext) {
         throw new Error("NftProvider must be used within WalletProvider");
@@ -88,7 +97,7 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         try {
             console.log("Create sale URL:", url);
             const price = ethers.parseUnits(formInputPrice, "ether");
-
+            console.log("currentNetwork:", currentNetwork);
             const contract = await connectToContract(currentNetwork, "marketplace");
             if (!contract) {
                 console.error("Failed to connect to the contract.");
@@ -116,7 +125,12 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             }
 
             await transaction.wait();
-            console.log("Transaction Hash:", transaction.hash);
+            const receipt = await transaction.wait();
+            if (receipt.status !== 1) {
+                throw new Error("Transaction failed.");
+            }
+            return receipt; // Return the receipt for further processing if needed
+            // router.push("/media");
         } catch (error) {
             console.error("Error while creating sale:", error);
         }
@@ -130,8 +144,6 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                 networkInfo[network].contracts.nft
         );
     };
-
-
 
     const fetchMarketsNFTs = async (): Promise<NftData[]> => {
         try {
@@ -255,8 +267,6 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
     };
 
-
-
     function isNftData(item: NftData | null): item is NftData {
         return item !== null;
     }
@@ -350,9 +360,6 @@ const NftProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
         return allNFTs;
     };
-
-
-
 
     const buyNFT = async (listingId: number, tokenId: number, price: string) => {
         try {

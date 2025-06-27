@@ -1,8 +1,9 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NftData } from "../../../types/media-types";
 import MediaCard from "../mediaComponent/mediaCard/mediaCard";
-import { NftContext } from "@/providers/nftProvider";
+import { useNftContext } from "@/(context)/useContext/nftContext/useNftContext.ts";
+import Error from "next/error";
 
 interface RelatedMediaProps {
     id: string;
@@ -12,18 +13,16 @@ const RelatedMedia = ({ id }: RelatedMediaProps) => {
     const [relatedMedia, setRelatedMedia] = useState<NftData[]>([]); // State to store related NFTs
     const [loading, setLoading] = useState<boolean>(true);
 
-    const nftContext = useContext(NftContext);
+    const nftContext = useNftContext();
 
-    if (!nftContext) {
-        throw new Error("RelatedMedia must be used within NftProvider");
-    }
+
 
     const { fetchMarketsNFTs } = nftContext;
     const tokenId = Number(id); // Convert tokenId to a number
     console.log(tokenId)
     useEffect(() => {
         fetchMarketsNFTs()
-            .then((items) => {
+            .then((items: NftData[]) => {
                 if (!items || items.length === 0) {
                     console.warn("No NFTs fetched.");
                     setRelatedMedia([]);
@@ -48,7 +47,7 @@ const RelatedMedia = ({ id }: RelatedMediaProps) => {
 
                 setRelatedMedia(filteredMedia);
             })
-            .catch((error) => {
+            .catch((error: Error) => {
                 console.error("Error fetching related media:", error);
             })
             .finally(() => {

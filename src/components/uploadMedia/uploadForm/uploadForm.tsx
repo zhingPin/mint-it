@@ -1,27 +1,21 @@
 "use client";
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import formStyles from "@/components/layout/form/form.module.css";
 import Input from "@/components/ui/form_Components/input/input";
 import Textarea from "@/components/ui/form_Components/textArea/textArea";
 import Select from "@/components/ui/form_Components/select/select";
-import { Button } from "@/components/ui"; import { MediaContext } from "@/providers/mediaProvider";
-import { NftContext } from "@/providers/nftProvider";
+import { Button } from "@/components/ui"; import { MediaContext } from "@/(context)/providers/mediaProvider";
 import { useRouter } from "next/navigation";
 import { NftImage } from "../../../../types/media-types";
 import FormField from "@/components/ui/form_Components/formField/formField";
+import { useMedia } from "@/(context)/useContext/useMediaContext";
+import { useNftContext } from "@/(context)/useContext/nftContext/useNftContext.ts";
 
 const UploadForm = () => {
     const router = useRouter();
 
-    const mediaContext = useContext(MediaContext);
-    const nftContext = useContext(NftContext);
-
-    if (!mediaContext || !nftContext) {
-        throw new Error("UploadForm must be used within MediaProvider and NftProvider");
-    }
-
-    const { mediaData } = mediaContext;
-    const { createNFT } = nftContext;
+    const { mediaData } = useMedia()
+    const { createNFT } = useNftContext();
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");

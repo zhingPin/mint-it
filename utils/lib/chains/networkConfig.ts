@@ -15,11 +15,11 @@ export const networkConfig: Record<string, NetworkConfigProps> = {
         ],
         blockExplorerUrls: ["http://localhost:3001"],
     },
-    polygon: {
+    polygon_pos: {
         chainId: `0x${Number(137).toString(16)}`,
-        chainName: "Polygon Mainnet",
+        chainName: "Polygon pos",
         nativeCurrency: {
-            name: "MATIC",
+            name: "POL",
             symbol: "POL",
             decimals: 18,
         },
@@ -37,7 +37,8 @@ export const networkConfig: Record<string, NetworkConfigProps> = {
             symbol: "MATIC",
             decimals: 18,
         },
-        rpcUrls: ["https://rpc-amoy.polygon.technology/"],
-        blockExplorerUrls: ["https://www.oklink.com/amoy"],
+        rpcUrls: [
+            "https://rpc-amoy.polygon.technology/"],
+        blockExplorerUrls: ["https://amoy.polygonscan.com/"],
     },
 }

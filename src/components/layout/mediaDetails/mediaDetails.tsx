@@ -1,25 +1,18 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import styles from "./mediaDetails.module.css";
 import { NftData } from "../../../../types/media-types";
-import { WalletContext } from "@/providers/walletProvider";
 import { Button } from "@/components/ui";
 import { FaWallet } from "react-icons/fa";
 import MediaDisplay from "@/components/mediaComponent/mediaCard/mediaDisplay/mediaDisplay";
-import { shortenAddress } from "../../../../utils/address";
-import { NftContext } from "@/providers/nftProvider";
+import { shortenAddress } from "../../../../utils/hooks/address";
+import { useNftContext } from "@/(context)/useContext/nftContext/useNftContext.ts";
+import { useWalletContext } from "@/(context)/useContext/walletContext/useWalletContext";
 
 const MediaDetails = () => {
-    const nftContext = useContext(NftContext);
-    const walletContext = useContext(WalletContext);
-
-    if (!nftContext || !walletContext) {
-        throw new Error("MediaDetails must be used within NftProvider and WalletProvider");
-    }
-
-    const { fetchMarketsNFTs, buyNFT } = nftContext;
-    const { currentAccount } = walletContext;
+    const { fetchMarketsNFTs, buyNFT } = useNftContext();
+    const { currentAccount } = useWalletContext();
 
     const { id } = useParams();
     const [media, setMedia] = useState<NftData | null>(null);
@@ -32,7 +25,7 @@ const MediaDetails = () => {
         const fetchMedia = async () => {
             try {
                 const allNFTs = (await fetchMarketsNFTs()) || [];
-                const selectedMedia = allNFTs.find((item) => Number(item.tokenId) === tokenId);
+                const selectedMedia = allNFTs.find((item: NftData) => Number(item.tokenId) === tokenId);
                 setMedia(selectedMedia || null);
             } catch (error) {
                 console.error("Error fetching media details:", error);

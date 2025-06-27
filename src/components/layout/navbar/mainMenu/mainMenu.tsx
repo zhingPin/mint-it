@@ -1,11 +1,10 @@
 "use client";
 import Link from "next/link";
-import React, { useContext } from "react";
 import styles from "./mainMenu.module.css";
 import Button from "../../../ui/button/button"
 import Dropdown from "../dropdown/dropdown";
-import { WokeContext } from "@/providers/context";
-import { shortenAddress } from "../../../../../utils/address";
+import { shortenAddress } from "../../../../../utils/hooks/address";
+import { useWalletContext } from "@/(context)/useContext/walletContext/useWalletContext";
 // import ThemeSwitch from "../themeSwitch/themeSwitch";
 type MainMenuProps = {
   pageLinks: {
@@ -14,7 +13,7 @@ type MainMenuProps = {
   }[];
 };
 const MainMenu: React.FC<MainMenuProps> = ({ pageLinks }) => {
-  const { currentAccount, handleConnectWallet } = useContext(WokeContext) || {};
+  const { currentAccount, handleConnectWallet } = useWalletContext();
 
   const account = shortenAddress(currentAccount || "");
   return (

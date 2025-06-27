@@ -157,6 +157,10 @@ a {
   transition: all 0.3s ease-in-out;
 }
 
+button {
+  color: var(--text-shade);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -182,12 +186,12 @@ button {
   margin: 0;
   height: 100%;
   outline: none;
+
 }
 
 input,
 select,
-textarea,
-button {
+textarea {
   padding: 4px;
 }
 

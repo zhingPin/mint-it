@@ -1,6 +1,6 @@
 "use client"
 import MediaDisplay from "@/components/mediaComponent/mediaCard/mediaDisplay/mediaDisplay";
-import { useMedia } from "@/providers/mediaProvider";
+import { useMedia } from "@/(context)/useContext/useMediaContext";
 
 function PreviewCard() {
     const { mediaData } = useMedia();

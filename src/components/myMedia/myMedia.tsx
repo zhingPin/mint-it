@@ -1,11 +1,12 @@
 "use client"
 import type React from "react"
-import { useContext, useEffect, useState } from "react"
-import { NftContext } from "@/providers/nftProvider"
-import { WalletContext } from "@/providers/walletProvider"
+import { useEffect, useState } from "react"
 import MediaCard from "../mediaComponent/mediaCard/mediaCard"
 import type { NftData } from "../../../types/media-types"
 import { filterAndSortNFTs, getUniqueBatchNFTs } from "../../../lib/utils/nftFilters"
+import { useNftContext } from "@/(context)/useContext/nftContext/useNftContext.ts"
+import { useWalletContext } from "@/(context)/useContext/walletContext/useWalletContext"
+import Error from "next/error"
 
 interface MyMediaProps {
     query: string
@@ -20,12 +21,10 @@ const MyMedia: React.FC<MyMediaProps> = ({ query, sort, filter, tabopt }) => {
     const [myNFTs, setMyNFTs] = useState<NftData[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
-    const nftContext = useContext(NftContext)
-    const walletContext = useContext(WalletContext)
+    const nftContext = useNftContext() // Using the custom hook for NftContext
+    const walletContext = useWalletContext() // Using the custom hook for WalletContext
 
-    if (!nftContext || !walletContext) {
-        throw new Error("MyMedia must be used within NftProvider and WalletProvider")
-    }
+
 
     const { fetchNFTsByOwner } = nftContext
     const { currentAccount } = walletContext
@@ -47,7 +46,7 @@ const MyMedia: React.FC<MyMediaProps> = ({ query, sort, filter, tabopt }) => {
         }
 
         fetchNFTsByOwner(type)
-            .then((items) => {
+            .then((items: NftData[]) => {
                 if (!items || items.length === 0) {
                     console.warn("No NFTs fetched.")
                     setMyNFTs([])
@@ -58,7 +57,7 @@ const MyMedia: React.FC<MyMediaProps> = ({ query, sort, filter, tabopt }) => {
                 const uniqueNFTs = getUniqueBatchNFTs(items)
                 setMyNFTs(uniqueNFTs)
             })
-            .catch((error) => {
+            .catch((error: Error) => {
                 console.error("Error fetching NFTs:", error)
                 setMyNFTs([])
             })

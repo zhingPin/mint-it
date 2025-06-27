@@ -3,12 +3,13 @@ import styles from './navbar.module.css'
 import MainMenu from './mainMenu/mainMenu'
 import NavConnect from './navConnect/navConnect'
 import { Logo } from '@/components/ui'
+import { Web3Connection } from '@/components'
 
 const Navbar = () => {
     const pageLinks = [
         {
             name: "Home",
-            link: "/",
+            link: "/media",
         },
         {
             name: "Mint",
@@ -17,23 +18,16 @@ const Navbar = () => {
         {
             name: "Media",
             link: "/media"
-        }, {
+        },
+        {
             name: "Profile",
             link: "/media/profile"
-        }, {
+        },
+        {
             name: "Edit Profile",
             link: "/media/profile/editProfile"
         },
-        // {
-        //     name: "Media",
-        //     link: "/media"
-        // }, {
-        //     name: "Media",
-        //     link: "/media"
-        // }, {
-        //     name: "Media",
-        //     link: "/media"
-        // },
+
     ];
     return (
         <nav className={styles.navbar}>
@@ -41,7 +35,9 @@ const Navbar = () => {
                 <Logo />
             </div>
             <div className={styles.nav_controllers}>
-                <NavConnect />
+                <Web3Connection />
+                {/* <NavConnect /> */}
+
                 <MainMenu pageLinks={pageLinks} />
             </div>
 

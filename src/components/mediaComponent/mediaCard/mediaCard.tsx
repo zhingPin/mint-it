@@ -6,8 +6,8 @@ import BuyToken from "./buyToken/buyToken"
 import MediaDisplay from "./mediaDisplay/mediaDisplay"
 import MediaCardInfo from "./mediaCardInfo/mediaCardInfo"
 import { FaEthereum } from "react-icons/fa"
-import { networkInfo } from "@/lib/chains/networkInfo"
-import { shortenAddress } from "../../../../utils/address"
+import { networkInfo } from "../../../../utils/lib/chains/networkInfo"
+import { shortenAddress } from "../../../../utils/hooks/address"
 
 type MediaCardProps = {
     NftData: NftData[]

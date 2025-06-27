@@ -1,13 +1,12 @@
 "use client";
-import React, { useContext } from "react";
 import styles from "./navConnect.module.css";
-import { shortenAddress } from "../../../../../utils/address";
-import { WokeContext } from "@/providers/context";
+import { shortenAddress } from "../../../../../utils/hooks/address";
 import ChainSwitch from "../ChainSwitch/ChainSwitch";
 import Button from "@/components/ui/button/button";
+import { useWalletContext } from "@/(context)/useContext/walletContext/useWalletContext";
 
 const NavConnect = () => {
-  const { currentAccount, handleConnectWallet } = useContext(WokeContext) || {};
+  const { currentAccount, handleConnectWallet } = useWalletContext();
 
   const handleConnectClick = async () => {
     if (handleConnectWallet) {

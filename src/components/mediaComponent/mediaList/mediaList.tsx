@@ -1,5 +1,5 @@
 "use client"
-import { NftContext } from "@/providers/nftProvider"
+import { NftContext } from "@/(context)/providers/nftProvider"
 import type React from "react"
 import { useContext, useEffect, useState } from "react"
 import type { NftData } from "../../../../types/media-types"

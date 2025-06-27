@@ -1,9 +1,9 @@
 "use client";
 import React, { useCallback } from "react";
 import styles from "./dropzone.module.css";
-import { useIpfs } from "@/providers/ipfsProvider";
+import { useIpfs } from "@/(context)/useContext/useIpfsContext";
 import { useDropzone } from "react-dropzone";
-import { useMedia } from "@/providers/mediaProvider";
+import { useMedia } from "@/(context)/useContext/useMediaContext";
 import { NftImage, NftMedia } from "../../../../types/media-types";
 import { BiUpload, BiImage } from "react-icons/bi";
 import { GrMultimedia } from "react-icons/gr";
@@ -49,11 +49,11 @@ const Dropzone: React.FC<DropzoneProps> = ({ type }) => {
             try {
                 // 👇 Example call to the new hello route
 
-                const res = await fetch("/api/ipfs-upload/preview", {
-                    method: "GET",
-                });
-                const data = await res.json();
-                console.log("Hello API response:", data);
+                // const res = await fetch("/api/ipfs-upload/preview", {
+                //     method: "GET",
+                // });
+                // const data = await res.json();
+                // console.log("Hello API response:", data);
 
 
                 // 👇 Prepare form data for POST
