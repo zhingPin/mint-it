@@ -1,8 +1,8 @@
 "use client";
 import { createContext, ReactNode, useContext } from "react";
-import { WalletContextProps } from "./walletContext";
+import { WalletContextProps } from "../providers/walletProvider";
 import { WalletContext } from "../providers/walletProvider";
-import { NftContextProps } from "./nftContext";
+import { NftContextProps } from "../providers/nftProvider";
 import { NftContext } from "../providers/nftProvider";
 
 // Combined Context Type
