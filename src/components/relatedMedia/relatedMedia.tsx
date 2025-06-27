@@ -22,7 +22,7 @@ const RelatedMedia = ({ id }: RelatedMediaProps) => {
     console.log(tokenId)
     useEffect(() => {
         fetchMarketsNFTs()
-            .then((items: NftData[]) => {
+            .then((items) => {
                 if (!items || items.length === 0) {
                     console.warn("No NFTs fetched.");
                     setRelatedMedia([]);

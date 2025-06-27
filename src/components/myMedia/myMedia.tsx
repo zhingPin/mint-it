@@ -46,7 +46,7 @@ const MyMedia: React.FC<MyMediaProps> = ({ query, sort, filter, tabopt }) => {
         }
 
         fetchNFTsByOwner(type)
-            .then((items: NftData[]) => {
+            .then((items) => {
                 if (!items || items.length === 0) {
                     console.warn("No NFTs fetched.")
                     setMyNFTs([])

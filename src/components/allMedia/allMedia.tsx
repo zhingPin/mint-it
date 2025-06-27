@@ -22,7 +22,7 @@ const AllMedia: React.FC<AllMediaProps> = ({ query, filter, sort }) => {
 
     useEffect(() => {
         fetchMarketsNFTs()
-            .then((items: NftData[]) => {
+            .then((items) => {
                 if (!items || items.length === 0) {
                     console.warn("No NFTs fetched.");
                     setNfts([]);
