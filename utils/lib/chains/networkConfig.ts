@@ -17,7 +17,7 @@ export const networkConfig: Record<string, NetworkConfigProps> = {
     },
     polygon_pos: {
         chainId: `0x${Number(137).toString(16)}`,
-        chainName: "Polygon pos",
+        chainName: "Polygon",
         nativeCurrency: {
             name: "POL",
             symbol: "POL",

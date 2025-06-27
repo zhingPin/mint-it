@@ -13,7 +13,7 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
         active: true,
     },
 
-    polygon: {
+    polygon_pos: {
         iconUrls: [matic_logo],
         displayName: "Polygon Pos",
         contracts: {
