@@ -44,6 +44,7 @@ const ChainSwitch = () => {
             console.error("Error switching networks:", error);
         }
     };
+    console.log("visibleNetworks", visibleNetworks)
 
     // if (currentAccount) {
     //     console.log(`[chainSwitch] network: ${currentNetwork}`);
