@@ -23,7 +23,6 @@ const changeNetwork = async (networkName: string): Promise<void> => {
             params: [{ chainId: network.chainId }],
         });
 
-        console.log(`Switched to network: ${networkName}`);
     } catch (error: unknown) {
 
         if (typeof error === "object" && error !== null && "code" in error) {
@@ -36,7 +35,7 @@ const changeNetwork = async (networkName: string): Promise<void> => {
                 console.warn("Error switching network:", error);
             }
         } else {
-            console.warn("Unknown error switching network:", error);
+            console.error("Unknown error switching network:", error);
         }
     }
 }

@@ -10,9 +10,6 @@ import styles from "./chainSwitch.module.css"
 import Image from "next/image";
 import { FaChevronDown } from "react-icons/fa";
 
-
-
-
 const ChainSwitch = () => {
     const { currentNetwork, setCurrentNetwork, currentAccount, handleConnectWallet } = useWalletContext();
 
@@ -24,8 +21,6 @@ const ChainSwitch = () => {
     const networkLogo = networkInfo[selectedKey]?.iconUrls?.[0];
 
     const switchNetworks = async (chainKey: string) => {
-        console.log(`[chainSwitch] network: ${currentNetwork}`);
-        console.log(`[chainSwitch] account: ${currentAccount}`);
         if (!isConnected) {
             console.warn("Please connect your wallet before switching networks.");
             await handleConnectWallet(); // Optional: auto-connect
@@ -36,7 +31,6 @@ const ChainSwitch = () => {
             const switched = await handleNetworkSwitch(chainKey);
             if (switched) {
                 setCurrentNetwork(switched);
-                // console.log("Switched to network:", switched);
             } else {
                 console.warn("Network switch unsuccessful or cancelled by user.");
             }
@@ -44,12 +38,13 @@ const ChainSwitch = () => {
             console.error("Error switching networks:", error);
         }
     };
-    console.log("visibleNetworks", visibleNetworks)
 
     // if (currentAccount) {
+    //     console.log("visibleNetworks", visibleNetworks)
     //     console.log(`[chainSwitch] network: ${currentNetwork}`);
     //     console.log(`[chainSwitch] account: ${currentAccount}`);
     // }
+
     return (
         <Dropdown
             trigger={
