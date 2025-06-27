@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { WalletContextProps } from "../../context/walletContext";
+import { WalletContextProps } from "@/(context)/providers/walletProvider";
 import { WalletContext } from "@/(context)/providers/walletProvider";
 
 export const useWalletContext = (): WalletContextProps => {
