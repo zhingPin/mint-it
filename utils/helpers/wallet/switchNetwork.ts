@@ -1,21 +1,8 @@
 import { DEFAULT_NETWORK } from "@/(context)/useContext/walletContext/const";
-import { getVisibleNetworks } from "../../../helpers/networkHelpers";
+import { getCurrentNetwork, getVisibleNetworks } from "../../../helpers/networkHelpers";
 import { NetworkConfigProps } from "../../../types/network-types";
 import { networkConfig } from "../../lib/chains/networkConfig";
 
-
-// Get the current network ID
-const getCurrentNetwork = async (): Promise<number | null> => {
-    try {
-        if (!window.ethereum) throw new Error("No crypto wallet found");
-
-        const chainId = await window.ethereum.request({ method: "net_version" });
-        return Number(chainId); // Return the chain ID as a number
-    } catch (err) {
-        console.error("Error fetching current network:", (err as Error).message);
-        return null;
-    }
-};
 
 // Network switch function
 const changeNetwork = async (networkName: string): Promise<void> => {

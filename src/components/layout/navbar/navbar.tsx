@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './navbar.module.css'
 import MainMenu from './mainMenu/mainMenu'
-import NavConnect from './navConnect/navConnect'
 import { Logo } from '@/components/ui'
 import { Web3Connection } from '@/components'
 
@@ -36,8 +35,6 @@ const Navbar = () => {
             </div>
             <div className={styles.nav_controllers}>
                 <Web3Connection />
-                {/* <NavConnect /> */}
-
                 <MainMenu pageLinks={pageLinks} />
             </div>
 

@@ -7,7 +7,7 @@ import { getNetworkKeyFromChainId } from "../../../helpers/networkHelpers";
 
 export interface WalletContextProps {
     currentAccount: string;
-    setAccount: React.Dispatch<React.SetStateAction<string>>;
+    setCurrentAccount: React.Dispatch<React.SetStateAction<string>>;
     accountBalance: string;
     handleConnectWallet: () => Promise<void>;
     currentNetwork: string;
@@ -17,14 +17,15 @@ export interface WalletContextProps {
 
 }
 
+
 export const WalletContext = createContext<WalletContextProps | undefined>(
     undefined
 );
 
 const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [walletError, setWalletError] = useState<string>("");
-    const [currentAccount, setAccount] = useState<string>("");
-    const [accountBalance, setAccountBalance] = useState<string>("");
+    const [currentAccount, setCurrentAccount] = useState<string>("");
+    const [accountBalance, setCurrentAccountBalance] = useState<string>("");
     const [currentNetwork, setCurrentNetwork] = useState<string>("");
 
     const init = useCallback(async () => {
@@ -32,12 +33,12 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
         if (walletData) {
             const networkKey = getNetworkKeyFromChainId(walletData.chainId);
-            setAccount(walletData.address);
-            setAccountBalance(walletData.balance);
+            setCurrentAccount(walletData.address);
+            setCurrentAccountBalance(walletData.balance);
             setCurrentNetwork(networkKey ?? "");
         } else {
-            setAccount("");
-            setAccountBalance("");
+            setCurrentAccount("");
+            setCurrentAccountBalance("");
             setCurrentNetwork("");
         }
     }, []);
@@ -64,7 +65,7 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
                 window.ethereum.removeListener("chainChanged", handleChainChanged);
             };
         }
-    }, []); // only once on mount
+    }, [init]); // only once on mount
 
     const handleConnectWallet = async () => {
         try {
@@ -80,8 +81,8 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
                     return;
                 }
 
-                setAccount(address);
-                setAccountBalance(balance);
+                setCurrentAccount(address);
+                setCurrentAccountBalance(balance);
                 setCurrentNetwork(networkKey);
                 return;
             }
@@ -104,12 +105,12 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
                     return;
                 }
 
-                setAccount(address);
-                setAccountBalance(balance);
+                setCurrentAccount(address);
+                setCurrentAccountBalance(balance);
                 setCurrentNetwork(networkKey);
             }
         } catch (error) {
-            console.error("Error connecting wallet:", error);
+            console.warn("[prov]Error connecting wallet:", error);
             setWalletError("Could not connect wallet.");
         }
     };
@@ -120,7 +121,7 @@ const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
         <WalletContext.Provider
             value={{
                 currentAccount,
-                setAccount,
+                setCurrentAccount,
                 accountBalance,
                 currentNetwork,
                 setCurrentNetwork,
