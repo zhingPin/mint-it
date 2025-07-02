@@ -4,7 +4,7 @@
     min-height: 100%;
     position: sticky;
     z-index: 1000;
-    padding-inline: 3%;
+    padding-inline: var(--main-padding);
     background-color: rgb(6, 6, 33);
 }
 

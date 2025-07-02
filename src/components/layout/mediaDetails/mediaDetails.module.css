@@ -1,11 +1,8 @@
 .nft_detail_card {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
-    /* Two columns: media + details */
     gap: var(--main-padding);
-
     /* background: var(--primary-shade); */
-    padding: var(--main-padding);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
     min-height: 150px;
@@ -15,7 +12,6 @@
 .media_placeholder {
     width: 100%;
     aspect-ratio: 1 / 1;
-    /* background-color: #ddd; */
     border-radius: 8px;
     display: flex;
     align-items: center;

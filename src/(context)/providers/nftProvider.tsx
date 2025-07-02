@@ -17,7 +17,7 @@ export interface NftContextProps {
     error?: string;
     setError?: React.Dispatch<React.SetStateAction<string>>;
     fetchNFTsByOwner: (type: "fetchItemsListed" | "fetchMyNFTs") => Promise<NftData[] | undefined>;
-    fetchMarketsNFTs: () => Promise<NftData[] | undefined>;
+    fetchMarketsNFTs: () => Promise<NftData[]>;
     createNFT: (input: CreateNftInput) => Promise<void>
     buyNFT: (listingId: number, tokenId: number, price: string) => Promise<void>; // Updated type
     client?: IPFSHTTPClient; // Replace 'any' with the actual type of your client
@@ -85,7 +85,7 @@ const NftProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         }
     };
 
-    //--- createSale FUNCTION
+    // --- createSale FUNCTION
     const createSale = async (
         url: string,
         formInputPrice: string,
@@ -95,20 +95,42 @@ const NftProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         id: number = 0
     ): Promise<void> => {
         try {
-            console.log("Create sale URL:", url);
+            console.log("🔵 Create sale URL:", url);
+
             const price = ethers.parseUnits(formInputPrice, "ether");
-            console.log("currentNetwork:", currentNetwork);
+            console.log("💱 Parsed price (wei):", price.toString());
+
+            console.log("🌐 Current network:", currentNetwork);
             const contract = await connectToContract(currentNetwork, "marketplace");
-            if (!contract) {
-                console.error("Failed to connect to the contract.");
+            const MintingContract = await connectToContract(currentNetwork, "nft");
+
+            console.log("🏛️ Marketplace contract:", contract?.target);
+            console.log("🎨 NFT contract:", MintingContract?.target);
+
+            if (!contract || !MintingContract) {
+                console.error("❌ Failed to connect to one or more contracts.");
                 return;
             }
 
-            const [listingPrice] = await contract.getFees(); // assume listingPrice is a BigInt
+            // --- Debug: Check MINTER_ROLE ---
+            const MINTER_ROLE = await MintingContract.MINTER_ROLE();
+            const hasMinterRole = await MintingContract.hasRole(MINTER_ROLE, contract.target);
+            console.log("🧾 MINTER_ROLE hash:", MINTER_ROLE);
+            console.log("🏢 Marketplace address:", contract.target);
+            console.log("✅ Marketplace has MINTER_ROLE:", hasMinterRole);
+
+            if (!hasMinterRole) {
+                throw new Error("Marketplace does not have MINTER_ROLE — cannot mint.");
+            }
+
+            const [listingPrice] = await contract.getFees();
+            console.log("💸 Listing fee per item:", listingPrice.toString());
 
             let transaction;
             if (!isReselling) {
                 const totalListingFee = listingPrice * BigInt(quantity);
+                console.log("🧮 Total listing fee:", totalListingFee.toString());
+
                 transaction = await contract.mintAndList(
                     url,
                     price,
@@ -118,23 +140,31 @@ const NftProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         value: totalListingFee,
                     }
                 );
+                console.log("transaction", transaction)
             } else {
+                console.log("🔁 Reselling token ID:", id);
                 transaction = await contract.listItem(id, price, {
                     value: listingPrice,
                 });
             }
 
-            await transaction.wait();
+            console.log("📤 Transaction submitted:", transaction.hash);
             const receipt = await transaction.wait();
+            console.log("📥 Transaction receipt:", receipt);
+
             if (receipt.status !== 1) {
-                throw new Error("Transaction failed.");
+                throw new Error("❌ Transaction failed on-chain.");
             }
-            return receipt; // Return the receipt for further processing if needed
-            // router.push("/media");
+
+            console.log("✅ Sale created successfully.");
+            return receipt;
         } catch (error) {
-            console.error("Error while creating sale:", error);
+            console.error("🚨 Error while creating sale:", error);
         }
     };
+
+
+
 
     const getActiveNetworks = (): string[] => {
         return Object.keys(networkInfo).filter(
@@ -145,131 +175,105 @@ const NftProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         );
     };
 
-    const fetchMarketsNFTs = async (): Promise<NftData[]> => {
+    const parseNFTMetadata = async (tokenURI: string, tokenId: string, network: string) => {
         try {
-            const allNetworks = Object.keys(networkInfo).filter(
-                (network) =>
-                    networkInfo[network].active &&
-                    networkInfo[network].contracts.marketplace &&
-                    networkInfo[network].contracts.nft // ✅ NFT contract must exist
-            );
-
-            const allNFTs: NftData[] = [];
-
-            for (const network of allNetworks) {
-                const provider = new ethers.JsonRpcProvider(
-                    networkConfig[network]?.rpcUrls[0]
-                );
-                // console.log(`Fetching NFTs from network: ${network}`);
-
-                const marketplaceContract = fetchContract(provider, network, "marketplace");
-                const nftContract = fetchContract(provider, network, "nft"); // ✅ NFT contract instance
-
-                try {
-                    const data = await marketplaceContract.fetchMarketItems();
-                    console.log(`Fetched Market Items from ${network}:`, data);
-
-                    if (!data || data.length === 0) {
-                        console.warn(`No market items found on ${network}.`);
-                        continue;
-                    }
-
-                    const items: NftData[] = await Promise.all(
-                        data.map(
-                            async ({
-                                tokenId,
-                                listingId,
-                                seller,
-                                owner,
-                                price: unformattedPrice,
-                                creator,
-                                batchSpecificId,
-                                batchNumber,
-                            }: MarketItem) => {
-                                try {
-                                    // ✅ Call tokenURI on the NFT contract, not marketplace
-                                    const tokenURI = await nftContract.tokenURI(tokenId);
-                                    // console.log(
-                                    //     `Token URI for Token ID ${tokenId} on ${network}:`,
-                                    //     tokenURI
-                                    // );
-
-                                    const {
-                                        data: {
-                                            name,
-                                            image,
-                                            media,
-                                            description,
-                                            video,
-                                            audio,
-                                            royaltyPercentage,
-                                            quantity,
-                                            website,
-                                            collection,
-                                            chainId
-                                        },
-                                    } = await axios.get(tokenURI);
-
-                                    const price = ethers.formatUnits(
-                                        unformattedPrice.toString(),
-                                        "ether"
-                                    );
-                                    const ownedByCurrentUser = (owner?.toLowerCase() === currentAccount?.toLowerCase());
-                                    const isSeller = (seller?.toLowerCase() === currentAccount?.toLowerCase());
-
-
-                                    return {
-                                        tokenId,
-                                        listingId,
-                                        name,
-                                        description,
-                                        image,
-                                        media,
-                                        video,
-                                        audio,
-                                        price,
-                                        seller,
-                                        owner,
-                                        creator,
-                                        royaltyPercentage,
-                                        quantity,
-                                        website,
-                                        collection,
-                                        tokenURI,
-                                        batchSpecificId: Number(batchSpecificId),
-                                        batchNumber: Number(batchNumber),
-                                        network,
-                                        ownedByCurrentUser,
-                                        isSeller,
-                                        chainId
-                                    };
-                                } catch (metadataError) {
-                                    console.error(
-                                        `Error fetching metadata for token ${tokenId} on ${network}:`,
-                                        metadataError
-                                    );
-                                    return null;
-                                }
-                            }
-                        )
-                    );
-
-                    allNFTs.push(...items.filter((item): item is NftData => item !== null));
-                } catch (networkError) {
-                    console.error(`Error fetching NFTs from ${network}:`, networkError);
-                }
-            }
-
-            return allNFTs;
-        } catch (error) {
-            console.error("Error while fetching NFTs from all networks:", error);
-            return [];
+            const { data } = await axios.get(tokenURI, { timeout: 5000 });
+            return {
+                name: data.name,
+                description: data.description,
+                image: data.image,
+                media: data.media,
+                video: data.video,
+                audio: data.audio,
+                royaltyPercentage: data.royaltyPercentage,
+                quantity: data.quantity,
+                website: data.website,
+                collection: data.collection,
+                chainId: data.chainId,
+            };
+        } catch (err) {
+            console.error(`Failed to fetch metadata for token ${tokenId} on ${network}:`, err);
+            return null;
         }
     };
+    const createNftData = async (
+        item: MarketItem,
+        tokenURI: string,
+        network: string,
+        currentAccount?: string
+    ): Promise<NftData | null> => {
+        const metadata = await parseNFTMetadata(tokenURI, item.tokenId.toString(), network);
+        if (!metadata) return null;
 
-    function isNftData(item: NftData | null): item is NftData {
-        return item !== null;
-    }
+        const chainId = metadata.chainId;
+        const nftContractAddress = networkInfo[network]?.contracts?.nft;
+        const marketplaceAddress = networkInfo[network]?.contracts?.marketplace;
+
+        return {
+            tokenId: item.tokenId.toString(),
+            listingId: item.listingId.toString(),
+            name: metadata.name,
+            description: metadata.description,
+            image: metadata.image,
+            media: metadata.media,
+            price: ethers.formatUnits(item.price.toString(), "ether"),
+            seller: item.seller,
+            owner: item.owner,
+            creator: item.creator,
+            royaltyPercentage: metadata.royaltyPercentage,
+            quantity: metadata.quantity,
+            website: metadata.website,
+            collection: metadata.collection,
+            tokenURI,
+            batchSpecificId: item.batchSpecificId.toString(),
+            batchNumber: item.batchNumber.toString(),
+            ownedByCurrentUser: item.owner?.toLowerCase() === currentAccount?.toLowerCase(),
+            isSeller: item.seller?.toLowerCase() === currentAccount?.toLowerCase(),
+            chainId,
+            router,
+            globalId: `${chainId}:${nftContractAddress}:${item.tokenId.toString()}`,
+            listingGlobalId: `${chainId}:${marketplaceAddress}:${item.listingId.toString()}`,
+        };
+    };
+
+
+
+
+    const fetchMarketsNFTs = async (): Promise<NftData[]> => {
+        const allNFTs: NftData[] = [];
+
+        for (const network of getActiveNetworks()) {
+            const provider = new ethers.JsonRpcProvider(networkConfig[network]?.rpcUrls[0]);
+            const marketplace = fetchContract(provider, network, "marketplace");
+            const nft = fetchContract(provider, network, "nft");
+
+            try {
+                const rawItems: MarketItem[] = await marketplace.fetchMarketItems();
+                if (!rawItems || rawItems.length === 0) {
+                    console.warn(`No market items found on ${network}.`);
+                    continue;
+                }
+
+                const parsed = await Promise.all(
+                    rawItems.map(async (item) => {
+                        try {
+                            const tokenURI = await nft.tokenURI(item.tokenId);
+                            return await createNftData(item, tokenURI, network, currentAccount);
+                        } catch (e) {
+                            console.error(`Failed tokenURI fetch for ${item.tokenId} on ${network}:`, e);
+                            return null;
+                        }
+                    })
+                );
+
+                allNFTs.push(...parsed.filter((nft): nft is NftData => nft !== null));
+            } catch (e) {
+                console.error(`Failed to fetch market NFTs from ${network}:`, e);
+            }
+        }
+
+        return allNFTs;
+    };
 
     const fetchNFTsByOwner = async (
         type: "fetchItemsListed" | "fetchMyNFTs"
@@ -279,9 +283,7 @@ const NftProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             return [];
         }
 
-        console.log("Current account:", currentAccount);
         const allNFTs: NftData[] = [];
-
         const web3Provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await web3Provider.getSigner();
 
@@ -292,67 +294,29 @@ const NftProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
                 console.log(`Calling ${type} on:`, marketplace.target);
 
-                let rawItems: MarketItem[];
-
-                try {
-                    rawItems = type === "fetchItemsListed"
+                const rawItems: MarketItem[] =
+                    type === "fetchItemsListed"
                         ? await marketplace.fetchItemsListed()
                         : await marketplace.fetchMyNFTs();
-                } catch {
-                    console.warn(`No NFTs returned from ${type} on ${network}. Skipping...`);
-                    continue;
-                }
 
                 if (!rawItems || rawItems.length === 0) {
                     console.log(`No NFTs found on ${network}.`);
                     continue;
                 }
 
-                const parsedItems = await Promise.all(
+                const parsed = await Promise.all(
                     rawItems.map(async (item) => {
                         try {
                             const tokenURI = await nft.tokenURI(item.tokenId);
-                            console.log(`Token URI for token ${item.tokenId} on ${network}:`, tokenURI);
-
-                            const { data } = await axios.get(tokenURI);
-                            const ownedByCurrentUser = item.owner?.toLowerCase() === currentAccount.toLowerCase();
-                            const isSeller = item.seller?.toLowerCase() === currentAccount.toLowerCase();
-
-
-                            return {
-                                tokenId: Number(item.tokenId),
-                                listingId: Number(item.listingId),
-                                name: data.name,
-                                description: data.description,
-                                image: data.image,
-                                media: data.media,
-                                video: data.video,
-                                audio: data.audio,
-                                price: ethers.formatUnits(item.price.toString(), "ether"),
-                                seller: item.seller,
-                                owner: item.owner,
-                                creator: item.creator,
-                                royaltyPercentage: data.royaltyPercentage,
-                                quantity: data.quantity,
-                                website: data.website,
-                                collection: data.collection,
-                                tokenURI,
-                                batchSpecificId: Number(item.batchSpecificId),
-                                batchNumber: Number(item.batchNumber),
-                                network,
-                                router,
-                                ownedByCurrentUser,
-                                isSeller,
-                                chainId: data.chainId,
-                            } as NftData;
-                        } catch (metaErr) {
-                            console.error(`Metadata error for token ${item.tokenId} on ${network}:`, metaErr);
+                            return await createNftData(item, tokenURI, network, currentAccount);
+                        } catch (e) {
+                            console.error(`Metadata error for token ${item.tokenId} on ${network}:`, e);
                             return null;
                         }
                     })
                 );
 
-                allNFTs.push(...parsedItems.filter(isNftData));
+                allNFTs.push(...parsed.filter((nft): nft is NftData => nft !== null));
             } catch (err) {
                 console.error(`Failed to fetch NFTs from ${network}:`, err);
             }

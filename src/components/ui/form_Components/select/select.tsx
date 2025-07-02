@@ -8,8 +8,8 @@ type SelectOption = {
 };
 
 type SelectProps = {
-    id?: string;
-    name?: string;
+    id: string;
+    name: string;
     value?: string;
     defaultValue?: string;
     onChange?: (value: string) => void;

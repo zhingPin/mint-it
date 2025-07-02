@@ -3,8 +3,8 @@ import React from "react";
 import styles from "./input.module.css";
 
 type InputProps = {
-    id?: string;
-    name?: string;
+    id: string;
+    name: string;
     type?: string;
     value?: string | number | readonly string[];
     defaultValue?: string | number | readonly string[];

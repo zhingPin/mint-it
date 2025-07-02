@@ -46,7 +46,7 @@
 .menu_popover {
     padding: 0;
     border-radius: 0 0 5px 5px;
-    border: 3px solid var(--text-color, #fff);
+    border: 3px solid var(#fff);
     border-top: none;
     background-color: var(--primary-color);
     font-size: 1rem;
@@ -66,7 +66,8 @@
     position-anchor: --chain-switch;
     top: anchor(bottom);
     right: anchor(right);
-    left: -60px;
+    right: 0;
+    top: 100%;
     overflow: hidden;
 }
 

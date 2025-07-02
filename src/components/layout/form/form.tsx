@@ -23,15 +23,15 @@ const Form = () => {
                     <h3>Profile Information</h3>
                     <div className={styles.Form_box_input_grid}>
                         <FormField id="username" label="Username">
-                            <Input id="username" placeholder="Enter your name" />
+                            <Input name="" id="username" placeholder="Enter your name" />
                         </FormField>
 
                         <FormField id="email" label="Email">
-                            <Input id="email" placeholder="Your email" icon={<HiOutlineMail />} />
+                            <Input name="" id="email" placeholder="Your email" icon={<HiOutlineMail />} />
                         </FormField>
 
                         <FormField id="website" label="Website">
-                            <Input id="website" placeholder="Your website" icon={<MdOutlineHttp />} />
+                            <Input name="" id="website" placeholder="Your website" icon={<MdOutlineHttp />} />
                         </FormField>
                     </div>
                 </div>
@@ -46,6 +46,7 @@ const Form = () => {
 
                         <FormField id="genre" label="Genre">
                             <Select
+                                name=""
                                 id="genre"
                                 options={[
                                     { label: "Select Genre", value: "" },
@@ -63,15 +64,15 @@ const Form = () => {
                     <h3>Social Links</h3>
                     <div className={styles.Form_box_input_grid}>
                         <FormField id="facebook" label="Facebook">
-                            <Input id="facebook" placeholder="Your Facebook" icon={<TiSocialFacebook />} />
+                            <Input name="" id="facebook" placeholder="Your Facebook" icon={<TiSocialFacebook />} />
                         </FormField>
 
                         <FormField id="twitter" label="Twitter">
-                            <Input id="twitter" placeholder="Your Twitter" icon={<TiSocialTwitter />} />
+                            <Input name="" id="twitter" placeholder="Your Twitter" icon={<TiSocialTwitter />} />
                         </FormField>
 
                         <FormField id="instagram" label="Instagram">
-                            <Input id="instagram" placeholder="Your Instagram" icon={<TiSocialInstagram />} />
+                            <Input name="" id="instagram" placeholder="Your Instagram" icon={<TiSocialInstagram />} />
                         </FormField>
                     </div>
                 </div></div>

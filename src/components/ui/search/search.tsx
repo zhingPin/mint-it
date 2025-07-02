@@ -32,6 +32,8 @@ const Search: React.FC<SearchProps> = ({ placeholder, icon, query }) => {
         <div className={styles.search_container}>
             {/* Use the Input component with the current query as the default value */}
             <Input
+                name="search_field"
+                id="search_field"
                 placeholder={placeholder}
                 defaultValue={query} // Set the current query as the default value
                 onChange={handleSearch}

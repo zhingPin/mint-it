@@ -38,7 +38,10 @@ export const networkConfig: Record<string, NetworkConfigProps> = {
             decimals: 18,
         },
         rpcUrls: [
-            "https://rpc-amoy.polygon.technology/"],
+            "https://rpc-amoy.polygon.technology",
+            "https://polygon-amoy.g.alchemy.com/v2/YOUR_KEY",
+            "https://amoy-rpc.publicnode.com"
+        ],
         blockExplorerUrls: ["https://amoy.polygonscan.com/"],
     },
 }

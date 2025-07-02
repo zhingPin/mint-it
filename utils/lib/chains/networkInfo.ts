@@ -17,8 +17,8 @@ export const networkInfo: Record<string, NetworkInfoProps> = {
         iconUrls: [matic_logo],
         displayName: "Polygon Pos",
         contracts: {
-            nft: "0xBcB215A68677cB6D5aA0481B99Cb7190C937A0f0",
-            marketplace: "0xF472dDDC6E7aCE2CB68bad4710d125429Ff918Ec"
+            nft: "0xCCa61FbF2b09c4BaA442Ed39d52EEc0D080e028c",
+            marketplace: "0x55Ba126c95dfB215b4A528caD1A8435C25fB90F8"
         },
         environment: "mainnet",
         active: true,

@@ -38,6 +38,8 @@ const DropDownTap: React.FC<DropDownTapProps> = ({ dropdownOptions, sort }) => {
 
     return (
         <Select
+            id=""
+            name=""
             value={selectedOption}
             onChange={handleDropdownChange}
             options={selectOptions}

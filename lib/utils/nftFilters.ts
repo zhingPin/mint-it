@@ -31,10 +31,10 @@ export function filterAndSortNFTs(nfts: NftData[], options: FilterAndSortOptions
             if (mediaType !== "all") {
                 switch (mediaType) {
                     case "music":
-                        if (!(nft.audio || nft.media?.fileType?.startsWith("audio/"))) return false
+                        if (!(nft.media?.fileType?.startsWith("audio/"))) return false
                         break
                     case "videos":
-                        if (!(nft.video || nft.media?.fileType?.startsWith("video/"))) return false
+                        if (!(nft.media?.fileType?.startsWith("video/"))) return false
                         break
                     case "images":
                         if (nft.media?.fileType) return false // Images don't have media fileType
@@ -94,7 +94,7 @@ export function filterAndSortNFTs(nfts: NftData[], options: FilterAndSortOptions
  * Get unique batch NFTs (first NFT from each batch)
  */
 export function getUniqueBatchNFTs(nfts: NftData[]): NftData[] {
-    const firstNFTsMap = new Map<number, NftData>()
+    const firstNFTsMap = new Map<string, NftData>()
 
     // Reverse to get the latest NFT from each batch
     nfts.reverse().forEach((nft) => {
